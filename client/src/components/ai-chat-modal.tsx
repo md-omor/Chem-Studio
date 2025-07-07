@@ -83,7 +83,7 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl h-[600px] flex flex-col">
+      <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Bot className="h-5 w-5 text-blue-600" />
@@ -91,10 +91,10 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 flex flex-col gap-4">
+        <div className="flex-1 flex flex-col gap-4 min-h-0">
           {/* Chat Messages */}
-          <ScrollArea className="flex-1 pr-4">
-            <div className="space-y-4">
+          <ScrollArea className="flex-1 pr-4 max-h-[400px]">
+            <div className="space-y-4 p-2">
               {messages.length === 0 ? (
                 <div className="text-center text-gray-500 py-8">
                   <Bot className="h-12 w-12 mx-auto mb-4 text-gray-400" />

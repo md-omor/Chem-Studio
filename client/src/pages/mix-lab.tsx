@@ -8,6 +8,7 @@ import { useElementSelection } from "@/hooks/use-element-selection";
 import { apiRequest } from "@/lib/queryClient";
 import { ArrowRight, Beaker } from "lucide-react";
 import { AiChatModal } from "@/components/ai-chat-modal";
+import { ReactionJar } from "@/components/reaction-jar";
 import type { Reaction } from "@shared/schema";
 
 export default function MixLab() {
@@ -125,14 +126,17 @@ export default function MixLab() {
                 
                 <div className="text-center">
                   {isAnimating || findReactionMutation.isPending ? (
-                    <div className="flex flex-col items-center space-y-2">
-                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
-                      <div className="text-sm text-blue-600">Mixing elements...</div>
-                    </div>
+                    <ReactionJar 
+                      product="Mixing..."
+                      productName="Reaction in Progress"
+                      isAnimating={true}
+                    />
                   ) : reactionResult ? (
-                    <div className="text-green-600 font-semibold text-lg animate-pulse">
-                      {reactionResult.product}
-                    </div>
+                    <ReactionJar 
+                      product={reactionResult.product}
+                      productName={reactionResult.productName || reactionResult.product}
+                      isAnimating={false}
+                    />
                   ) : showNoReaction ? (
                     <div className="text-red-600 font-semibold">
                       No stable compound possible
@@ -164,30 +168,43 @@ export default function MixLab() {
         {reactionResult && (
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle>Reaction Details</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="bg-blue-50 rounded-lg p-4">
-                <h4 className="font-semibold text-blue-900 mb-2">Compound Information</h4>
-                <p className="text-blue-800">{reactionResult.description}</p>
+              <CardTitle className="text-center text-2xl">
+                {selectedElements.map(e => e.symbol).join(" + ")} → {reactionResult.product}
+              </CardTitle>
+              <div className="text-center text-gray-600">
+                {reactionResult.productName || reactionResult.product}
               </div>
-              
-              <div className="bg-green-50 rounded-lg p-4">
-                <h4 className="font-semibold text-green-900 mb-2">Real-World Uses</h4>
-                <p className="text-green-800">{reactionResult.uses}</p>
+            </CardHeader>
+            <CardContent className="space-y-6">
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="bg-blue-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-blue-900 mb-3 flex items-center gap-2">
+                    🔬 Compound Information
+                  </h4>
+                  <p className="text-blue-800">{reactionResult.description}</p>
+                </div>
+                
+                <div className="bg-green-50 rounded-lg p-4">
+                  <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
+                    🏭 Real-World Uses
+                  </h4>
+                  <p className="text-green-800">{reactionResult.uses}</p>
+                </div>
               </div>
               
               <div className="bg-purple-50 rounded-lg p-4">
-                <h4 className="font-semibold text-purple-900 mb-2">Fun Facts</h4>
+                <h4 className="font-semibold text-purple-900 mb-3 flex items-center gap-2">
+                  ⚡ Amazing Facts
+                </h4>
                 <p className="text-purple-800">{reactionResult.facts}</p>
               </div>
               
               {reactionResult.id === -1 && (
                 <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 mb-2">
                     <span className="text-amber-600 font-medium">🤖 AI Analysis</span>
                   </div>
-                  <p className="text-amber-800 text-sm mt-1">
+                  <p className="text-amber-800 text-sm">
                     This reaction analysis was generated using artificial intelligence. The information is educational and based on chemistry principles.
                   </p>
                 </div>
