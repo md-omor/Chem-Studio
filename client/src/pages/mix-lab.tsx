@@ -14,6 +14,8 @@ export default function MixLab() {
   const [reactionResult, setReactionResult] = useState<Reaction | null>(null);
   const [showNoReaction, setShowNoReaction] = useState(false);
   const [noReactionExplanation, setNoReactionExplanation] = useState<string>("");
+  const [isAnimating, setIsAnimating] = useState(false);
+  const [showAiInquiry, setShowAiInquiry] = useState(false);
 
   const findReactionMutation = useMutation({
     mutationFn: async (reactants: string[]) => {
@@ -24,10 +26,14 @@ export default function MixLab() {
       setReactionResult(data);
       setShowNoReaction(false);
       setNoReactionExplanation("");
+      setIsAnimating(false);
+      setShowAiInquiry(true);
     },
     onError: (error: any) => {
       setReactionResult(null);
       setShowNoReaction(true);
+      setIsAnimating(false);
+      setShowAiInquiry(true);
       // Try to extract explanation from error response
       try {
         const errorData = error.response?.data;
@@ -42,29 +48,38 @@ export default function MixLab() {
 
   const handleMixElements = () => {
     if (selectedElements.length >= 2) {
-      const reactants = selectedElements.map(el => el.symbol);
-      findReactionMutation.mutate(reactants);
+      setIsAnimating(true);
+      setReactionResult(null);
+      setShowNoReaction(false);
+      setShowAiInquiry(false);
+      
+      // Add animation delay before API call
+      setTimeout(() => {
+        const reactants = selectedElements.map(el => el.symbol);
+        findReactionMutation.mutate(reactants);
+      }, 2000);
     }
   };
-
-  useEffect(() => {
-    if (selectedElements.length >= 2) {
-      handleMixElements();
-    }
-  }, [selectedElements]);
 
   const categoryColors: Record<string, string> = {
     "alkali-metal": "bg-red-500",
     "alkaline-earth": "bg-orange-500",
-    "transition-metal": "bg-purple-500",
+    "transition-metal": "bg-blue-500",
     "post-transition": "bg-purple-500",
-    "metalloid": "bg-cyan-500",
+    "metalloid": "bg-yellow-500",
     "nonmetal": "bg-green-500",
-    "halogen": "bg-green-500",
-    "noble-gas": "bg-orange-500",
-    "lanthanide": "bg-pink-500",
-    "actinide": "bg-indigo-500",
+    "halogen": "bg-pink-500",
+    "noble-gas": "bg-cyan-500",
+    "lanthanide": "bg-orange-400",
+    "actinide": "bg-pink-600",
   };
+
+  // Auto-trigger mixing when elements are selected and we come to this page
+  useEffect(() => {
+    if (selectedElements.length >= 2 && !reactionResult && !showNoReaction) {
+      handleMixElements();
+    }
+  }, [selectedElements]);
 
   return (
     <div className="py-8 fade-in">
@@ -91,8 +106,7 @@ export default function MixLab() {
                     selectedElements.map((element, index) => (
                       <div key={element.symbol} className="flex items-center">
                         <Badge
-                          className="text-white"
-                          style={{ backgroundColor: categoryColors[element.category] || '#6b7280' }}
+                          className={`text-white ${categoryColors[element.category] || 'bg-gray-500'}`}
                         >
                           {element.symbol}
                         </Badge>
@@ -107,10 +121,13 @@ export default function MixLab() {
                 <ArrowRight className="h-6 w-6 text-gray-400" />
                 
                 <div className="text-center">
-                  {findReactionMutation.isPending ? (
-                    <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-blue-600"></div>
+                  {isAnimating || findReactionMutation.isPending ? (
+                    <div className="flex flex-col items-center space-y-2">
+                      <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600"></div>
+                      <div className="text-sm text-blue-600">Mixing elements...</div>
+                    </div>
                   ) : reactionResult ? (
-                    <div className="text-green-600 font-semibold text-lg">
+                    <div className="text-green-600 font-semibold text-lg animate-pulse">
                       {reactionResult.product}
                     </div>
                   ) : showNoReaction ? (
@@ -176,18 +193,64 @@ export default function MixLab() {
           </Card>
         )}
 
-        <div className="text-center space-y-4">
+        {/* AI Inquiry Section */}
+        {showAiInquiry && (reactionResult || showNoReaction) && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                🤖 AI Assistant
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4">
+                <p className="text-gray-700 mb-4">
+                  Would you like me to explain more about this reaction, suggest related experiments, 
+                  or answer any questions about the chemistry involved?
+                </p>
+                <div className="flex gap-2 flex-wrap">
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => alert("This would open a detailed explanation dialog")}
+                  >
+                    Explain the Chemistry
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => alert("This would suggest related experiments")}
+                  >
+                    Similar Reactions
+                  </Button>
+                  <Button 
+                    size="sm" 
+                    variant="outline"
+                    onClick={() => alert("This would open a chat interface")}
+                  >
+                    Ask a Question
+                  </Button>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        )}
+
+        <div className="flex justify-center gap-4">
+          <Button
+            onClick={handleMixElements}
+            disabled={selectedElements.length < 2 || findReactionMutation.isPending || isAnimating}
+            className="bg-blue-600 hover:bg-blue-700"
+          >
+            {isAnimating ? "Mixing..." : "Mix Elements"}
+          </Button>
+          <Button variant="outline" onClick={clearSelection}>
+            Clear Selection
+          </Button>
           <Link href="/periodic-table">
-            <Button className="bg-blue-600 hover:bg-blue-700">
-              Select Elements from Periodic Table
+            <Button variant="outline">
+              Back to Periodic Table
             </Button>
           </Link>
-          
-          {selectedElements.length > 0 && (
-            <Button variant="outline" onClick={clearSelection}>
-              Clear Selection
-            </Button>
-          )}
         </div>
       </div>
     </div>

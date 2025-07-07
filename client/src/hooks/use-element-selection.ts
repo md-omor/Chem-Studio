@@ -1,8 +1,22 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import type { Element } from "@shared/schema";
 
 export function useElementSelection() {
-  const [selectedElements, setSelectedElements] = useState<Element[]>([]);
+  const [selectedElements, setSelectedElements] = useState<Element[]>(() => {
+    // Load from localStorage on initial load
+    if (typeof window !== 'undefined') {
+      const stored = localStorage.getItem('selectedElements');
+      return stored ? JSON.parse(stored) : [];
+    }
+    return [];
+  });
+
+  // Save to localStorage whenever selectedElements changes
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('selectedElements', JSON.stringify(selectedElements));
+    }
+  }, [selectedElements]);
 
   const toggleElement = useCallback((element: Element) => {
     setSelectedElements(prev => {
