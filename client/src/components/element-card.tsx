@@ -10,8 +10,20 @@ interface ElementCardProps {
 }
 
 export function ElementCard({ element, onClick, onSelect, isSelected, style }: ElementCardProps) {
-  const getCategoryClass = (category: string) => {
-    return `element-${category}`;
+  const getCategoryColor = (category: string) => {
+    const colorMap: Record<string, string> = {
+      "alkali-metal": "bg-red-500",
+      "alkaline-earth": "bg-orange-500", 
+      "transition-metal": "bg-blue-500",
+      "post-transition": "bg-purple-500",
+      "metalloid": "bg-yellow-500",
+      "nonmetal": "bg-green-500",
+      "halogen": "bg-pink-500",
+      "noble-gas": "bg-cyan-500",
+      "lanthanide": "bg-orange-400",
+      "actinide": "bg-pink-600",
+    };
+    return colorMap[category] || "bg-gray-500";
   };
 
   const handleClick = (e: React.MouseEvent) => {
@@ -27,9 +39,9 @@ export function ElementCard({ element, onClick, onSelect, isSelected, style }: E
   return (
     <div
       className={cn(
-        "relative min-h-[60px] rounded-lg p-2 text-center cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 text-white font-medium",
-        getCategoryClass(element.category),
-        isSelected && "ring-4 ring-yellow-400 ring-offset-2"
+        "group relative min-h-[60px] rounded-lg p-2 text-center cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 text-white font-medium border-2 border-transparent",
+        getCategoryColor(element.category),
+        isSelected && "ring-4 ring-yellow-400 ring-offset-2 border-yellow-400"
       )}
       style={style}
       onClick={handleClick}
@@ -48,9 +60,9 @@ export function ElementCard({ element, onClick, onSelect, isSelected, style }: E
       {/* Selection button */}
       <button
         onClick={handleSelect}
-        className="absolute bottom-1 right-1 w-4 h-4 bg-black bg-opacity-20 rounded-full flex items-center justify-center opacity-0 hover:opacity-100 transition-opacity"
+        className="absolute bottom-1 right-1 w-5 h-5 bg-black bg-opacity-30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity hover:bg-opacity-50"
       >
-        <span className="text-xs text-white">+</span>
+        <span className="text-xs text-white font-bold">+</span>
       </button>
     </div>
   );

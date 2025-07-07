@@ -36,14 +36,14 @@ export default function PeriodicTable() {
   const categoryColors: Record<string, string> = {
     "alkali-metal": "bg-red-500",
     "alkaline-earth": "bg-orange-500",
-    "transition-metal": "bg-purple-500",
+    "transition-metal": "bg-blue-500",
     "post-transition": "bg-purple-500",
-    "metalloid": "bg-cyan-500",
+    "metalloid": "bg-yellow-500",
     "nonmetal": "bg-green-500",
-    "halogen": "bg-green-500",
-    "noble-gas": "bg-orange-500",
-    "lanthanide": "bg-pink-500",
-    "actinide": "bg-indigo-500",
+    "halogen": "bg-pink-500",
+    "noble-gas": "bg-cyan-500",
+    "lanthanide": "bg-orange-400",
+    "actinide": "bg-pink-600",
   };
 
   if (isLoading) {
@@ -104,8 +104,7 @@ export default function PeriodicTable() {
                   <Badge
                     key={element.symbol}
                     variant="secondary"
-                    className="px-3 py-1 text-white cursor-pointer"
-                    style={{ backgroundColor: categoryColors[element.category] || '#6b7280' }}
+                    className={`px-3 py-1 text-white cursor-pointer ${categoryColors[element.category] || 'bg-gray-500'}`}
                     onClick={() => handleElementSelect(element)}
                   >
                     {element.symbol} ×
