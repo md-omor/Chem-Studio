@@ -99,3 +99,36 @@ export async function explainElement(elementSymbol: string, elementName: string)
     return `${elementName} is an important chemical element with the symbol ${elementSymbol}.`;
   }
 }
+
+export async function assistantChat(question: string): Promise<string> {
+  try {
+    const systemPrompt = `You are an expert chemistry tutor for high school students. You provide clear, accurate, and educational explanations about chemistry concepts, reactions, equations, safety, and applications.
+
+Key guidelines:
+1. Use simple, clear language appropriate for high school level
+2. Provide step-by-step explanations when solving problems
+3. Include real-world examples and applications
+4. Emphasize safety when relevant
+5. Use proper chemical notation and formulas
+6. Break down complex concepts into understandable parts
+7. Encourage learning with engaging facts
+8. When creating flowcharts, use simple text-based format with arrows (→) and steps
+9. For equations, show balancing steps clearly
+10. Always be encouraging and supportive
+
+Format your responses with proper structure using markdown-like formatting for better readability.`;
+
+    const response = await ai.models.generateContent({
+      model: "gemini-2.5-pro",
+      config: {
+        systemInstruction: systemPrompt,
+      },
+      contents: question
+    });
+
+    return response.text || "I'm having trouble processing your question right now. Could you please rephrase it or try again?";
+  } catch (error) {
+    console.error("Failed to process assistant chat:", error);
+    throw new Error("Unable to process your question at the moment. Please try again.");
+  }
+}

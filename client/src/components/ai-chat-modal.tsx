@@ -93,48 +93,73 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
 
         <div className="flex-1 flex flex-col gap-4 min-h-0">
           {/* Chat Messages */}
-          <ScrollArea className="flex-1 pr-4 max-h-[400px]">
-            <div className="space-y-4 p-2">
-              {messages.length === 0 ? (
-                <div className="text-center text-gray-500 py-8">
-                  <Bot className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                  <p>Ask me anything about chemistry, reactions, or the elements you're working with!</p>
-                </div>
-              ) : (
-                messages.map((message) => (
-                  <div
-                    key={message.id}
-                    className={`flex gap-3 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
-                  >
-                    {message.sender === "ai" && (
-                      <div className="flex-shrink-0">
-                        <Bot className="h-6 w-6 text-blue-600 mt-1" />
-                      </div>
-                    )}
-                    <Card
-                      className={`max-w-[80%] p-3 ${
-                        message.sender === "user"
-                          ? "bg-blue-600 text-white"
-                          : "bg-gray-50 text-gray-900"
-                      }`}
+          <div className="flex-1 overflow-hidden">
+            <ScrollArea className="h-full w-full custom-scrollbar">
+              <div className="space-y-4 p-4 min-h-[400px]">
+                {messages.length === 0 ? (
+                  <div className="text-center text-gray-500 py-8">
+                    <Bot className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                    <p>Ask me anything about chemistry, reactions, or the elements you're working with!</p>
+                  </div>
+                ) : (
+                  messages.map((message) => (
+                    <div
+                      key={message.id}
+                      className={`flex gap-3 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
                     >
-                      <p className="whitespace-pre-wrap">{message.content}</p>
-                      <div className={`text-xs mt-2 ${
-                        message.sender === "user" ? "text-blue-100" : "text-gray-500"
-                      }`}>
-                        {message.timestamp.toLocaleTimeString()}
+                      {message.sender === "ai" && (
+                        <div className="flex-shrink-0">
+                          <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                            <Bot className="h-4 w-4 text-white" />
+                          </div>
+                        </div>
+                      )}
+                      <Card
+                        className={`max-w-[80%] ${
+                          message.sender === "user"
+                            ? "bg-gradient-to-r from-blue-600 to-purple-600 text-white border-0"
+                            : "bg-gray-50 text-gray-900 border-gray-200"
+                        }`}
+                      >
+                        <div className="p-4">
+                          <div className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</div>
+                          <div className={`text-xs mt-2 ${
+                            message.sender === "user" ? "text-blue-100" : "text-gray-500"
+                          }`}>
+                            {message.timestamp.toLocaleTimeString()}
+                          </div>
+                        </div>
+                      </Card>
+                      {message.sender === "user" && (
+                        <div className="flex-shrink-0">
+                          <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
+                            <User className="h-4 w-4 text-white" />
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  ))
+                )}
+                {chatMutation.isPending && (
+                  <div className="flex gap-3 justify-start">
+                    <div className="flex-shrink-0">
+                      <div className="w-8 h-8 bg-gradient-to-r from-blue-600 to-purple-600 rounded-full flex items-center justify-center">
+                        <Bot className="h-4 w-4 text-white" />
+                      </div>
+                    </div>
+                    <Card className="bg-gray-50">
+                      <div className="p-4">
+                        <div className="flex items-center gap-2">
+                          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+                          <span className="text-sm text-gray-600">Thinking...</span>
+                        </div>
                       </div>
                     </Card>
-                    {message.sender === "user" && (
-                      <div className="flex-shrink-0">
-                        <User className="h-6 w-6 text-gray-600 mt-1" />
-                      </div>
-                    )}
                   </div>
-                ))
-              )}
-            </div>
-          </ScrollArea>
+                )}
+              </div>
+            </ScrollArea>
+          </div>
 
           {/* Suggested Questions */}
           {messages.length === 0 && (

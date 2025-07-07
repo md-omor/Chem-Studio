@@ -103,9 +103,18 @@ ChemVerse is an educational web application designed to provide students in grad
 - Environment-specific database URLs
 - Schema versioning and rollback capabilities
 
+## Recent Changes
+- July 07, 2025: Added AI Chemistry Assistant page with comprehensive features
+- July 07, 2025: Enhanced Gemini API integration for better chemistry tutoring
+- July 07, 2025: Improved Knowledge Center with responsive design and detailed content
+- July 07, 2025: Fixed scroll bar issues in chat components
+- July 07, 2025: Enhanced overall graphics with animations and better styling
+- July 07, 2025: Added AI Assistant to navigation and home page
+
 ## Changelog
 - July 07, 2025. Initial setup
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
+Requests: Scroll bars for chat components, better AI responses, AI Chemistry Assistant page, responsive Knowledge Center, improved graphics.

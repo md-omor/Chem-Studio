@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { analyzeChemicalReaction, explainElement } from "./gemini";
+import { analyzeChemicalReaction, explainElement, assistantChat } from "./gemini";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Get all elements
@@ -105,11 +105,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       // Use Gemini to answer chemistry questions
-      const response = await explainElement("general", question);
+      const response = await assistantChat(question);
       
       res.json({ response });
     } catch (error) {
       console.error("Chat error:", error);
+      res.status(500).json({ error: "Failed to get AI response" });
+    }
+  });
+
+  // AI Assistant endpoint with enhanced features
+  app.post("/api/ai-assistant", async (req, res) => {
+    try {
+      const { question } = req.body;
+      if (!question) {
+        return res.status(400).json({ error: "Question is required" });
+      }
+
+      // Use enhanced Gemini assistant
+      const response = await assistantChat(question);
+      
+      res.json({ 
+        response,
+        type: "text" // Could be expanded to support different response types
+      });
+    } catch (error) {
+      console.error("AI Assistant error:", error);
       res.status(500).json({ error: "Failed to get AI response" });
     }
   });

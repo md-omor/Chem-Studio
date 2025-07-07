@@ -13,6 +13,7 @@ export function Navigation() {
     { path: "/periodic-table", label: "Periodic Table" },
     { path: "/mix-lab", label: "Mix Lab" },
     { path: "/knowledge-center", label: "Knowledge Center" },
+    { path: "/ai-assistant", label: "AI Assistant" },
     { path: "/join-us", label: "Join Us" },
   ];
 

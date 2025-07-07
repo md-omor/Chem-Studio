@@ -9,6 +9,7 @@ import Home from "@/pages/home";
 import PeriodicTable from "@/pages/periodic-table";
 import MixLab from "@/pages/mix-lab";
 import KnowledgeCenter from "@/pages/knowledge-center";
+import AiAssistant from "@/pages/ai-assistant";
 import JoinUs from "@/pages/join-us";
 import NotFound from "@/pages/not-found";
 
@@ -22,6 +23,7 @@ function Router() {
           <Route path="/periodic-table" component={PeriodicTable} />
           <Route path="/mix-lab" component={MixLab} />
           <Route path="/knowledge-center" component={KnowledgeCenter} />
+          <Route path="/ai-assistant" component={AiAssistant} />
           <Route path="/join-us" component={JoinUs} />
           <Route component={NotFound} />
         </Switch>
