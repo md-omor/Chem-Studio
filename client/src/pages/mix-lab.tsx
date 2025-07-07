@@ -13,6 +13,7 @@ export default function MixLab() {
   const { selectedElements, clearSelection } = useElementSelection();
   const [reactionResult, setReactionResult] = useState<Reaction | null>(null);
   const [showNoReaction, setShowNoReaction] = useState(false);
+  const [noReactionExplanation, setNoReactionExplanation] = useState<string>("");
 
   const findReactionMutation = useMutation({
     mutationFn: async (reactants: string[]) => {
@@ -22,10 +23,20 @@ export default function MixLab() {
     onSuccess: (data) => {
       setReactionResult(data);
       setShowNoReaction(false);
+      setNoReactionExplanation("");
     },
-    onError: () => {
+    onError: (error: any) => {
       setReactionResult(null);
       setShowNoReaction(true);
+      // Try to extract explanation from error response
+      try {
+        const errorData = error.response?.data;
+        if (errorData?.explanation) {
+          setNoReactionExplanation(errorData.explanation);
+        }
+      } catch (e) {
+        setNoReactionExplanation("These elements cannot form a stable compound under normal conditions.");
+      }
     },
   });
 
@@ -104,7 +115,7 @@ export default function MixLab() {
                     </div>
                   ) : showNoReaction ? (
                     <div className="text-red-600 font-semibold">
-                      No known stable compound
+                      No stable compound possible
                     </div>
                   ) : (
                     <div className="text-gray-500">
@@ -116,6 +127,19 @@ export default function MixLab() {
             </div>
           </CardContent>
         </Card>
+
+        {showNoReaction && noReactionExplanation && (
+          <Card className="mb-8">
+            <CardHeader>
+              <CardTitle className="text-red-700">Why This Reaction Doesn't Work</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="bg-red-50 rounded-lg p-4">
+                <p className="text-red-800">{noReactionExplanation}</p>
+              </div>
+            </CardContent>
+          </Card>
+        )}
 
         {reactionResult && (
           <Card className="mb-8">
@@ -137,6 +161,17 @@ export default function MixLab() {
                 <h4 className="font-semibold text-purple-900 mb-2">Fun Facts</h4>
                 <p className="text-purple-800">{reactionResult.facts}</p>
               </div>
+              
+              {reactionResult.id === -1 && (
+                <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
+                  <div className="flex items-center gap-2">
+                    <span className="text-amber-600 font-medium">🤖 AI Analysis</span>
+                  </div>
+                  <p className="text-amber-800 text-sm mt-1">
+                    This reaction analysis was generated using artificial intelligence. The information is educational and based on chemistry principles.
+                  </p>
+                </div>
+              )}
             </CardContent>
           </Card>
         )}

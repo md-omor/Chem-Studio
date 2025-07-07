@@ -5,7 +5,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import { useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { apiRequest } from "@/lib/queryClient";
 import type { Element } from "@shared/schema";
 
 interface ElementModalProps {
@@ -15,7 +19,18 @@ interface ElementModalProps {
 }
 
 export function ElementModal({ element, open, onOpenChange }: ElementModalProps) {
+  const [showAiExplanation, setShowAiExplanation] = useState(false);
+  
   if (!element) return null;
+
+  const { data: aiExplanation, isLoading: isLoadingExplanation } = useQuery({
+    queryKey: ['element-explanation', element.symbol],
+    queryFn: async () => {
+      const response = await apiRequest("GET", `/api/elements/${element.symbol}/explain`);
+      return response.json();
+    },
+    enabled: showAiExplanation && open,
+  });
 
   const getCategoryClass = (category: string) => {
     return `element-${category}`;
@@ -92,6 +107,39 @@ export function ElementModal({ element, open, onOpenChange }: ElementModalProps)
               <div>
                 <span className="font-medium">Interesting Fact:</span>
                 <p className="text-gray-600 mt-1">{element.fact || "A fascinating element with unique properties."}</p>
+              </div>
+              
+              <Separator className="my-4" />
+              
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="font-medium">AI-Powered Insights:</span>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    onClick={() => setShowAiExplanation(!showAiExplanation)}
+                    disabled={isLoadingExplanation}
+                  >
+                    {showAiExplanation ? 'Hide' : 'Get AI Explanation'}
+                  </Button>
+                </div>
+                
+                {showAiExplanation && (
+                  <div className="bg-blue-50 rounded-lg p-3 border border-blue-200">
+                    {isLoadingExplanation ? (
+                      <div className="text-blue-600 text-sm">🤖 AI is analyzing this element...</div>
+                    ) : aiExplanation ? (
+                      <div>
+                        <div className="flex items-center gap-2 mb-2">
+                          <span className="text-blue-600 font-medium text-sm">🤖 AI Insights</span>
+                        </div>
+                        <p className="text-blue-800 text-sm">{aiExplanation.explanation}</p>
+                      </div>
+                    ) : (
+                      <div className="text-blue-600 text-sm">Unable to get AI explanation at the moment.</div>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>

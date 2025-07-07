@@ -1,6 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import { analyzeChemicalReaction, explainElement } from "./gemini";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Get all elements
@@ -36,7 +37,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Get reaction by reactants
+  // Get reaction by reactants (with AI fallback)
   app.post("/api/reactions/find", async (req, res) => {
     try {
       const { reactants } = req.body;
@@ -44,14 +45,54 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Invalid reactants" });
       }
       
-      const reaction = await storage.getReactionByReactants(reactants);
-      if (!reaction) {
-        return res.status(404).json({ error: "No reaction found for these elements" });
+      // First try to find a known reaction in storage
+      const storedReaction = await storage.getReactionByReactants(reactants);
+      if (storedReaction) {
+        return res.json(storedReaction);
       }
       
-      res.json(reaction);
+      // If no stored reaction found, use AI to analyze
+      console.log(`No stored reaction found for ${reactants.join(', ')}, using AI analysis...`);
+      const aiAnalysis = await analyzeChemicalReaction(reactants);
+      
+      if (aiAnalysis.feasible) {
+        // Create a temporary reaction object that matches our interface
+        const aiReaction = {
+          id: -1, // Temporary ID to indicate AI-generated
+          reactants: JSON.stringify(reactants),
+          product: aiAnalysis.product,
+          productName: aiAnalysis.productName,
+          description: aiAnalysis.description,
+          uses: aiAnalysis.uses,
+          facts: aiAnalysis.facts
+        };
+        
+        res.json(aiReaction);
+      } else {
+        return res.status(404).json({ 
+          error: "No stable compound can be formed", 
+          explanation: aiAnalysis.description 
+        });
+      }
     } catch (error) {
+      console.error("Error finding reaction:", error);
       res.status(500).json({ error: "Failed to find reaction" });
+    }
+  });
+
+  // Get AI explanation for an element
+  app.get("/api/elements/:symbol/explain", async (req, res) => {
+    try {
+      const element = await storage.getElementBySymbol(req.params.symbol);
+      if (!element) {
+        return res.status(404).json({ error: "Element not found" });
+      }
+      
+      const explanation = await explainElement(element.symbol, element.name);
+      res.json({ explanation });
+    } catch (error) {
+      console.error("Error explaining element:", error);
+      res.status(500).json({ error: "Failed to explain element" });
     }
   });
 
