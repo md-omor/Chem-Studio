@@ -492,7 +492,7 @@ Special arrangements of atoms that determine properties:
         {/* Lesson Detail Modal */}
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col">
-            <DialogHeader>
+            <DialogHeader className="flex-shrink-0">
               <DialogTitle className="flex items-center gap-3">
                 {selectedLesson && (
                   <>

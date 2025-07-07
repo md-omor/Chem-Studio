@@ -206,9 +206,9 @@ export default function AiAssistant() {
                       }`}>
                         {feature.icon}
                       </div>
-                      <div className="text-left">
-                        <div className="font-medium">{feature.title}</div>
-                        <div className={`text-sm ${
+                      <div className="text-left flex-1">
+                        <div className="font-medium text-sm">{feature.title}</div>
+                        <div className={`text-xs mt-1 leading-relaxed ${
                           selectedFeature === feature.id ? "text-white/80" : "text-gray-500"
                         }`}>
                           {feature.description}

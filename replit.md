@@ -105,11 +105,14 @@ ChemVerse is an educational web application designed to provide students in grad
 
 ## Recent Changes
 - July 07, 2025: Added AI Chemistry Assistant page with comprehensive features
-- July 07, 2025: Enhanced Gemini API integration for better chemistry tutoring
-- July 07, 2025: Improved Knowledge Center with responsive design and detailed content
-- July 07, 2025: Fixed scroll bar issues in chat components
+- July 07, 2025: Enhanced Gemini API integration for better chemistry tutoring and cleaner responses
+- July 07, 2025: Improved Knowledge Center with responsive design, detailed content, and proper scrolling
+- July 07, 2025: Fixed scroll bar issues in chat components and Knowledge Center modal
 - July 07, 2025: Enhanced overall graphics with animations and better styling
 - July 07, 2025: Added AI Assistant to navigation and home page
+- July 07, 2025: Updated landing page with modern dark hero section and improved visual design
+- July 07, 2025: Fixed AI feature text alignment and improved readability
+- July 07, 2025: Enhanced AI responses to avoid unnecessary markdown formatting
 
 ## Changelog
 - July 07, 2025. Initial setup
@@ -117,4 +120,5 @@ ChemVerse is an educational web application designed to provide students in grad
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
-Requests: Scroll bars for chat components, better AI responses, AI Chemistry Assistant page, responsive Knowledge Center, improved graphics.
+Design preferences: Modern UI with proper scrolling, clean AI responses without excessive markdown, good text alignment, comprehensive visual information display.
+Feature requests: Comprehensive AI chemistry tutoring, responsive design, improved graphics and animations.
