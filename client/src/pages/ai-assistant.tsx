@@ -19,7 +19,10 @@ import {
   Lightbulb,
   Sparkles,
   BookOpen,
-  Atom
+  Atom,
+  FileImage,
+  ImageIcon,
+  Upload 
 } from "lucide-react";
 
 interface Message {
@@ -144,6 +147,58 @@ export default function AiAssistant() {
   const handleFeatureSelect = (feature: AssistantFeature) => {
     setSelectedFeature(feature.id);
     setInputValue("");
+  };
+
+  const handleImageUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const userMessage: Message = {
+          id: Date.now().toString() + "-user",
+          content: `I've uploaded an image: ${file.name}. Please analyze this chemistry-related image and provide detailed explanations.`,
+          sender: "user",
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, userMessage]);
+        
+        // For demo purposes, simulate AI response
+        setTimeout(() => {
+          const aiMessage: Message = {
+            id: Date.now().toString() + "-ai",
+            content: `I can see you've uploaded "${file.name}". While I can't process images directly in this demo, I can help you with:\n\n• Describing chemical structures you see\n• Explaining reaction mechanisms\n• Solving chemistry problems from the image\n• Balancing equations\n\nPlease describe what you see in the image, and I'll provide detailed explanations!`,
+            sender: "ai",
+            timestamp: new Date(),
+          };
+          setMessages(prev => [...prev, aiMessage]);
+        }, 1000);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      const userMessage: Message = {
+        id: Date.now().toString() + "-user",
+        content: `I've uploaded a file: ${file.name}. Please help me with the chemistry problems or content in this file.`,
+        sender: "user",
+        timestamp: new Date(),
+      };
+      setMessages(prev => [...prev, userMessage]);
+      
+      // For demo purposes, simulate AI response
+      setTimeout(() => {
+        const aiMessage: Message = {
+          id: Date.now().toString() + "-ai",
+          content: `I can see you've uploaded "${file.name}". While I can't directly read files in this demo, I can help you with:\n\n• Solving chemistry homework problems\n• Explaining concepts from your textbook\n• Balancing chemical equations\n• Understanding reaction mechanisms\n• Laboratory procedures and safety\n\nPlease type or describe the specific problems you need help with, and I'll provide step-by-step solutions!`,
+          sender: "ai",
+          timestamp: new Date(),
+        };
+        setMessages(prev => [...prev, aiMessage]);
+      }, 1000);
+    }
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
@@ -337,6 +392,50 @@ export default function AiAssistant() {
                 </ScrollArea>
 
                 <Separator />
+
+                {/* File Upload Area */}
+                <div className="p-4 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg border-2 border-dashed border-blue-200">
+                  <div className="text-center">
+                    <FileImage className="h-8 w-8 mx-auto mb-2 text-blue-600" />
+                    <p className="text-sm text-gray-600 mb-3">
+                      Upload chemistry problems, equations, or diagrams for AI analysis
+                    </p>
+                    <div className="flex flex-col sm:flex-row gap-2 justify-center">
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => document.getElementById('image-upload')?.click()}
+                        className="flex items-center gap-2"
+                      >
+                        <ImageIcon className="h-4 w-4" />
+                        Upload Image
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => document.getElementById('file-upload')?.click()}
+                        className="flex items-center gap-2"
+                      >
+                        <FileText className="h-4 w-4" />
+                        Upload File
+                      </Button>
+                    </div>
+                    <input
+                      id="image-upload"
+                      type="file"
+                      accept="image/*"
+                      className="hidden"
+                      onChange={handleImageUpload}
+                    />
+                    <input
+                      id="file-upload"
+                      type="file"
+                      accept=".pdf,.doc,.docx,.txt"
+                      className="hidden"
+                      onChange={handleFileUpload}
+                    />
+                  </div>
+                </div>
 
                 {/* Input Area */}
                 <div className="space-y-3">

@@ -1,8 +1,8 @@
-# ChemVerse - Interactive Chemistry Lab
+# ChemyVerse - Interactive Chemistry Lab
 
 ## Overview
 
-ChemVerse is an educational web application designed to provide students in grades 9-12 with access to interactive chemistry experiments when physical labs are unavailable. The platform features a complete periodic table interface, element mixing capabilities, and AI-powered insights to make chemistry learning engaging and accessible.
+ChemyVerse is an educational web application designed to provide students in grades 9-12 with access to interactive chemistry experiments when physical labs are unavailable. The platform features a complete periodic table interface, element mixing capabilities, and AI-powered insights to make chemistry learning engaging and accessible.
 
 ## System Architecture
 
@@ -113,6 +113,9 @@ ChemVerse is an educational web application designed to provide students in grad
 - July 07, 2025: Updated landing page with modern dark hero section and improved visual design
 - July 07, 2025: Fixed AI feature text alignment and improved readability
 - July 07, 2025: Enhanced AI responses to avoid unnecessary markdown formatting
+- July 07, 2025: Changed app name from ChemVerse to ChemyVerse throughout application
+- July 07, 2025: Added image and file upload functionality to AI Assistant for chemistry problem analysis
+- July 07, 2025: Updated Try AI Assistant button color to emerald gradient
 
 ## Changelog
 - July 07, 2025. Initial setup

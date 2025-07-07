@@ -31,7 +31,7 @@ export function Navigation() {
             <div className="w-8 h-8 bg-gradient-to-br from-blue-500 to-green-500 rounded-lg flex items-center justify-center">
               <span className="text-white font-bold text-sm">C</span>
             </div>
-            <span className="text-xl font-bold text-gray-900">ChemVerse</span>
+            <span className="text-xl font-bold text-gray-900">ChemyVerse</span>
           </Link>
 
           {/* Desktop Navigation */}

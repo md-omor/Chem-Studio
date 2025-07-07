@@ -21,7 +21,7 @@ export default function Home() {
                 <Atom className="h-12 w-12 text-white" />
               </div>
               <h1 className="text-5xl md:text-7xl font-bold text-white mb-0">
-                ChemVerse
+                ChemyVerse
               </h1>
             </div>
             <h2 className="text-2xl md:text-4xl font-semibold text-blue-200 mb-6">
@@ -60,7 +60,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-20">
             <h2 className="text-4xl font-bold bg-gradient-to-r from-gray-900 to-gray-600 bg-clip-text text-transparent mb-4">
-              Revolutionary Chemistry Learning
+              Why Choose ChemyVerse?
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
               Experience chemistry like never before with cutting-edge technology and interactive learning tools
@@ -119,8 +119,8 @@ export default function Home() {
               </h2>
             </div>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Your personal chemistry tutor powered by advanced AI. Get instant help with any chemistry question, 
-              from basic concepts to complex problem solving.
+              Your personal chemistry tutor powered by advanced AI. Upload images, files, or ask questions directly. 
+              Get instant help with problem solving, explanations, and step-by-step guidance.
             </p>
           </div>
 
