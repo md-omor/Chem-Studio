@@ -32,7 +32,7 @@ export class MemStorage implements IStorage {
     this.currentReactionId = 1;
     
     // Initialize with basic elements and reactions
-    this.initializeData();
+    this.initializeData().catch(console.error);
   }
 
   private async initializeData() {
@@ -179,9 +179,11 @@ export class MemStorage implements IStorage {
       { symbol: 'Og', name: 'Oganesson', atomicNumber: 118, atomicMass: 294, category: 'noble-gas', period: 7, group: 18, electronConfiguration: '[Rn] 5f¹⁴ 6d¹⁰ 7s² 7p⁶', meltingPoint: null, boilingPoint: null, uses: 'Scientific research only', fact: 'Oganesson was named after Yuri Oganessian and may actually be a solid, not a gas.' },
     ];
 
+    console.log(`Initializing ${elementData.length} elements...`);
     for (const element of elementData) {
       await this.createElement(element);
     }
+    console.log(`Initialized ${this.elements.size} elements successfully`);
 
     // Initialize reactions
     const reactionData = [

@@ -21,16 +21,17 @@ interface ElementModalProps {
 export function ElementModal({ element, open, onOpenChange }: ElementModalProps) {
   const [showAiExplanation, setShowAiExplanation] = useState(false);
   
-  if (!element) return null;
-
   const { data: aiExplanation, isLoading: isLoadingExplanation } = useQuery({
-    queryKey: ['element-explanation', element.symbol],
+    queryKey: ['element-explanation', element?.symbol],
     queryFn: async () => {
+      if (!element) return null;
       const response = await apiRequest("GET", `/api/elements/${element.symbol}/explain`);
       return response.json();
     },
-    enabled: showAiExplanation && open,
+    enabled: showAiExplanation && open && !!element,
   });
+  
+  if (!element) return null;
 
   const getCategoryClass = (category: string) => {
     return `element-${category}`;

@@ -25,16 +25,16 @@
   --radius: 0.5rem;
   
   /* ChemVerse Element Category Colors */
-  --alkali-metal: hsl(0, 73%, 55%);
-  --alkaline-earth: hsl(39, 93%, 55%);
-  --transition-metal: hsl(253, 60%, 65%);
-  --post-transition: hsl(253, 60%, 65%);
-  --metalloid: hsl(187, 95%, 45%);
-  --nonmetal: hsl(159, 70%, 45%);
-  --halogen: hsl(159, 70%, 45%);
-  --noble-gas: hsl(25, 95%, 55%);
-  --lanthanide: hsl(324, 71%, 55%);
-  --actinide: hsl(235, 71%, 55%);
+  --alkali-metal: hsl(355, 78%, 56%);      /* Red */
+  --alkaline-earth: hsl(39, 100%, 50%);    /* Orange */
+  --transition-metal: hsl(200, 100%, 50%); /* Blue */
+  --post-transition: hsl(280, 100%, 60%);  /* Purple */
+  --metalloid: hsl(60, 100%, 50%);         /* Yellow */
+  --nonmetal: hsl(120, 100%, 40%);         /* Green */
+  --halogen: hsl(300, 100%, 50%);          /* Magenta */
+  --noble-gas: hsl(180, 100%, 50%);        /* Cyan */
+  --lanthanide: hsl(25, 100%, 60%);        /* Light Orange */
+  --actinide: hsl(320, 100%, 50%);         /* Pink */
 }
 
 .dark {
@@ -97,6 +97,18 @@
   
   .element-halogen {
     background-color: var(--halogen);
+  }
+  
+  .element-noble-gas {
+    background-color: var(--noble-gas);
+  }
+  
+  .element-lanthanide {
+    background-color: var(--lanthanide);
+  }
+  
+  .element-actinide {
+    background-color: var(--actinide);
   }
   
   .element-noble-gas {
