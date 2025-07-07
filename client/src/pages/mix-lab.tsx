@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { useElementSelection } from "@/hooks/use-element-selection";
 import { apiRequest } from "@/lib/queryClient";
 import { ArrowRight, Beaker } from "lucide-react";
+import { AiChatModal } from "@/components/ai-chat-modal";
 import type { Reaction } from "@shared/schema";
 
 export default function MixLab() {
@@ -16,6 +17,8 @@ export default function MixLab() {
   const [noReactionExplanation, setNoReactionExplanation] = useState<string>("");
   const [isAnimating, setIsAnimating] = useState(false);
   const [showAiInquiry, setShowAiInquiry] = useState(false);
+  const [showChatModal, setShowChatModal] = useState(false);
+  const [chatContext, setChatContext] = useState<string>("");
 
   const findReactionMutation = useMutation({
     mutationFn: async (reactants: string[]) => {
@@ -211,21 +214,36 @@ export default function MixLab() {
                   <Button 
                     size="sm" 
                     variant="outline"
-                    onClick={() => alert("This would open a detailed explanation dialog")}
+                    onClick={() => {
+                      setChatContext(reactionResult ? 
+                        `Reaction: ${selectedElements.map(e => e.symbol).join(" + ")} → ${reactionResult.product}\nDescription: ${reactionResult.description}` :
+                        `Elements: ${selectedElements.map(e => e.symbol).join(", ")}\nExplanation: ${noReactionExplanation}`
+                      );
+                      setShowChatModal(true);
+                    }}
                   >
                     Explain the Chemistry
                   </Button>
                   <Button 
                     size="sm" 
                     variant="outline"
-                    onClick={() => alert("This would suggest related experiments")}
+                    onClick={() => {
+                      setChatContext(`Please suggest similar reactions to: ${selectedElements.map(e => e.symbol).join(" + ")}`);
+                      setShowChatModal(true);
+                    }}
                   >
                     Similar Reactions
                   </Button>
                   <Button 
                     size="sm" 
                     variant="outline"
-                    onClick={() => alert("This would open a chat interface")}
+                    onClick={() => {
+                      setChatContext(reactionResult ? 
+                        `I have questions about this reaction: ${selectedElements.map(e => e.symbol).join(" + ")} → ${reactionResult.product}` :
+                        `I have questions about these elements: ${selectedElements.map(e => e.symbol).join(", ")}`
+                      );
+                      setShowChatModal(true);
+                    }}
                   >
                     Ask a Question
                   </Button>
@@ -252,6 +270,14 @@ export default function MixLab() {
             </Button>
           </Link>
         </div>
+
+        {/* AI Chat Modal */}
+        <AiChatModal
+          open={showChatModal}
+          onOpenChange={setShowChatModal}
+          initialContext={chatContext}
+          reactionElements={selectedElements.map(e => e.symbol)}
+        />
       </div>
     </div>
   );

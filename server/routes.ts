@@ -96,6 +96,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // AI Chat endpoint
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const { question } = req.body;
+      if (!question) {
+        return res.status(400).json({ error: "Question is required" });
+      }
+
+      // Use Gemini to answer chemistry questions
+      const response = await explainElement("general", question);
+      
+      res.json({ response });
+    } catch (error) {
+      console.error("Chat error:", error);
+      res.status(500).json({ error: "Failed to get AI response" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
