@@ -43,9 +43,8 @@ export default function Home() {
               </Link>
               <Link href="/ai-assistant">
                 <Button 
-                  variant="outline"
                   size="lg" 
-                  className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg font-semibold backdrop-blur-sm transform hover:scale-105 transition-all duration-300"
+                  className="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white px-8 py-4 text-lg font-semibold shadow-2xl hover:shadow-emerald-500/25 transform hover:scale-105 transition-all duration-300"
                 >
                   <Bot className="mr-2 h-5 w-5" />
                   Try AI Assistant
