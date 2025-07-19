@@ -1,20 +1,21 @@
-import { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { PeriodicTableGrid } from "@/components/periodic-table-grid";
 import { ElementModal } from "@/components/element-modal";
+import { PeriodicTableGrid } from "@/components/periodic-table-grid";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useElementSelection } from "@/hooks/use-element-selection";
-import { useLocation } from "wouter";
 import type { Element } from "@shared/schema";
+import { useQuery } from "@tanstack/react-query";
+import { useState } from "react";
+import { useLocation } from "wouter";
 
 export default function PeriodicTable() {
   const [, setLocation] = useLocation();
   const [selectedElement, setSelectedElement] = useState<Element | null>(null);
   const [showModal, setShowModal] = useState(false);
-  
-  const { selectedElements, toggleElement, clearSelection } = useElementSelection();
+
+  const { selectedElements, toggleElement, clearSelection } =
+    useElementSelection();
 
   const { data: elements, isLoading } = useQuery<Element[]>({
     queryKey: ["/api/elements"],
@@ -38,12 +39,12 @@ export default function PeriodicTable() {
     "alkaline-earth": "bg-orange-500",
     "transition-metal": "bg-blue-500",
     "post-transition": "bg-purple-500",
-    "metalloid": "bg-yellow-500",
-    "nonmetal": "bg-green-500",
-    "halogen": "bg-pink-500",
+    metalloid: "bg-yellow-500",
+    nonmetal: "bg-green-500",
+    halogen: "bg-pink-500",
     "noble-gas": "bg-cyan-500",
-    "lanthanide": "bg-orange-400",
-    "actinide": "bg-pink-600",
+    lanthanide: "bg-orange-400",
+    actinide: "bg-pink-600",
   };
 
   if (isLoading) {
@@ -65,8 +66,12 @@ export default function PeriodicTable() {
     <div className="py-8 fade-in">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">Interactive Periodic Table</h1>
-          <p className="text-gray-600">Click on any element to learn more about its properties and uses</p>
+          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+            Interactive Periodic Table
+          </h1>
+          <p className="text-gray-600">
+            Click on any element to learn more about its properties and uses
+          </p>
         </div>
 
         {/* Legend */}
@@ -91,7 +96,9 @@ export default function PeriodicTable() {
         {/* Selected Elements */}
         <Card className="mb-8">
           <CardHeader>
-            <CardTitle className="text-lg">Selected Elements for Mixing</CardTitle>
+            <CardTitle className="text-lg">
+              Selected Elements for Mixing
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2 min-h-12 mb-4">
@@ -104,7 +111,9 @@ export default function PeriodicTable() {
                   <Badge
                     key={element.symbol}
                     variant="secondary"
-                    className={`px-3 py-1 text-white cursor-pointer ${categoryColors[element.category] || 'bg-gray-500'}`}
+                    className={`px-3 py-1 text-white cursor-pointer ${
+                      categoryColors[element.category] || "bg-gray-500"
+                    }`}
                     onClick={() => handleElementSelect(element)}
                   >
                     {element.symbol} ×
@@ -129,7 +138,7 @@ export default function PeriodicTable() {
 
         {/* Periodic Table */}
         <Card>
-          <CardContent className="p-6">
+          <CardContent className="p-6 bg-black">
             <PeriodicTableGrid
               elements={elements || []}
               onElementClick={handleElementClick}

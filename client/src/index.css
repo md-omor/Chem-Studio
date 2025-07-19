@@ -74,11 +74,13 @@
 }
 
 @keyframes glow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 5px rgba(59, 130, 246, 0.5);
   }
   50% {
-    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8), 0 0 30px rgba(59, 130, 246, 0.6);
+    box-shadow: 0 0 20px rgba(59, 130, 246, 0.8),
+      0 0 30px rgba(59, 130, 246, 0.6);
   }
 }
 
@@ -120,16 +122,36 @@
 }
 
 /* Enhanced element category colors */
-.alkali-metals { background-color: #ff6b6b; }
-.alkaline-earth-metals { background-color: #ffa726; }
-.transition-metals { background-color: #66bb6a; }
-.post-transition-metals { background-color: #42a5f5; }
-.metalloids { background-color: #ab47bc; }
-.nonmetals { background-color: #26c6da; }
-.halogens { background-color: #ffee58; }
-.noble-gases { background-color: #ff7043; }
-.lanthanides { background-color: #8d6e63; }
-.actinides { background-color: #78909c; }
+.alkali-metals {
+  background-color: #ff6b6b;
+}
+.alkaline-earth-metals {
+  background-color: #ffa726;
+}
+.transition-metals {
+  background-color: #66bb6a;
+}
+.post-transition-metals {
+  background-color: #42a5f5;
+}
+.metalloids {
+  background-color: #ab47bc;
+}
+.nonmetals {
+  background-color: #26c6da;
+}
+.halogens {
+  background-color: #ffee58;
+}
+.noble-gases {
+  background-color: #ff7043;
+}
+.lanthanides {
+  background-color: #8d6e63;
+}
+.actinides {
+  background-color: #78909c;
+}
 
 /* Enhanced hover effects */
 .element-hover {
@@ -183,12 +205,13 @@
 }
 
 .loading-dots:after {
-  content: '...';
+  content: "...";
   animation: loading-dots 1.5s steps(4, end) infinite;
 }
 
 @keyframes loading-dots {
-  0%, 20% {
+  0%,
+  20% {
     color: rgba(0, 0, 0, 0);
     text-shadow: 0.25em 0 0 rgba(0, 0, 0, 0), 0.5em 0 0 rgba(0, 0, 0, 0);
   }
@@ -199,7 +222,8 @@
   60% {
     text-shadow: 0.25em 0 0 currentColor, 0.5em 0 0 rgba(0, 0, 0, 0);
   }
-  80%, 100% {
+  80%,
+  100% {
     text-shadow: 0.25em 0 0 currentColor, 0.5em 0 0 currentColor;
   }
 }
@@ -225,18 +249,18 @@
   --destructive-foreground: hsl(60, 9.1%, 97.8%);
   --ring: hsl(20, 14.3%, 4.1%);
   --radius: 0.5rem;
-  
+
   /* ChemVerse Element Category Colors */
-  --alkali-metal: hsl(355, 78%, 56%);      /* Red */
-  --alkaline-earth: hsl(39, 100%, 50%);    /* Orange */
+  --alkali-metal: hsl(355, 78%, 56%); /* Red */
+  --alkaline-earth: hsl(39, 100%, 50%); /* Orange */
   --transition-metal: hsl(200, 100%, 50%); /* Blue */
-  --post-transition: hsl(280, 100%, 60%);  /* Purple */
-  --metalloid: hsl(60, 100%, 50%);         /* Yellow */
-  --nonmetal: hsl(120, 100%, 40%);         /* Green */
-  --halogen: hsl(300, 100%, 50%);          /* Magenta */
-  --noble-gas: hsl(180, 100%, 50%);        /* Cyan */
-  --lanthanide: hsl(25, 100%, 60%);        /* Light Orange */
-  --actinide: hsl(320, 100%, 50%);         /* Pink */
+  --post-transition: hsl(280, 100%, 60%); /* Purple */
+  --metalloid: hsl(60, 100%, 50%); /* Yellow */
+  --nonmetal: hsl(120, 100%, 40%); /* Green */
+  --halogen: hsl(300, 100%, 50%); /* Magenta */
+  --noble-gas: hsl(180, 100%, 50%); /* Cyan */
+  --lanthanide: hsl(25, 100%, 60%); /* Light Orange */
+  --actinide: hsl(320, 100%, 50%); /* Pink */
 }
 
 .dark {
@@ -276,69 +300,130 @@
   .element-alkali-metal {
     background-color: var(--alkali-metal);
   }
-  
+
   .element-alkaline-earth {
     background-color: var(--alkaline-earth);
   }
-  
+
   .element-transition-metal {
     background-color: var(--transition-metal);
   }
-  
+
   .element-post-transition {
     background-color: var(--post-transition);
   }
-  
+
   .element-metalloid {
     background-color: var(--metalloid);
   }
-  
+
   .element-nonmetal {
     background-color: var(--nonmetal);
   }
-  
+
   .element-halogen {
     background-color: var(--halogen);
   }
-  
+
   .element-noble-gas {
     background-color: var(--noble-gas);
   }
-  
+
   .element-lanthanide {
     background-color: var(--lanthanide);
   }
-  
+
   .element-actinide {
     background-color: var(--actinide);
   }
-  
+
   .element-noble-gas {
     background-color: var(--noble-gas);
   }
-  
+
   .element-lanthanide {
     background-color: var(--lanthanide);
   }
-  
+
   .element-actinide {
     background-color: var(--actinide);
   }
-  
-  .periodic-table-grid {
-    display: grid;
-    grid-template-columns: repeat(18, minmax(60px, 1fr));
-    grid-template-rows: repeat(9, minmax(60px, auto));
-    gap: 4px;
-    padding: 16px;
+
+  .periodic-table-container {
+    position: relative;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 30px 0 0 0px;
   }
-  
+
+  .period-numbers {
+    position: absolute;
+    top: 30px;
+    left: 15px;
+    display: grid;
+    grid-template-rows:
+      minmax(60px, auto) /* Period 1 - skip this one */
+      minmax(60px, auto) /* Period 2 */
+      minmax(60px, auto) /* Period 3 */
+      minmax(60px, auto) /* Period 4 */
+      minmax(60px, auto) /* Period 5 */
+      minmax(60px, auto) /* Period 6 */
+      minmax(60px, auto); /* Period 7 */
+    gap: 10px;
+    z-index: 10;
+  }
+
+  .period-number {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 60px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .column-headers {
+    position: absolute;
+    top: 5px;
+    left: 90px; /* Shifted right to account for the 40px period number column + padding */
+    display: grid;
+    grid-template-columns: repeat(18, minmax(60px, 1fr));
+    gap: 10px;
+    z-index: 10;
+    width: calc(100% - 90px);
+  }
+
+  .column-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    font-size: 14px;
+    font-weight: bold;
+    color: #ffffff;
+    opacity: 0.9;
+  }
+
+  .periodic-table-grid {
+    display: grid;
+    grid-template-columns: 40px repeat(18, minmax(60px, 1fr)); /* First column for period numbers, then 18 element columns */
+    grid-template-rows:
+      25px /* Row 1 for column headers */
+      repeat(7, minmax(60px, auto)) /* Main periods 1-7 (rows 2-8) */
+      20px /* Spacer row (row 9) */
+      20px /* Another spacer row (row 10) */
+      minmax(60px, auto) /* Lanthanides row (row 11) */
+      minmax(60px, auto); /* Actinides row (row 12) */
+    gap: 10px;
+  }
+
   .fade-in {
     animation: fadeIn 0.6s ease-out;
   }
-  
+
   @keyframes fadeIn {
     from {
       opacity: 0;

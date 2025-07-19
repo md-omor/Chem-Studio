@@ -1,6 +1,6 @@
-import express, { type Request, Response, NextFunction } from "express";
+import express, { NextFunction, type Request, Response } from "express";
 import { registerRoutes } from "./routes";
-import { setupVite, serveStatic, log } from "./vite";
+import { log, serveStatic, setupVite } from "./vite";
 
 const app = express();
 app.use(express.json());
@@ -56,15 +56,32 @@ app.use((req, res, next) => {
     serveStatic(app);
   }
 
-  // ALWAYS serve the app on port 5000
-  // this serves both the API and the client.
-  // It is the only port that is not firewalled.
-  const port = 5000;
-  server.listen({
-    port,
-    host: "0.0.0.0",
-    reusePort: true,
-  }, () => {
-    log(`serving on port ${port}`);
-  });
+  // Get port from environment variable or use default
+  const startPort = parseInt(process.env.PORT || "3000");
+  const host = process.env.HOST || "localhost";
+
+  // Try to find an available port
+  const tryListen = (port: number): Promise<void> => {
+    return new Promise((resolve, reject) => {
+      server
+        .listen(port, host)
+        .once("listening", () => {
+          log(`serving on ${host}:${port}`);
+          resolve();
+        })
+        .once("error", (err: any) => {
+          if (err.code === "EADDRINUSE") {
+            log(`Port ${port} in use, trying ${port + 1}`);
+            server.close();
+            tryListen(port + 1)
+              .then(resolve)
+              .catch(reject);
+          } else {
+            reject(err);
+          }
+        });
+    });
+  };
+
+  await tryListen(startPort);
 })();

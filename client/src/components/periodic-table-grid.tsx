@@ -8,51 +8,148 @@ interface PeriodicTableGridProps {
   selectedElements: Element[];
 }
 
-export function PeriodicTableGrid({ 
-  elements, 
-  onElementClick, 
-  onElementSelect, 
-  selectedElements 
+export function PeriodicTableGrid({
+  elements,
+  onElementClick,
+  onElementSelect,
+  selectedElements,
 }: PeriodicTableGridProps) {
   const isSelected = (element: Element) => {
-    return selectedElements.some(selected => selected.symbol === element.symbol);
+    return selectedElements.some(
+      (selected) => selected.symbol === element.symbol
+    );
   };
 
   const getGridPosition = (element: Element) => {
-    // Calculate grid position based on period and group
     const period = element.period;
     const group = element.group || 1;
-    
-    // Handle lanthanides and actinides (periods 8 and 9)
-    if (period === 8) {
-      return { gridColumn: group, gridRow: 8 };
+
+    // Handle lanthanides (atomic numbers 57-71) - place in row 11, shift columns by 1
+    if (element.atomicNumber >= 57 && element.atomicNumber <= 71) {
+      return { gridColumn: element.atomicNumber - 56 + 1, gridRow: 11 };
     }
-    if (period === 9) {
-      return { gridColumn: group, gridRow: 9 };
+
+    // Handle actinides (atomic numbers 89-103) - place in row 12, shift columns by 1
+    if (element.atomicNumber >= 89 && element.atomicNumber <= 103) {
+      return { gridColumn: element.atomicNumber - 88 + 1, gridRow: 12 };
     }
-    
-    return { gridColumn: group, gridRow: period };
+
+    // Standard positioning: group determines column, period determines row
+    // Add 1 to column for period number column, add 1 to row for header row
+    return { gridColumn: group + 1, gridRow: period + 1 };
   };
+
+  // Create placeholder elements for Lanthanide and Actinide series
+  const LanthanidePlaceholder = () => (
+    <div
+      className="group relative min-h-[60px] rounded-lg p-2 text-center cursor-pointer transition-all duration-200 text-white font-medium border-2 bg-transparent hover:bg-opacity-10 hover:bg-white"
+      style={{
+        gridColumn: 4, // Shifted by 1 to account for period number column
+        gridRow: 7, // Period 6 + 1 for column header row
+        borderColor: "#FF76A0", // Lanthanide color
+      }}
+    >
+      <div className="text-xs opacity-80">57-71</div>
+      <div className="text-sm font-bold">La-Lu</div>
+      <div className="text-xs opacity-60">*</div>
+    </div>
+  );
+
+  const ActinidePlaceholder = () => (
+    <div
+      className="group relative min-h-[60px] rounded-lg p-2 text-center cursor-pointer transition-all duration-200 text-white font-medium border-2 bg-transparent hover:bg-opacity-10 hover:bg-white"
+      style={{
+        gridColumn: 4, // Shifted by 1 to account for period number column
+        gridRow: 8, // Period 7 + 1 for column header row
+        borderColor: "#B5A7F9", // Actinide color
+      }}
+    >
+      <div className="text-xs opacity-80">89-103</div>
+      <div className="text-sm font-bold">Ac-Lr</div>
+      <div className="text-xs opacity-60">**</div>
+    </div>
+  );
 
   return (
     <div className="overflow-x-auto">
-      <div className="periodic-table-grid min-w-max">
-        {elements.map((element) => {
-          const position = getGridPosition(element);
-          return (
-            <ElementCard
-              key={element.symbol}
-              element={element}
-              onClick={() => onElementClick(element)}
-              onSelect={() => onElementSelect(element)}
-              isSelected={isSelected(element)}
-              style={{
-                gridColumn: position.gridColumn,
-                gridRow: position.gridRow,
-              }}
-            />
-          );
-        })}
+      <div className="periodic-table-container min-w-max">
+        {/* Main periodic table grid */}
+        <div className="periodic-table-grid">
+          {elements.map((element) => {
+            const position = getGridPosition(element);
+            return (
+              <ElementCard
+                key={element.symbol}
+                element={element}
+                onClick={() => onElementClick(element)}
+                onSelect={() => onElementSelect(element)}
+                isSelected={isSelected(element)}
+                style={{
+                  gridColumn: position.gridColumn,
+                  gridRow: position.gridRow,
+                }}
+              />
+            );
+          })}
+
+          {/* Column headers - show group numbers based on when they first appear */}
+          {Array.from(
+            new Set(elements.filter((el) => el.group).map((el) => el.group))
+          )
+            .sort((a, b) => a! - b!)
+            .map((group) => {
+              // Find the earliest period where this group appears
+              const elementsInGroup = elements.filter(
+                (el) => el.group === group
+              );
+              const earliestPeriod = Math.min(
+                ...elementsInGroup.map((el) => el.period)
+              );
+
+              // Find an element in this group from the earliest period
+              const elementInGroup = elementsInGroup.find(
+                (el) => el.period === earliestPeriod
+              );
+              if (!elementInGroup) return null;
+
+              // Use the same column positioning as the element, but position above the earliest period
+              const position = getGridPosition(elementInGroup);
+
+              return (
+                <div
+                  key={`group-${group}`}
+                  className="flex items-center justify-center text-sm font-bold text-white opacity-90"
+                  style={{
+                    gridColumn: position.gridColumn, // Same column as element
+                    gridRow: earliestPeriod, // Position above the earliest period where this group appears
+                    height: "25px",
+                  }}
+                >
+                  {group}
+                </div>
+              );
+            })}
+
+          {/* Period numbers from actual elements data */}
+          {Array.from(new Set(elements.map((el) => el.period)))
+            .sort((a, b) => a - b)
+            .map((period) => (
+              <div
+                key={`period-${period}`}
+                className="flex items-center justify-center text-lg font-bold text-white opacity-90"
+                style={{
+                  gridColumn: 1,
+                  gridRow: period + 1, // Shift down by 1 to account for column header row
+                }}
+              >
+                {period}
+              </div>
+            ))}
+
+          {/* Add placeholders for Lanthanide and Actinide series */}
+          <LanthanidePlaceholder />
+          <ActinidePlaceholder />
+        </div>
       </div>
     </div>
   );
