@@ -49,10 +49,10 @@ function getGridPosition(element: Element): ElementPosition;
   grid-template-columns: repeat(18, minmax(60px, 1fr));
   grid-template-rows:
     repeat(7, minmax(60px, auto)) /* Main periods 1-7 */
-    40px /* Spacer row */
+    55px /* Spacer row */
     minmax(60px, auto) /* Lanthanides */
     minmax(60px, auto); /* Actinides */
-  gap: 4px;
+  gap: 104px;
 }
 ```
 

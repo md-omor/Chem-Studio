@@ -71,7 +71,7 @@ export function PeriodicTableGrid({
   );
 
   return (
-    <div className="overflow-x-auto">
+    <div className="overflow-x-auto pb-10">
       <div className="periodic-table-container min-w-max">
         {/* Main periodic table grid */}
         <div className="periodic-table-grid">
@@ -118,11 +118,11 @@ export function PeriodicTableGrid({
               return (
                 <div
                   key={`group-${group}`}
-                  className="flex items-center justify-center text-sm font-bold text-white opacity-90"
+                  className="flex items-center justify-center text-2xl font-bold text-white opacity-90"
                   style={{
                     gridColumn: position.gridColumn, // Same column as element
                     gridRow: earliestPeriod, // Position above the earliest period where this group appears
-                    height: "25px",
+                    height: "65px",
                   }}
                 >
                   {group}
@@ -136,7 +136,7 @@ export function PeriodicTableGrid({
             .map((period) => (
               <div
                 key={`period-${period}`}
-                className="flex items-center justify-center text-lg font-bold text-white opacity-90"
+                className="flex items-center justify-center text-2xl font-bold text-white opacity-90"
                 style={{
                   gridColumn: 1,
                   gridRow: period + 1, // Shift down by 1 to account for column header row

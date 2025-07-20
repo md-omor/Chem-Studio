@@ -30,6 +30,21 @@ export class MemStorage implements IStorage {
   private currentElementId: number;
   private currentReactionId: number;
 
+  // Element category colors
+  private categoryColors: Record<string, string> = {
+    "alkali-metal": "#F95F5F",
+    "alkaline-earth": "#F4C669",
+    lanthanide: "#FF76A0",
+    actinide: "#B5A7F9",
+    "transition-metal": "#F7AA97",
+    "post-transition": "#4ADDDD",
+    nonmetal: "#C5E99B", // Reactive nonmetal
+    halogen: "#C5E99B", // Reactive nonmetal
+    "noble-gas": "#80D4F6",
+    metalloid: "#FF8B6C",
+    unknown: "#D8E9EF",
+  };
+
   constructor() {
     this.users = new Map();
     this.elements = new Map();
@@ -59,6 +74,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "-252.9°C",
         uses: "Fuel cells, rocket fuel, industrial processes",
         fact: "Hydrogen is the most abundant element in the universe, making up about 75% of all matter.",
+        colorHex: "#C5E99B",
       },
       {
         symbol: "He",
@@ -73,9 +89,9 @@ export class MemStorage implements IStorage {
         boilingPoint: "-268.9°C",
         uses: "Balloons, welding, medical equipment",
         fact: "Helium is the second most abundant element in the universe but very rare on Earth.",
+        colorHex: this.categoryColors["noble-gas"],
       },
-
-      // Period 2
+      // Period 2//
       {
         symbol: "Li",
         name: "Lithium",
@@ -89,6 +105,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1342°C",
         uses: "Batteries, ceramics, mental health medication",
         fact: "Lithium is the lightest metal and can cut with a knife.",
+        colorHex: this.categoryColors["alkali-metal"],
       },
       {
         symbol: "Be",
@@ -103,6 +120,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2468°C",
         uses: "Aerospace alloys, nuclear reactors, X-ray equipment",
         fact: "Beryllium is transparent to X-rays and is used in X-ray tube windows.",
+        colorHex: this.categoryColors["alkaline-earth"],
       },
       {
         symbol: "B",
@@ -117,6 +135,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4000°C",
         uses: "Glass, detergents, semiconductors",
         fact: "Boron is essential for plant growth and is used in high-strength glass.",
+        colorHex: this.categoryColors["metalloid"],
       },
       {
         symbol: "C",
@@ -131,6 +150,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4027°C",
         uses: "Diamond, graphite, organic compounds, steel",
         fact: "Carbon can form more compounds than any other element except hydrogen.",
+        colorHex: this.categoryColors["nonmetal"],
       },
       {
         symbol: "N",
@@ -145,6 +165,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "-195.8°C",
         uses: "Fertilizers, explosives, food preservation",
         fact: "Nitrogen makes up about 78% of Earth's atmosphere.",
+        colorHex: this.categoryColors["nonmetal"],
       },
       {
         symbol: "O",
@@ -159,6 +180,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "-182.9°C",
         uses: "Breathing, combustion, water, medical oxygen",
         fact: "Oxygen is the most abundant element in Earth's crust.",
+        colorHex: this.categoryColors["nonmetal"],
       },
       {
         symbol: "F",
@@ -173,6 +195,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "-188.1°C",
         uses: "Toothpaste, Teflon, refrigerants",
         fact: "Fluorine is the most electronegative element and highly reactive.",
+        colorHex: this.categoryColors["halogen"],
       },
       {
         symbol: "Ne",
@@ -187,9 +210,9 @@ export class MemStorage implements IStorage {
         boilingPoint: "-246.1°C",
         uses: "Neon signs, lasers, cryogenics",
         fact: "Neon gives off a distinctive red-orange glow when used in gas-discharge tubes.",
+        colorHex: this.categoryColors["noble-gas"],
       },
-
-      // Period 3
+      //  Period 3
       {
         symbol: "Na",
         name: "Sodium",
@@ -203,6 +226,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "883°C",
         uses: "Table salt, soap, street lights",
         fact: "Sodium is so reactive that it must be stored under oil to prevent reaction with air.",
+        colorHex: this.categoryColors["alkali-metal"],
       },
       {
         symbol: "Mg",
@@ -217,6 +241,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1090°C",
         uses: "Lightweight alloys, fireworks, photography",
         fact: "Magnesium burns with a brilliant white flame and is used in fireworks and photography.",
+        colorHex: this.categoryColors["alkaline-earth"],
       },
       {
         symbol: "Al",
@@ -231,6 +256,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2519°C",
         uses: "Cans, aircraft, building materials",
         fact: "Aluminum is the most abundant metal in Earth's crust but was once more valuable than gold.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Si",
@@ -245,6 +271,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3265°C",
         uses: "Computer chips, glass, solar panels",
         fact: "Silicon is the second most abundant element in Earth's crust and is essential for computer technology.",
+        colorHex: this.categoryColors["metalloid"],
       },
       {
         symbol: "P",
@@ -259,6 +286,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "280.5°C",
         uses: "Fertilizers, matches, DNA, bones",
         fact: "Phosphorus glows in the dark and is essential for all life on Earth.",
+        colorHex: this.categoryColors["nonmetal"],
       },
       {
         symbol: "S",
@@ -273,6 +301,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "444.6°C",
         uses: "Rubber, gunpowder, fertilizers",
         fact: "Sulfur has been known since ancient times and is mentioned in religious texts.",
+        colorHex: this.categoryColors["nonmetal"],
       },
       {
         symbol: "Cl",
@@ -287,6 +316,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "-34.0°C",
         uses: "Water purification, bleach, PVC plastic",
         fact: "Chlorine is essential for swimming pool sanitation and water treatment.",
+        colorHex: this.categoryColors["halogen"],
       },
       {
         symbol: "Ar",
@@ -301,8 +331,8 @@ export class MemStorage implements IStorage {
         boilingPoint: "-185.8°C",
         uses: "Welding, light bulbs, wine preservation",
         fact: "Argon makes up about 1% of Earth's atmosphere and is used to protect materials from oxidation.",
+        colorHex: this.categoryColors["noble-gas"],
       },
-
       // Period 4
       {
         symbol: "K",
@@ -317,6 +347,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "759°C",
         uses: "Fertilizers, bananas, nerve function",
         fact: "Potassium is essential for life and is found in high concentrations in bananas.",
+        colorHex: this.categoryColors["alkali-metal"],
       },
       {
         symbol: "Ca",
@@ -331,6 +362,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1484°C",
         uses: "Bones, teeth, concrete, milk",
         fact: "Calcium is the fifth most abundant element in Earth's crust and is essential for bone health.",
+        colorHex: this.categoryColors["alkaline-earth"],
       },
       {
         symbol: "Sc",
@@ -345,6 +377,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2836°C",
         uses: "Aerospace components, sports equipment",
         fact: "Scandium is one of the rarest earth elements and makes aluminum alloys stronger.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Ti",
@@ -359,6 +392,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3287°C",
         uses: "Aircraft, medical implants, jewelry",
         fact: "Titanium is as strong as steel but 45% lighter and highly corrosion resistant.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "V",
@@ -373,6 +407,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3407°C",
         uses: "Steel alloys, catalysts",
         fact: "Vanadium improves steel strength and is used in tools and springs.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Cr",
@@ -387,6 +422,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2671°C",
         uses: "Stainless steel, chrome plating",
         fact: "Chromium gives stainless steel its corrosion resistance and shiny appearance.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Mn",
@@ -401,6 +437,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2061°C",
         uses: "Steel production, batteries, fertilizers",
         fact: "Manganese is essential for steel production and removes oxygen and sulfur impurities.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Fe",
@@ -415,6 +452,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2861°C",
         uses: "Steel, construction, red blood cells",
         fact: "Iron is the most abundant element on Earth by mass and is essential for oxygen transport in blood.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Co",
@@ -429,6 +467,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2927°C",
         uses: "Magnets, batteries, blue pigments",
         fact: "Cobalt creates the blue color in glass and ceramics and is used in rechargeable batteries.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Ni",
@@ -443,6 +482,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2913°C",
         uses: "Stainless steel, coins, batteries",
         fact: "Nickel is used in coins and gives stainless steel additional corrosion resistance.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Cu",
@@ -457,6 +497,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2562°C",
         uses: "Electrical wiring, plumbing, coins",
         fact: "Copper is one of the few metals that occurs naturally in its metallic form.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Zn",
@@ -471,6 +512,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "907°C",
         uses: "Galvanizing, batteries, dietary supplements",
         fact: "Zinc is essential for human health and is found in many foods.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Ga",
@@ -485,6 +527,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2204°C",
         uses: "Semiconductors, LEDs, thermometers",
         fact: "Gallium melts in your hand at body temperature and is used in advanced electronics.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Ge",
@@ -499,6 +542,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2833°C",
         uses: "Semiconductors, fiber optics, infrared optics",
         fact: "Germanium was one of the first semiconductor materials and predicted by Mendeleev before its discovery.",
+        colorHex: this.categoryColors["metalloid"],
       },
       {
         symbol: "As",
@@ -513,6 +557,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "614°C",
         uses: "Semiconductors, wood preservatives, pesticides",
         fact: "Arsenic is toxic but has important uses in electronics and was historically used in medicine.",
+        colorHex: this.categoryColors["metalloid"],
       },
       {
         symbol: "Se",
@@ -527,6 +572,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "685°C",
         uses: "Electronics, glass, nutrition supplements",
         fact: "Selenium is essential for human health and gives photoconductivity to electronic devices.",
+        colorHex: this.categoryColors["nonmetal"],
       },
       {
         symbol: "Br",
@@ -541,6 +587,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "58.8°C",
         uses: "Flame retardants, photography, water treatment",
         fact: "Bromine is one of only two elements that are liquid at room temperature.",
+        colorHex: this.categoryColors["halogen"],
       },
       {
         symbol: "Kr",
@@ -555,9 +602,9 @@ export class MemStorage implements IStorage {
         boilingPoint: "-153.2°C",
         uses: "Photography, lasers, energy-efficient windows",
         fact: "Krypton is used in high-performance windows and produces a bright white light in photography.",
+        colorHex: this.categoryColors["noble-gas"],
       },
-
-      // Period 5
+      // Period 5 - First part
       {
         symbol: "Rb",
         name: "Rubidium",
@@ -571,6 +618,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "688°C",
         uses: "Research, atomic clocks, specialty glass",
         fact: "Rubidium is so reactive it ignites spontaneously in air and is used in atomic clocks.",
+        colorHex: this.categoryColors["alkali-metal"],
       },
       {
         symbol: "Sr",
@@ -585,6 +633,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1382°C",
         uses: "Fireworks, flares, bone treatment",
         fact: "Strontium gives fireworks and flares their bright red color.",
+        colorHex: this.categoryColors["alkaline-earth"],
       },
       {
         symbol: "Y",
@@ -599,6 +648,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3345°C",
         uses: "Lasers, superconductors, cancer treatment",
         fact: "Yttrium is used in medical treatments and gives red color to TV screens.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Zr",
@@ -613,6 +663,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4409°C",
         uses: "Nuclear reactors, ceramics, jewelry",
         fact: "Zirconium is extremely corrosion-resistant and used in nuclear reactor cores.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Nb",
@@ -627,6 +678,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4744°C",
         uses: "Superconducting magnets, steel alloys",
         fact: "Niobium becomes superconducting at low temperatures and is used in MRI machines.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Mo",
@@ -641,6 +693,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4639°C",
         uses: "Steel alloys, catalysts, lubricants",
         fact: "Molybdenum has one of the highest melting points of all elements and strengthens steel.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Tc",
@@ -655,6 +708,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4265°C",
         uses: "Medical imaging, nuclear medicine",
         fact: "Technetium was the first artificially produced element and is used in medical scans.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Ru",
@@ -669,6 +723,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4150°C",
         uses: "Electronics, jewelry, catalysts",
         fact: "Ruthenium is one of the rarest platinum group metals and extremely valuable.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Rh",
@@ -683,6 +738,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3695°C",
         uses: "Catalytic converters, jewelry, mirrors",
         fact: "Rhodium is one of the most expensive precious metals and used in car catalytic converters.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Pd",
@@ -697,6 +753,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2963°C",
         uses: "Catalytic converters, jewelry, electronics",
         fact: "Palladium can absorb hydrogen up to 900 times its own volume.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Ag",
@@ -711,6 +768,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2162°C",
         uses: "Jewelry, photography, electronics",
         fact: "Silver has the highest electrical conductivity of any element.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Cd",
@@ -725,6 +783,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "767°C",
         uses: "Batteries, pigments, coatings",
         fact: "Cadmium is toxic but useful in rechargeable batteries and gives bright colors to paints.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "In",
@@ -739,6 +798,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2072°C",
         uses: "Touchscreens, semiconductors, solders",
         fact: "Indium is used to make touchscreens work and creates transparent conducting coatings.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Sn",
@@ -753,6 +813,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2602°C",
         uses: "Cans, solders, alloys",
         fact: "Tin has been used for thousands of years and prevents iron from rusting in tin cans.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Sb",
@@ -767,6 +828,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1587°C",
         uses: "Flame retardants, semiconductors, alloys",
         fact: "Antimony has been used since ancient times and makes materials flame-resistant.",
+        colorHex: this.categoryColors["metalloid"],
       },
       {
         symbol: "Te",
@@ -781,6 +843,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "988°C",
         uses: "Solar panels, thermoelectrics, alloys",
         fact: "Tellurium is one of the rarest stable elements and used in advanced solar panels.",
+        colorHex: this.categoryColors["metalloid"],
       },
       {
         symbol: "I",
@@ -795,6 +858,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "184.3°C",
         uses: "Disinfectants, medical imaging, nutrition",
         fact: "Iodine is essential for thyroid function and creates purple vapor when heated.",
+        colorHex: this.categoryColors["halogen"],
       },
       {
         symbol: "Xe",
@@ -809,8 +873,8 @@ export class MemStorage implements IStorage {
         boilingPoint: "-108.1°C",
         uses: "Light bulbs, anesthetics, ion propulsion",
         fact: "Xenon produces an extremely bright light and is used in car headlights and space propulsion.",
+        colorHex: this.categoryColors["noble-gas"],
       },
-
       // Period 6
       {
         symbol: "Cs",
@@ -825,6 +889,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "671°C",
         uses: "Atomic clocks, drilling fluids, photoelectric cells",
         fact: "Cesium is used to define the second in atomic clocks and is extremely reactive.",
+        colorHex: this.categoryColors["alkali-metal"],
       },
       {
         symbol: "Ba",
@@ -839,8 +904,8 @@ export class MemStorage implements IStorage {
         boilingPoint: "1870°C",
         uses: "Medical imaging, fireworks, drilling mud",
         fact: "Barium compounds are used in medical X-rays and give fireworks a green color.",
+        colorHex: this.categoryColors["alkaline-earth"],
       },
-
       // Lanthanides (Period 6)
       {
         symbol: "La",
@@ -855,6 +920,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3464°C",
         uses: "Camera lenses, lighting, batteries",
         fact: "Lanthanum improves the refractive index of glass and is used in expensive camera lenses.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Ce",
@@ -869,6 +935,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3443°C",
         uses: "Catalytic converters, lighter flints, glass polishing",
         fact: "Cerium is the most abundant rare earth element and used in catalytic converters.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Pr",
@@ -883,6 +950,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3520°C",
         uses: "Magnets, lasers, aircraft engines",
         fact: "Praseodymium creates a distinctive green color and is used in high-strength magnets.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Nd",
@@ -897,6 +965,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3074°C",
         uses: "Permanent magnets, lasers, electric motors",
         fact: "Neodymium magnets are the strongest permanent magnets and used in electric vehicles.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Pm",
@@ -911,6 +980,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3000°C",
         uses: "Nuclear batteries, research",
         fact: "Promethium is radioactive and was the last rare earth element to be discovered.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Sm",
@@ -925,6 +995,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1794°C",
         uses: "Magnets, nuclear reactors, cancer treatment",
         fact: "Samarium-cobalt magnets work at high temperatures and are used in aerospace applications.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Eu",
@@ -939,6 +1010,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1529°C",
         uses: "TV screens, anti-counterfeiting, lasers",
         fact: "Europium produces red and blue phosphors in TV screens and is used in euro banknotes.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Gd",
@@ -953,6 +1025,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3273°C",
         uses: "MRI contrast agents, neutron capture, magnets",
         fact: "Gadolinium is used in MRI scans to improve image contrast and has unique magnetic properties.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Tb",
@@ -967,6 +1040,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3230°C",
         uses: "Green phosphors, solid-state devices, fuel cells",
         fact: "Terbium produces green color in fluorescent lamps and is used in advanced displays.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Dy",
@@ -981,6 +1055,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2567°C",
         uses: "Magnets, lasers, nuclear reactors",
         fact: "Dysprosium helps magnets work at high temperatures and is critical for wind turbines.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Ho",
@@ -995,6 +1070,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2700°C",
         uses: "Lasers, magnetic flux concentrators",
         fact: "Holmium has the highest magnetic permeability of any element and is used in medical lasers.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Er",
@@ -1009,6 +1085,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2868°C",
         uses: "Fiber optics, lasers, nuclear technology",
         fact: "Erbium amplifies light signals in fiber optic communications and gives pink color to glass.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Tm",
@@ -1023,6 +1100,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1950°C",
         uses: "Medical X-rays, lasers, research",
         fact: "Thulium is the least abundant rare earth element and used in portable medical X-ray devices.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Yb",
@@ -1037,6 +1115,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1196°C",
         uses: "Lasers, atomic clocks, steel improvement",
         fact: "Ytterbium is used in the most precise atomic clocks and high-power fiber lasers.",
+        colorHex: this.categoryColors["lanthanide"],
       },
       {
         symbol: "Lu",
@@ -1051,8 +1130,8 @@ export class MemStorage implements IStorage {
         boilingPoint: "3402°C",
         uses: "Medical imaging, research, catalysts",
         fact: "Lutetium is the rarest and most expensive rare earth element.",
+        colorHex: this.categoryColors["lanthanide"],
       },
-
       // Transition metals continued (Period 6)
       {
         symbol: "Hf",
@@ -1067,6 +1146,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4603°C",
         uses: "Nuclear reactors, superalloys, electronics",
         fact: "Hafnium absorbs neutrons and is used in nuclear reactor control rods.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Ta",
@@ -1081,6 +1161,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "5458°C",
         uses: "Electronics, medical implants, superalloys",
         fact: "Tantalum is extremely corrosion-resistant and used in smartphone capacitors.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "W",
@@ -1095,6 +1176,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "5555°C",
         uses: "Light bulb filaments, cutting tools, electronics",
         fact: "Tungsten has the highest melting point of any metal and is used in incandescent bulbs.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Re",
@@ -1109,6 +1191,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "5596°C",
         uses: "Jet engines, catalysts, thermocouples",
         fact: "Rhenium is one of the rarest elements and used in high-temperature jet engine components.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Os",
@@ -1123,6 +1206,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "5012°C",
         uses: "Fountain pen tips, electrical contacts, catalysts",
         fact: "Osmium is the densest naturally occurring element and extremely rare.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Ir",
@@ -1137,6 +1221,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4428°C",
         uses: "Spark plugs, crucibles, jewelry",
         fact: "Iridium is extremely corrosion-resistant and was used to define the meter standard.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Pt",
@@ -1151,6 +1236,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3825°C",
         uses: "Catalytic converters, jewelry, medical equipment",
         fact: "Platinum is 30 times rarer than gold and used in life-saving medical devices.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Au",
@@ -1165,6 +1251,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2856°C",
         uses: "Jewelry, electronics, currency",
         fact: "Gold is so unreactive that it can be found in nature in its pure form.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Hg",
@@ -1179,6 +1266,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "356.7°C",
         uses: "Thermometers, fluorescent lamps, switches",
         fact: "Mercury is the only metal that is liquid at room temperature.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Tl",
@@ -1193,6 +1281,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1473°C",
         uses: "Electronics, optics, medical imaging",
         fact: "Thallium is highly toxic but used in specialized electronic components and medical scans.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Pb",
@@ -1207,6 +1296,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1749°C",
         uses: "Batteries, radiation shielding, weights",
         fact: "Lead has been used for thousands of years and provides excellent radiation protection.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Bi",
@@ -1221,13 +1311,14 @@ export class MemStorage implements IStorage {
         boilingPoint: "1564°C",
         uses: "Cosmetics, medicine, low-melting alloys",
         fact: "Bismuth creates beautiful rainbow-colored crystals and is used in stomach medicines.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Po",
         name: "Polonium",
         atomicNumber: 84,
         atomicMass: 209,
-        category: "post-transition",
+        category: "metalloid",
         period: 6,
         group: 16,
         electronConfiguration: "[Xe] 4f¹⁴ 5d¹⁰ 6s² 6p⁴",
@@ -1235,6 +1326,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "962°C",
         uses: "Anti-static devices, nuclear research",
         fact: "Polonium was discovered by Marie Curie and is extremely radioactive.",
+        colorHex: this.categoryColors["metalloid"],
       },
       {
         symbol: "At",
@@ -1249,6 +1341,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "337°C",
         uses: "Cancer treatment, research",
         fact: "Astatine is the rarest naturally occurring element and used in targeted cancer therapy.",
+        colorHex: this.categoryColors["halogen"],
       },
       {
         symbol: "Rn",
@@ -1263,8 +1356,8 @@ export class MemStorage implements IStorage {
         boilingPoint: "-62°C",
         uses: "Cancer treatment, earthquake prediction",
         fact: "Radon is radioactive and can accumulate in buildings, posing health risks.",
+        colorHex: this.categoryColors["noble-gas"],
       },
-
       // Period 7
       {
         symbol: "Fr",
@@ -1279,6 +1372,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "677°C",
         uses: "Research only",
         fact: "Francium is extremely rare and radioactive with a half-life of only 22 minutes.",
+        colorHex: this.categoryColors["alkali-metal"],
       },
       {
         symbol: "Ra",
@@ -1293,8 +1387,8 @@ export class MemStorage implements IStorage {
         boilingPoint: "1737°C",
         uses: "Historic luminous paints, cancer treatment",
         fact: "Radium was discovered by Marie Curie and glows in the dark due to radiation.",
+        colorHex: this.categoryColors["alkaline-earth"],
       },
-
       // Actinides (Period 7)
       {
         symbol: "Ac",
@@ -1309,6 +1403,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3198°C",
         uses: "Neutron sources, cancer treatment",
         fact: "Actinium is radioactive and glows blue-green in the dark.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Th",
@@ -1323,6 +1418,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4788°C",
         uses: "Nuclear fuel, gas mantles, alloys",
         fact: "Thorium is a potential clean nuclear fuel and is more abundant than uranium.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Pa",
@@ -1337,6 +1433,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4000°C",
         uses: "Nuclear research only",
         fact: "Protactinium is extremely rare and was one of the last naturally occurring elements discovered.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "U",
@@ -1351,6 +1448,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4131°C",
         uses: "Nuclear power, weapons, dating",
         fact: "Uranium powers nuclear reactors and was used to date the age of Earth.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Np",
@@ -1365,6 +1463,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "4000°C",
         uses: "Nuclear research, detectors",
         fact: "Neptunium was the first artificially produced transuranium element.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Pu",
@@ -1379,6 +1478,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3228°C",
         uses: "Nuclear weapons, space missions, power",
         fact: "Plutonium was used in the first nuclear weapons and powers deep space missions.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Am",
@@ -1393,6 +1493,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2607°C",
         uses: "Smoke detectors, neutron sources",
         fact: "Americium is found in household smoke detectors and was named after America.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Cm",
@@ -1407,6 +1508,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "3110°C",
         uses: "Space missions, research",
         fact: "Curium was named after Marie and Pierre Curie and glows purple in the dark.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Bk",
@@ -1421,6 +1523,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "2627°C",
         uses: "Scientific research only",
         fact: "Berkelium was named after Berkeley, California, where it was first synthesized.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Cf",
@@ -1435,6 +1538,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1743°C",
         uses: "Neutron sources, cancer treatment",
         fact: "Californium is extremely expensive and used to start nuclear reactors.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Es",
@@ -1449,6 +1553,7 @@ export class MemStorage implements IStorage {
         boilingPoint: "1130°C",
         uses: "Scientific research only",
         fact: "Einsteinium was named after Albert Einstein and first discovered in nuclear bomb debris.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Fm",
@@ -1463,6 +1568,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Fermium was named after Enrico Fermi and has no practical applications due to its short half-life.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Md",
@@ -1477,6 +1583,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Mendelevium was named after Dmitri Mendeleev, creator of the periodic table.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "No",
@@ -1491,6 +1598,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Nobelium was named after Alfred Nobel and exists for only seconds.",
+        colorHex: this.categoryColors["actinide"],
       },
       {
         symbol: "Lr",
@@ -1505,8 +1613,8 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Lawrencium was named after Ernest Lawrence, inventor of the cyclotron.",
+        colorHex: this.categoryColors["actinide"],
       },
-
       // Super-heavy elements (Period 7)
       {
         symbol: "Rf",
@@ -1521,6 +1629,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Rutherfordium was named after Ernest Rutherford and is highly radioactive.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Db",
@@ -1535,6 +1644,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Dubnium was named after Dubna, Russia, where it was synthesized.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Sg",
@@ -1549,6 +1659,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Seaborgium was named after Glenn T. Seaborg, who discovered many transuranium elements.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Bh",
@@ -1563,6 +1674,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Bohrium was named after Niels Bohr and has a half-life of about 61 seconds.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Hs",
@@ -1577,6 +1689,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Hassium was named after the German state of Hesse and is extremely short-lived.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Mt",
@@ -1591,6 +1704,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Meitnerium was named after Lise Meitner, who helped discover nuclear fission.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Ds",
@@ -1605,6 +1719,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Darmstadtium was named after Darmstadt, Germany, where it was first created.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Rg",
@@ -1619,6 +1734,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Roentgenium was named after Wilhelm Röntgen, discoverer of X-rays.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Cn",
@@ -1633,6 +1749,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Copernicium was named after Nicolaus Copernicus and may be liquid at room temperature.",
+        colorHex: this.categoryColors["transition-metal"],
       },
       {
         symbol: "Nh",
@@ -1647,6 +1764,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Nihonium was named after Japan (Nihon) and was the first element discovered in Asia.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Fl",
@@ -1661,6 +1779,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Flerovium was named after Georgy Flyorov and may behave like a noble gas.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Mc",
@@ -1675,6 +1794,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Moscovium was named after Moscow and is predicted to be metallic.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Lv",
@@ -1689,6 +1809,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Livermorium was named after Lawrence Livermore National Laboratory.",
+        colorHex: this.categoryColors["post-transition"],
       },
       {
         symbol: "Ts",
@@ -1703,6 +1824,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Tennessine was named after Tennessee and may not behave like other halogens.",
+        colorHex: this.categoryColors["halogen"],
       },
       {
         symbol: "Og",
@@ -1717,6 +1839,7 @@ export class MemStorage implements IStorage {
         boilingPoint: null,
         uses: "Scientific research only",
         fact: "Oganesson was named after Yuri Oganessian and may actually be a solid, not a gas.",
+        colorHex: this.categoryColors["noble-gas"],
       },
     ];
 
@@ -1842,6 +1965,10 @@ export class MemStorage implements IStorage {
       boilingPoint: insertElement.boilingPoint ?? null,
       uses: insertElement.uses ?? null,
       fact: insertElement.fact ?? null,
+      colorHex:
+        insertElement.colorHex ??
+        this.categoryColors[insertElement.category] ??
+        this.categoryColors["unknown"],
     };
     this.elements.set(id, element);
     return element;

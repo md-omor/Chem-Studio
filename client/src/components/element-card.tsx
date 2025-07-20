@@ -16,22 +16,6 @@ export function ElementCard({
   isSelected,
   style,
 }: ElementCardProps) {
-  const getCategoryBorderColor = (category: string) => {
-    const colorMap: Record<string, string> = {
-      "alkali-metal": "#F95F5F",
-      "alkaline-earth": "#F4C669",
-      "transition-metal": "#F7AA97",
-      "post-transition": "#4ADDDD",
-      metalloid: "#FF8B6C",
-      nonmetal: "#C5E99B",
-      halogen: "#C5E99B", // Reactive nonmetal
-      "noble-gas": "#80D4F6",
-      lanthanide: "#FF76A0",
-      actinide: "#B5A7F9",
-    };
-    return colorMap[category] || "#D8E9EF";
-  };
-
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
     onClick();
@@ -42,23 +26,56 @@ export function ElementCard({
     onSelect();
   };
 
+  const getCategoryColor = (category: string): string => {
+    const categoryColors: Record<string, string> = {
+      "alkali-metal": "#F95F5F",
+      "alkaline-earth": "#F4C669",
+      lanthanide: "#FF76A0",
+      actinide: "#B5A7F9",
+      "transition-metal": "#F7AA97",
+      "post-transition": "#4ADDDD",
+      nonmetal: "#C5E99B", // Reactive nonmetal
+      halogen: "#C5E99B", // Reactive nonmetal
+      "noble-gas": "#80D4F6",
+      metalloid: "#FF8B6C",
+      unknown: "#D8E9EF",
+    };
+    
+    return element.colorHex || categoryColors[element.category] || "#D8E9EF";
+  };
+  
+  const categoryColor = getCategoryColor(element.category);
+
+  console.log(element.colorHex);
+
   return (
     <div
       className={cn(
-        "group relative min-h-[60px] rounded-lg p-2 text-center cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 text-white font-medium border-2 bg-transparent",
+        "group relative h-[80px] w-[90px] rounded-lg p-1 cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 font-medium border-2 bg-transparent",
         isSelected && "ring-4 ring-yellow-400 ring-offset-2"
       )}
       style={{
         ...style,
-        borderColor: isSelected
-          ? "#facc15"
-          : getCategoryBorderColor(element.category),
+        borderColor: isSelected ? "#facc15" : categoryColor,
+        color: categoryColor,
       }}
       onClick={handleClick}
     >
-      <div className="text-xs opacity-80">{element.atomicNumber}</div>
-      <div className="text-lg font-bold">{element.symbol}</div>
-      <div className="text-xs opacity-80 truncate">{element.name}</div>
+      {/* Top row: Atomic number (left) and Element name (right) */}
+      <div className="flex justify-between items-start mb-1">
+        <div className="text-[11px] font-bold">{element.atomicNumber}</div>
+        <div className="text-[11px] font-medium truncate ">{element.name}</div>
+      </div>
+
+      {/* Center: Element symbol (large) */}
+      <div className="flex justify-center items-center flex-1 my-1">
+        <div className="text-xl font-bold">{element.symbol}</div>
+      </div>
+
+      {/* Bottom left: Atomic mass */}
+      <div className="flex justify-start">
+        <div className="text-[10px] font-medium">{element.atomicMass}</div>
+      </div>
 
       {/* Selection indicator */}
       {isSelected && (
@@ -70,9 +87,9 @@ export function ElementCard({
       {/* Selection button */}
       <button
         onClick={handleSelect}
-        className="absolute bottom-1 right-1 w-5 h-5 bg-black bg-opacity-30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity hover:bg-opacity-50"
+        className="absolute bottom-1 right-1 w-4 h-4 bg-black bg-opacity-30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity hover:bg-opacity-50"
       >
-        <span className="text-xs text-white font-bold">+</span>
+        <span className="text-[10px] text-white font-bold">+</span>
       </button>
     </div>
   );

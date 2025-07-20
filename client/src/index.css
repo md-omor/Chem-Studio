@@ -353,7 +353,7 @@
     position: relative;
     max-width: 1200px;
     margin: 0 auto;
-    padding: 30px 0 0 0px;
+    padding: 0px 0 0 0px;
   }
 
   .period-numbers {
@@ -411,7 +411,7 @@
     display: grid;
     grid-template-columns: 40px repeat(18, minmax(60px, 1fr)); /* First column for period numbers, then 18 element columns */
     grid-template-rows:
-      25px /* Row 1 for column headers */
+      65px /* Row 1 for column headers */
       repeat(7, minmax(60px, auto)) /* Main periods 1-7 (rows 2-8) */
       20px /* Spacer row (row 9) */
       20px /* Another spacer row (row 10) */
