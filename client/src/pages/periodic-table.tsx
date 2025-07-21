@@ -93,6 +93,73 @@ export default function PeriodicTable() {
           </CardContent>
         </Card>
 
+        {/* Origin Legend */}
+        <Card className="mb-8">
+          <CardHeader>
+            <CardTitle className="text-lg">Element Origins</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              {/* Primordial */}
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <div
+                    className="w-12 h-10 border-[3px] border-blue-500"
+                    style={{ borderRadius: "0px 0px 8px 0px" }}
+                  />
+                </div>
+                <div>
+                  <div className="font-semibold text-sm">Primordial</div>
+                  <div className="text-xs text-gray-600">
+                    Existed since Earth's formation
+                  </div>
+                </div>
+              </div>
+
+              {/* From Decay */}
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <svg
+                    className="w-12 h-10"
+                    viewBox="0 0 48 40"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M3 3 L45 3 L45 28 L32 37 L3 37 Z"
+                      fill="transparent"
+                      stroke="#10b981"
+                      strokeWidth="3"
+                    />
+                  </svg>
+                </div>
+                <div>
+                  <div className="font-semibold text-sm">From Decay</div>
+                  <div className="text-xs text-gray-600">
+                    Formed from radioactive decay
+                  </div>
+                </div>
+              </div>
+
+              {/* Synthetic */}
+              <div className="flex items-center space-x-3">
+                <div className="relative">
+                  <div
+                    className="w-12 h-10 border-[3px] border-purple-500"
+                    style={{ borderRadius: "0px" }}
+                  />
+                </div>
+                <div>
+                  <div className="font-semibold text-sm">Synthetic</div>
+                  <div className="text-xs text-gray-600">
+                    Artificially created in labs
+                  </div>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
         {/* Selected Elements */}
         <Card className="mb-8">
           <CardHeader>

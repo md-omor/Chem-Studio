@@ -42,31 +42,25 @@ export function PeriodicTableGrid({
   // Create placeholder elements for Lanthanide and Actinide series
   const LanthanidePlaceholder = () => (
     <div
-      className="group relative min-h-[60px] rounded-lg p-2 text-center cursor-pointer transition-all duration-200 text-white font-medium border-2 bg-transparent hover:bg-opacity-10 hover:bg-white"
+      className="group w-full flex justify-center items-center relative min-h-[60px] p-2 text-center cursor-pointer text-[#ff76a0] font-bold bg-[#331820]"
       style={{
         gridColumn: 4, // Shifted by 1 to account for period number column
         gridRow: 7, // Period 6 + 1 for column header row
-        borderColor: "#FF76A0", // Lanthanide color
       }}
     >
-      <div className="text-xs opacity-80">57-71</div>
-      <div className="text-sm font-bold">La-Lu</div>
-      <div className="text-xs opacity-60">*</div>
+      <div className="text-sm ">57-71</div>
     </div>
   );
 
   const ActinidePlaceholder = () => (
     <div
-      className="group relative min-h-[60px] rounded-lg p-2 text-center cursor-pointer transition-all duration-200 text-white font-medium border-2 bg-transparent hover:bg-opacity-10 hover:bg-white"
+      className="group w-full flex justify-center items-center relative min-h-[60px] p-2 text-center cursor-pointer text-[#a396e0] font-bold bg-[#242132]"
       style={{
         gridColumn: 4, // Shifted by 1 to account for period number column
         gridRow: 8, // Period 7 + 1 for column header row
-        borderColor: "#B5A7F9", // Actinide color
       }}
     >
-      <div className="text-xs opacity-80">89-103</div>
-      <div className="text-sm font-bold">Ac-Lr</div>
-      <div className="text-xs opacity-60">**</div>
+      <div className="text-sm">89-103</div>
     </div>
   );
 
@@ -74,7 +68,7 @@ export function PeriodicTableGrid({
     <div className="overflow-x-auto pb-10">
       <div className="periodic-table-container min-w-max">
         {/* Main periodic table grid */}
-        <div className="periodic-table-grid">
+        <div className="periodic-table-grid w-full">
           {elements.map((element) => {
             const position = getGridPosition(element);
             return (
@@ -118,7 +112,7 @@ export function PeriodicTableGrid({
               return (
                 <div
                   key={`group-${group}`}
-                  className="flex items-center justify-center text-2xl font-bold text-white opacity-90"
+                  className="flex items-center justify-center text-2xl font-bold text-white mt-5 opacity-90"
                   style={{
                     gridColumn: position.gridColumn, // Same column as element
                     gridRow: earliestPeriod, // Position above the earliest period where this group appears

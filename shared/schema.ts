@@ -23,6 +23,7 @@ export const elements = pgTable("elements", {
   uses: text("uses"),
   fact: text("fact"),
   colorHex: text("color_hex"),
+  origin: text("origin").notNull(),
 });
 
 export const reactions = pgTable("reactions", {
@@ -47,6 +48,8 @@ export const insertElementSchema = createInsertSchema(elements).omit({
 export const insertReactionSchema = createInsertSchema(reactions).omit({
   id: true,
 });
+
+export type ElementOrigin = "primordial" | "from_decay" | "synthetic";
 
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;

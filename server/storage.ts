@@ -39,7 +39,7 @@ export class MemStorage implements IStorage {
     "transition-metal": "#F7AA97",
     "post-transition": "#4ADDDD",
     nonmetal: "#C5E99B", // Reactive nonmetal
-    halogen: "#C5E99B", // Reactive nonmetal
+    halogen: "#D8E9EF", // Reactive nonmetal
     "noble-gas": "#80D4F6",
     metalloid: "#FF8B6C",
     unknown: "#D8E9EF",
@@ -74,7 +74,8 @@ export class MemStorage implements IStorage {
         boilingPoint: "-252.9°C",
         uses: "Fuel cells, rocket fuel, industrial processes",
         fact: "Hydrogen is the most abundant element in the universe, making up about 75% of all matter.",
-        colorHex: "#C5E99B",
+        colorHex: this.categoryColors["nonmetal"],
+        origin: "primordial",
       },
       {
         symbol: "He",
@@ -90,6 +91,7 @@ export class MemStorage implements IStorage {
         uses: "Balloons, welding, medical equipment",
         fact: "Helium is the second most abundant element in the universe but very rare on Earth.",
         colorHex: this.categoryColors["noble-gas"],
+        origin: "primordial",
       },
       // Period 2//
       {
@@ -106,6 +108,7 @@ export class MemStorage implements IStorage {
         uses: "Batteries, ceramics, mental health medication",
         fact: "Lithium is the lightest metal and can cut with a knife.",
         colorHex: this.categoryColors["alkali-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Be",
@@ -121,6 +124,7 @@ export class MemStorage implements IStorage {
         uses: "Aerospace alloys, nuclear reactors, X-ray equipment",
         fact: "Beryllium is transparent to X-rays and is used in X-ray tube windows.",
         colorHex: this.categoryColors["alkaline-earth"],
+        origin: "primordial",
       },
       {
         symbol: "B",
@@ -136,6 +140,7 @@ export class MemStorage implements IStorage {
         uses: "Glass, detergents, semiconductors",
         fact: "Boron is essential for plant growth and is used in high-strength glass.",
         colorHex: this.categoryColors["metalloid"],
+        origin: "primordial",
       },
       {
         symbol: "C",
@@ -151,6 +156,7 @@ export class MemStorage implements IStorage {
         uses: "Diamond, graphite, organic compounds, steel",
         fact: "Carbon can form more compounds than any other element except hydrogen.",
         colorHex: this.categoryColors["nonmetal"],
+        origin: "primordial",
       },
       {
         symbol: "N",
@@ -166,6 +172,7 @@ export class MemStorage implements IStorage {
         uses: "Fertilizers, explosives, food preservation",
         fact: "Nitrogen makes up about 78% of Earth's atmosphere.",
         colorHex: this.categoryColors["nonmetal"],
+        origin: "primordial",
       },
       {
         symbol: "O",
@@ -181,6 +188,7 @@ export class MemStorage implements IStorage {
         uses: "Breathing, combustion, water, medical oxygen",
         fact: "Oxygen is the most abundant element in Earth's crust.",
         colorHex: this.categoryColors["nonmetal"],
+        origin: "primordial",
       },
       {
         symbol: "F",
@@ -196,6 +204,7 @@ export class MemStorage implements IStorage {
         uses: "Toothpaste, Teflon, refrigerants",
         fact: "Fluorine is the most electronegative element and highly reactive.",
         colorHex: this.categoryColors["halogen"],
+        origin: "primordial",
       },
       {
         symbol: "Ne",
@@ -211,6 +220,7 @@ export class MemStorage implements IStorage {
         uses: "Neon signs, lasers, cryogenics",
         fact: "Neon gives off a distinctive red-orange glow when used in gas-discharge tubes.",
         colorHex: this.categoryColors["noble-gas"],
+        origin: "primordial",
       },
       //  Period 3
       {
@@ -227,6 +237,7 @@ export class MemStorage implements IStorage {
         uses: "Table salt, soap, street lights",
         fact: "Sodium is so reactive that it must be stored under oil to prevent reaction with air.",
         colorHex: this.categoryColors["alkali-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Mg",
@@ -242,6 +253,7 @@ export class MemStorage implements IStorage {
         uses: "Lightweight alloys, fireworks, photography",
         fact: "Magnesium burns with a brilliant white flame and is used in fireworks and photography.",
         colorHex: this.categoryColors["alkaline-earth"],
+        origin: "primordial",
       },
       {
         symbol: "Al",
@@ -257,6 +269,7 @@ export class MemStorage implements IStorage {
         uses: "Cans, aircraft, building materials",
         fact: "Aluminum is the most abundant metal in Earth's crust but was once more valuable than gold.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "primordial",
       },
       {
         symbol: "Si",
@@ -272,6 +285,7 @@ export class MemStorage implements IStorage {
         uses: "Computer chips, glass, solar panels",
         fact: "Silicon is the second most abundant element in Earth's crust and is essential for computer technology.",
         colorHex: this.categoryColors["metalloid"],
+        origin: "primordial",
       },
       {
         symbol: "P",
@@ -287,6 +301,7 @@ export class MemStorage implements IStorage {
         uses: "Fertilizers, matches, DNA, bones",
         fact: "Phosphorus glows in the dark and is essential for all life on Earth.",
         colorHex: this.categoryColors["nonmetal"],
+        origin: "primordial",
       },
       {
         symbol: "S",
@@ -302,6 +317,7 @@ export class MemStorage implements IStorage {
         uses: "Rubber, gunpowder, fertilizers",
         fact: "Sulfur has been known since ancient times and is mentioned in religious texts.",
         colorHex: this.categoryColors["nonmetal"],
+        origin: "primordial",
       },
       {
         symbol: "Cl",
@@ -317,6 +333,7 @@ export class MemStorage implements IStorage {
         uses: "Water purification, bleach, PVC plastic",
         fact: "Chlorine is essential for swimming pool sanitation and water treatment.",
         colorHex: this.categoryColors["halogen"],
+        origin: "primordial",
       },
       {
         symbol: "Ar",
@@ -332,6 +349,7 @@ export class MemStorage implements IStorage {
         uses: "Welding, light bulbs, wine preservation",
         fact: "Argon makes up about 1% of Earth's atmosphere and is used to protect materials from oxidation.",
         colorHex: this.categoryColors["noble-gas"],
+        origin: "primordial",
       },
       // Period 4
       {
@@ -348,6 +366,7 @@ export class MemStorage implements IStorage {
         uses: "Fertilizers, bananas, nerve function",
         fact: "Potassium is essential for life and is found in high concentrations in bananas.",
         colorHex: this.categoryColors["alkali-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Ca",
@@ -363,6 +382,7 @@ export class MemStorage implements IStorage {
         uses: "Bones, teeth, concrete, milk",
         fact: "Calcium is the fifth most abundant element in Earth's crust and is essential for bone health.",
         colorHex: this.categoryColors["alkaline-earth"],
+        origin: "primordial",
       },
       {
         symbol: "Sc",
@@ -378,6 +398,7 @@ export class MemStorage implements IStorage {
         uses: "Aerospace components, sports equipment",
         fact: "Scandium is one of the rarest earth elements and makes aluminum alloys stronger.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Ti",
@@ -393,6 +414,7 @@ export class MemStorage implements IStorage {
         uses: "Aircraft, medical implants, jewelry",
         fact: "Titanium is as strong as steel but 45% lighter and highly corrosion resistant.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "V",
@@ -408,6 +430,7 @@ export class MemStorage implements IStorage {
         uses: "Steel alloys, catalysts",
         fact: "Vanadium improves steel strength and is used in tools and springs.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Cr",
@@ -423,6 +446,7 @@ export class MemStorage implements IStorage {
         uses: "Stainless steel, chrome plating",
         fact: "Chromium gives stainless steel its corrosion resistance and shiny appearance.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Mn",
@@ -438,6 +462,7 @@ export class MemStorage implements IStorage {
         uses: "Steel production, batteries, fertilizers",
         fact: "Manganese is essential for steel production and removes oxygen and sulfur impurities.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Fe",
@@ -453,6 +478,7 @@ export class MemStorage implements IStorage {
         uses: "Steel, construction, red blood cells",
         fact: "Iron is the most abundant element on Earth by mass and is essential for oxygen transport in blood.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Co",
@@ -468,6 +494,7 @@ export class MemStorage implements IStorage {
         uses: "Magnets, batteries, blue pigments",
         fact: "Cobalt creates the blue color in glass and ceramics and is used in rechargeable batteries.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Ni",
@@ -483,6 +510,7 @@ export class MemStorage implements IStorage {
         uses: "Stainless steel, coins, batteries",
         fact: "Nickel is used in coins and gives stainless steel additional corrosion resistance.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Cu",
@@ -498,6 +526,7 @@ export class MemStorage implements IStorage {
         uses: "Electrical wiring, plumbing, coins",
         fact: "Copper is one of the few metals that occurs naturally in its metallic form.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Zn",
@@ -513,6 +542,7 @@ export class MemStorage implements IStorage {
         uses: "Galvanizing, batteries, dietary supplements",
         fact: "Zinc is essential for human health and is found in many foods.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Ga",
@@ -528,6 +558,7 @@ export class MemStorage implements IStorage {
         uses: "Semiconductors, LEDs, thermometers",
         fact: "Gallium melts in your hand at body temperature and is used in advanced electronics.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "primordial",
       },
       {
         symbol: "Ge",
@@ -543,6 +574,7 @@ export class MemStorage implements IStorage {
         uses: "Semiconductors, fiber optics, infrared optics",
         fact: "Germanium was one of the first semiconductor materials and predicted by Mendeleev before its discovery.",
         colorHex: this.categoryColors["metalloid"],
+        origin: "primordial",
       },
       {
         symbol: "As",
@@ -558,6 +590,7 @@ export class MemStorage implements IStorage {
         uses: "Semiconductors, wood preservatives, pesticides",
         fact: "Arsenic is toxic but has important uses in electronics and was historically used in medicine.",
         colorHex: this.categoryColors["metalloid"],
+        origin: "primordial",
       },
       {
         symbol: "Se",
@@ -573,6 +606,7 @@ export class MemStorage implements IStorage {
         uses: "Electronics, glass, nutrition supplements",
         fact: "Selenium is essential for human health and gives photoconductivity to electronic devices.",
         colorHex: this.categoryColors["nonmetal"],
+        origin: "primordial",
       },
       {
         symbol: "Br",
@@ -588,6 +622,7 @@ export class MemStorage implements IStorage {
         uses: "Flame retardants, photography, water treatment",
         fact: "Bromine is one of only two elements that are liquid at room temperature.",
         colorHex: this.categoryColors["halogen"],
+        origin: "primordial",
       },
       {
         symbol: "Kr",
@@ -603,6 +638,7 @@ export class MemStorage implements IStorage {
         uses: "Photography, lasers, energy-efficient windows",
         fact: "Krypton is used in high-performance windows and produces a bright white light in photography.",
         colorHex: this.categoryColors["noble-gas"],
+        origin: "primordial",
       },
       // Period 5 - First part
       {
@@ -619,6 +655,7 @@ export class MemStorage implements IStorage {
         uses: "Research, atomic clocks, specialty glass",
         fact: "Rubidium is so reactive it ignites spontaneously in air and is used in atomic clocks.",
         colorHex: this.categoryColors["alkali-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Sr",
@@ -634,6 +671,7 @@ export class MemStorage implements IStorage {
         uses: "Fireworks, flares, bone treatment",
         fact: "Strontium gives fireworks and flares their bright red color.",
         colorHex: this.categoryColors["alkaline-earth"],
+        origin: "primordial",
       },
       {
         symbol: "Y",
@@ -649,6 +687,7 @@ export class MemStorage implements IStorage {
         uses: "Lasers, superconductors, cancer treatment",
         fact: "Yttrium is used in medical treatments and gives red color to TV screens.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Zr",
@@ -664,6 +703,7 @@ export class MemStorage implements IStorage {
         uses: "Nuclear reactors, ceramics, jewelry",
         fact: "Zirconium is extremely corrosion-resistant and used in nuclear reactor cores.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Nb",
@@ -679,6 +719,7 @@ export class MemStorage implements IStorage {
         uses: "Superconducting magnets, steel alloys",
         fact: "Niobium becomes superconducting at low temperatures and is used in MRI machines.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Mo",
@@ -694,6 +735,7 @@ export class MemStorage implements IStorage {
         uses: "Steel alloys, catalysts, lubricants",
         fact: "Molybdenum has one of the highest melting points of all elements and strengthens steel.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Tc",
@@ -709,6 +751,7 @@ export class MemStorage implements IStorage {
         uses: "Medical imaging, nuclear medicine",
         fact: "Technetium was the first artificially produced element and is used in medical scans.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "from_decay",
       },
       {
         symbol: "Ru",
@@ -724,6 +767,7 @@ export class MemStorage implements IStorage {
         uses: "Electronics, jewelry, catalysts",
         fact: "Ruthenium is one of the rarest platinum group metals and extremely valuable.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Rh",
@@ -739,6 +783,7 @@ export class MemStorage implements IStorage {
         uses: "Catalytic converters, jewelry, mirrors",
         fact: "Rhodium is one of the most expensive precious metals and used in car catalytic converters.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Pd",
@@ -754,6 +799,7 @@ export class MemStorage implements IStorage {
         uses: "Catalytic converters, jewelry, electronics",
         fact: "Palladium can absorb hydrogen up to 900 times its own volume.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Ag",
@@ -769,6 +815,7 @@ export class MemStorage implements IStorage {
         uses: "Jewelry, photography, electronics",
         fact: "Silver has the highest electrical conductivity of any element.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Cd",
@@ -784,6 +831,7 @@ export class MemStorage implements IStorage {
         uses: "Batteries, pigments, coatings",
         fact: "Cadmium is toxic but useful in rechargeable batteries and gives bright colors to paints.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "In",
@@ -799,6 +847,7 @@ export class MemStorage implements IStorage {
         uses: "Touchscreens, semiconductors, solders",
         fact: "Indium is used to make touchscreens work and creates transparent conducting coatings.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "primordial",
       },
       {
         symbol: "Sn",
@@ -814,6 +863,7 @@ export class MemStorage implements IStorage {
         uses: "Cans, solders, alloys",
         fact: "Tin has been used for thousands of years and prevents iron from rusting in tin cans.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "primordial",
       },
       {
         symbol: "Sb",
@@ -829,6 +879,7 @@ export class MemStorage implements IStorage {
         uses: "Flame retardants, semiconductors, alloys",
         fact: "Antimony has been used since ancient times and makes materials flame-resistant.",
         colorHex: this.categoryColors["metalloid"],
+        origin: "primordial",
       },
       {
         symbol: "Te",
@@ -844,6 +895,7 @@ export class MemStorage implements IStorage {
         uses: "Solar panels, thermoelectrics, alloys",
         fact: "Tellurium is one of the rarest stable elements and used in advanced solar panels.",
         colorHex: this.categoryColors["metalloid"],
+        origin: "primordial",
       },
       {
         symbol: "I",
@@ -859,6 +911,7 @@ export class MemStorage implements IStorage {
         uses: "Disinfectants, medical imaging, nutrition",
         fact: "Iodine is essential for thyroid function and creates purple vapor when heated.",
         colorHex: this.categoryColors["halogen"],
+        origin: "primordial",
       },
       {
         symbol: "Xe",
@@ -874,6 +927,7 @@ export class MemStorage implements IStorage {
         uses: "Light bulbs, anesthetics, ion propulsion",
         fact: "Xenon produces an extremely bright light and is used in car headlights and space propulsion.",
         colorHex: this.categoryColors["noble-gas"],
+        origin: "primordial",
       },
       // Period 6
       {
@@ -890,6 +944,7 @@ export class MemStorage implements IStorage {
         uses: "Atomic clocks, drilling fluids, photoelectric cells",
         fact: "Cesium is used to define the second in atomic clocks and is extremely reactive.",
         colorHex: this.categoryColors["alkali-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Ba",
@@ -905,6 +960,7 @@ export class MemStorage implements IStorage {
         uses: "Medical imaging, fireworks, drilling mud",
         fact: "Barium compounds are used in medical X-rays and give fireworks a green color.",
         colorHex: this.categoryColors["alkaline-earth"],
+        origin: "primordial",
       },
       // Lanthanides (Period 6)
       {
@@ -921,6 +977,7 @@ export class MemStorage implements IStorage {
         uses: "Camera lenses, lighting, batteries",
         fact: "Lanthanum improves the refractive index of glass and is used in expensive camera lenses.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Ce",
@@ -936,6 +993,7 @@ export class MemStorage implements IStorage {
         uses: "Catalytic converters, lighter flints, glass polishing",
         fact: "Cerium is the most abundant rare earth element and used in catalytic converters.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Pr",
@@ -951,6 +1009,7 @@ export class MemStorage implements IStorage {
         uses: "Magnets, lasers, aircraft engines",
         fact: "Praseodymium creates a distinctive green color and is used in high-strength magnets.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Nd",
@@ -966,6 +1025,7 @@ export class MemStorage implements IStorage {
         uses: "Permanent magnets, lasers, electric motors",
         fact: "Neodymium magnets are the strongest permanent magnets and used in electric vehicles.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Pm",
@@ -981,6 +1041,7 @@ export class MemStorage implements IStorage {
         uses: "Nuclear batteries, research",
         fact: "Promethium is radioactive and was the last rare earth element to be discovered.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "from_decay",
       },
       {
         symbol: "Sm",
@@ -996,6 +1057,7 @@ export class MemStorage implements IStorage {
         uses: "Magnets, nuclear reactors, cancer treatment",
         fact: "Samarium-cobalt magnets work at high temperatures and are used in aerospace applications.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Eu",
@@ -1011,6 +1073,7 @@ export class MemStorage implements IStorage {
         uses: "TV screens, anti-counterfeiting, lasers",
         fact: "Europium produces red and blue phosphors in TV screens and is used in euro banknotes.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Gd",
@@ -1026,6 +1089,7 @@ export class MemStorage implements IStorage {
         uses: "MRI contrast agents, neutron capture, magnets",
         fact: "Gadolinium is used in MRI scans to improve image contrast and has unique magnetic properties.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Tb",
@@ -1041,6 +1105,7 @@ export class MemStorage implements IStorage {
         uses: "Green phosphors, solid-state devices, fuel cells",
         fact: "Terbium produces green color in fluorescent lamps and is used in advanced displays.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Dy",
@@ -1056,6 +1121,7 @@ export class MemStorage implements IStorage {
         uses: "Magnets, lasers, nuclear reactors",
         fact: "Dysprosium helps magnets work at high temperatures and is critical for wind turbines.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Ho",
@@ -1071,6 +1137,7 @@ export class MemStorage implements IStorage {
         uses: "Lasers, magnetic flux concentrators",
         fact: "Holmium has the highest magnetic permeability of any element and is used in medical lasers.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Er",
@@ -1086,6 +1153,7 @@ export class MemStorage implements IStorage {
         uses: "Fiber optics, lasers, nuclear technology",
         fact: "Erbium amplifies light signals in fiber optic communications and gives pink color to glass.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Tm",
@@ -1101,6 +1169,7 @@ export class MemStorage implements IStorage {
         uses: "Medical X-rays, lasers, research",
         fact: "Thulium is the least abundant rare earth element and used in portable medical X-ray devices.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Yb",
@@ -1116,6 +1185,7 @@ export class MemStorage implements IStorage {
         uses: "Lasers, atomic clocks, steel improvement",
         fact: "Ytterbium is used in the most precise atomic clocks and high-power fiber lasers.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       {
         symbol: "Lu",
@@ -1131,6 +1201,7 @@ export class MemStorage implements IStorage {
         uses: "Medical imaging, research, catalysts",
         fact: "Lutetium is the rarest and most expensive rare earth element.",
         colorHex: this.categoryColors["lanthanide"],
+        origin: "primordial",
       },
       // Transition metals continued (Period 6)
       {
@@ -1147,6 +1218,7 @@ export class MemStorage implements IStorage {
         uses: "Nuclear reactors, superalloys, electronics",
         fact: "Hafnium absorbs neutrons and is used in nuclear reactor control rods.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Ta",
@@ -1162,6 +1234,7 @@ export class MemStorage implements IStorage {
         uses: "Electronics, medical implants, superalloys",
         fact: "Tantalum is extremely corrosion-resistant and used in smartphone capacitors.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "W",
@@ -1177,6 +1250,7 @@ export class MemStorage implements IStorage {
         uses: "Light bulb filaments, cutting tools, electronics",
         fact: "Tungsten has the highest melting point of any metal and is used in incandescent bulbs.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Re",
@@ -1192,6 +1266,7 @@ export class MemStorage implements IStorage {
         uses: "Jet engines, catalysts, thermocouples",
         fact: "Rhenium is one of the rarest elements and used in high-temperature jet engine components.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Os",
@@ -1207,6 +1282,7 @@ export class MemStorage implements IStorage {
         uses: "Fountain pen tips, electrical contacts, catalysts",
         fact: "Osmium is the densest naturally occurring element and extremely rare.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Ir",
@@ -1222,6 +1298,7 @@ export class MemStorage implements IStorage {
         uses: "Spark plugs, crucibles, jewelry",
         fact: "Iridium is extremely corrosion-resistant and was used to define the meter standard.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Pt",
@@ -1237,6 +1314,7 @@ export class MemStorage implements IStorage {
         uses: "Catalytic converters, jewelry, medical equipment",
         fact: "Platinum is 30 times rarer than gold and used in life-saving medical devices.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Au",
@@ -1252,6 +1330,7 @@ export class MemStorage implements IStorage {
         uses: "Jewelry, electronics, currency",
         fact: "Gold is so unreactive that it can be found in nature in its pure form.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Hg",
@@ -1267,6 +1346,7 @@ export class MemStorage implements IStorage {
         uses: "Thermometers, fluorescent lamps, switches",
         fact: "Mercury is the only metal that is liquid at room temperature.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "primordial",
       },
       {
         symbol: "Tl",
@@ -1282,6 +1362,7 @@ export class MemStorage implements IStorage {
         uses: "Electronics, optics, medical imaging",
         fact: "Thallium is highly toxic but used in specialized electronic components and medical scans.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "primordial",
       },
       {
         symbol: "Pb",
@@ -1297,6 +1378,7 @@ export class MemStorage implements IStorage {
         uses: "Batteries, radiation shielding, weights",
         fact: "Lead has been used for thousands of years and provides excellent radiation protection.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "primordial",
       },
       {
         symbol: "Bi",
@@ -1312,6 +1394,7 @@ export class MemStorage implements IStorage {
         uses: "Cosmetics, medicine, low-melting alloys",
         fact: "Bismuth creates beautiful rainbow-colored crystals and is used in stomach medicines.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "primordial",
       },
       {
         symbol: "Po",
@@ -1327,6 +1410,7 @@ export class MemStorage implements IStorage {
         uses: "Anti-static devices, nuclear research",
         fact: "Polonium was discovered by Marie Curie and is extremely radioactive.",
         colorHex: this.categoryColors["metalloid"],
+        origin: "from_decay",
       },
       {
         symbol: "At",
@@ -1342,6 +1426,7 @@ export class MemStorage implements IStorage {
         uses: "Cancer treatment, research",
         fact: "Astatine is the rarest naturally occurring element and used in targeted cancer therapy.",
         colorHex: this.categoryColors["halogen"],
+        origin: "from_decay",
       },
       {
         symbol: "Rn",
@@ -1357,6 +1442,7 @@ export class MemStorage implements IStorage {
         uses: "Cancer treatment, earthquake prediction",
         fact: "Radon is radioactive and can accumulate in buildings, posing health risks.",
         colorHex: this.categoryColors["noble-gas"],
+        origin: "from_decay",
       },
       // Period 7
       {
@@ -1373,6 +1459,7 @@ export class MemStorage implements IStorage {
         uses: "Research only",
         fact: "Francium is extremely rare and radioactive with a half-life of only 22 minutes.",
         colorHex: this.categoryColors["alkali-metal"],
+        origin: "from_decay",
       },
       {
         symbol: "Ra",
@@ -1388,6 +1475,7 @@ export class MemStorage implements IStorage {
         uses: "Historic luminous paints, cancer treatment",
         fact: "Radium was discovered by Marie Curie and glows in the dark due to radiation.",
         colorHex: this.categoryColors["alkaline-earth"],
+        origin: "from_decay",
       },
       // Actinides (Period 7)
       {
@@ -1404,6 +1492,7 @@ export class MemStorage implements IStorage {
         uses: "Neutron sources, cancer treatment",
         fact: "Actinium is radioactive and glows blue-green in the dark.",
         colorHex: this.categoryColors["actinide"],
+        origin: "from_decay",
       },
       {
         symbol: "Th",
@@ -1419,6 +1508,7 @@ export class MemStorage implements IStorage {
         uses: "Nuclear fuel, gas mantles, alloys",
         fact: "Thorium is a potential clean nuclear fuel and is more abundant than uranium.",
         colorHex: this.categoryColors["actinide"],
+        origin: "primordial",
       },
       {
         symbol: "Pa",
@@ -1434,6 +1524,7 @@ export class MemStorage implements IStorage {
         uses: "Nuclear research only",
         fact: "Protactinium is extremely rare and was one of the last naturally occurring elements discovered.",
         colorHex: this.categoryColors["actinide"],
+        origin: "from_decay",
       },
       {
         symbol: "U",
@@ -1449,6 +1540,7 @@ export class MemStorage implements IStorage {
         uses: "Nuclear power, weapons, dating",
         fact: "Uranium powers nuclear reactors and was used to date the age of Earth.",
         colorHex: this.categoryColors["actinide"],
+        origin: "primordial",
       },
       {
         symbol: "Np",
@@ -1464,6 +1556,7 @@ export class MemStorage implements IStorage {
         uses: "Nuclear research, detectors",
         fact: "Neptunium was the first artificially produced transuranium element.",
         colorHex: this.categoryColors["actinide"],
+        origin: "from_decay",
       },
       {
         symbol: "Pu",
@@ -1479,6 +1572,7 @@ export class MemStorage implements IStorage {
         uses: "Nuclear weapons, space missions, power",
         fact: "Plutonium was used in the first nuclear weapons and powers deep space missions.",
         colorHex: this.categoryColors["actinide"],
+        origin: "from_decay",
       },
       {
         symbol: "Am",
@@ -1494,6 +1588,7 @@ export class MemStorage implements IStorage {
         uses: "Smoke detectors, neutron sources",
         fact: "Americium is found in household smoke detectors and was named after America.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       {
         symbol: "Cm",
@@ -1509,6 +1604,7 @@ export class MemStorage implements IStorage {
         uses: "Space missions, research",
         fact: "Curium was named after Marie and Pierre Curie and glows purple in the dark.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       {
         symbol: "Bk",
@@ -1524,6 +1620,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Berkelium was named after Berkeley, California, where it was first synthesized.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       {
         symbol: "Cf",
@@ -1539,6 +1636,7 @@ export class MemStorage implements IStorage {
         uses: "Neutron sources, cancer treatment",
         fact: "Californium is extremely expensive and used to start nuclear reactors.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       {
         symbol: "Es",
@@ -1554,6 +1652,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Einsteinium was named after Albert Einstein and first discovered in nuclear bomb debris.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       {
         symbol: "Fm",
@@ -1569,6 +1668,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Fermium was named after Enrico Fermi and has no practical applications due to its short half-life.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       {
         symbol: "Md",
@@ -1584,6 +1684,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Mendelevium was named after Dmitri Mendeleev, creator of the periodic table.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       {
         symbol: "No",
@@ -1599,6 +1700,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Nobelium was named after Alfred Nobel and exists for only seconds.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       {
         symbol: "Lr",
@@ -1614,6 +1716,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Lawrencium was named after Ernest Lawrence, inventor of the cyclotron.",
         colorHex: this.categoryColors["actinide"],
+        origin: "synthetic",
       },
       // Super-heavy elements (Period 7)
       {
@@ -1630,6 +1733,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Rutherfordium was named after Ernest Rutherford and is highly radioactive.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Db",
@@ -1645,6 +1749,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Dubnium was named after Dubna, Russia, where it was synthesized.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Sg",
@@ -1660,6 +1765,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Seaborgium was named after Glenn T. Seaborg, who discovered many transuranium elements.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Bh",
@@ -1675,6 +1781,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Bohrium was named after Niels Bohr and has a half-life of about 61 seconds.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Hs",
@@ -1690,6 +1797,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Hassium was named after the German state of Hesse and is extremely short-lived.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Mt",
@@ -1705,6 +1813,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Meitnerium was named after Lise Meitner, who helped discover nuclear fission.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Ds",
@@ -1720,6 +1829,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Darmstadtium was named after Darmstadt, Germany, where it was first created.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Rg",
@@ -1735,6 +1845,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Roentgenium was named after Wilhelm Röntgen, discoverer of X-rays.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Cn",
@@ -1750,6 +1861,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Copernicium was named after Nicolaus Copernicus and may be liquid at room temperature.",
         colorHex: this.categoryColors["transition-metal"],
+        origin: "synthetic",
       },
       {
         symbol: "Nh",
@@ -1765,6 +1877,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Nihonium was named after Japan (Nihon) and was the first element discovered in Asia.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "synthetic",
       },
       {
         symbol: "Fl",
@@ -1780,6 +1893,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Flerovium was named after Georgy Flyorov and may behave like a noble gas.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "synthetic",
       },
       {
         symbol: "Mc",
@@ -1795,6 +1909,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Moscovium was named after Moscow and is predicted to be metallic.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "synthetic",
       },
       {
         symbol: "Lv",
@@ -1810,6 +1925,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Livermorium was named after Lawrence Livermore National Laboratory.",
         colorHex: this.categoryColors["post-transition"],
+        origin: "synthetic",
       },
       {
         symbol: "Ts",
@@ -1825,6 +1941,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Tennessine was named after Tennessee and may not behave like other halogens.",
         colorHex: this.categoryColors["halogen"],
+        origin: "synthetic",
       },
       {
         symbol: "Og",
@@ -1840,6 +1957,7 @@ export class MemStorage implements IStorage {
         uses: "Scientific research only",
         fact: "Oganesson was named after Yuri Oganessian and may actually be a solid, not a gas.",
         colorHex: this.categoryColors["noble-gas"],
+        origin: "synthetic",
       },
     ];
 
@@ -1969,6 +2087,7 @@ export class MemStorage implements IStorage {
         insertElement.colorHex ??
         this.categoryColors[insertElement.category] ??
         this.categoryColors["unknown"],
+      origin: insertElement.origin ?? "primordial",
     };
     this.elements.set(id, element);
     return element;

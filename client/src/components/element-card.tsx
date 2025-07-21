@@ -40,57 +40,100 @@ export function ElementCard({
       metalloid: "#FF8B6C",
       unknown: "#D8E9EF",
     };
-    
+
     return element.colorHex || categoryColors[element.category] || "#D8E9EF";
   };
-  
-  const categoryColor = getCategoryColor(element.category);
 
-  console.log(element.colorHex);
+  // Get border radius style based on element origin
+  const getBorderRadiusStyle = () => {
+    switch (element.origin?.toLowerCase()) {
+      case "primordial":
+        // Square with bottom-right corner rounded
+        return { borderRadius: "0px 0px 30px 0px" };
+      case "synthetic":
+      default:
+        // Perfect square for synthetic elements
+        return { borderRadius: "0px" };
+    }
+  };
+
+  const categoryColor = getCategoryColor(element.category);
+  const borderRadiusStyle = getBorderRadiusStyle();
+
+  const isFromDecay = element.origin?.toLowerCase() === "from_decay";
 
   return (
     <div
       className={cn(
-        "group relative h-[80px] w-[90px] rounded-lg p-1 cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 font-medium border-2 bg-transparent",
+        "group relative h-[85px] w-[95px] cursor-pointer transition-all duration-200 hover:shadow-lg hover:scale-105 font-medium p-2",
         isSelected && "ring-4 ring-yellow-400 ring-offset-2"
       )}
       style={{
         ...style,
-        borderColor: isSelected ? "#facc15" : categoryColor,
         color: categoryColor,
       }}
       onClick={handleClick}
     >
-      {/* Top row: Atomic number (left) and Element name (right) */}
-      <div className="flex justify-between items-start mb-1">
-        <div className="text-[11px] font-bold">{element.atomicNumber}</div>
-        <div className="text-[11px] font-medium truncate ">{element.name}</div>
-      </div>
-
-      {/* Center: Element symbol (large) */}
-      <div className="flex justify-center items-center flex-1 my-1">
-        <div className="text-xl font-bold">{element.symbol}</div>
-      </div>
-
-      {/* Bottom left: Atomic mass */}
-      <div className="flex justify-start">
-        <div className="text-[10px] font-medium">{element.atomicMass}</div>
-      </div>
-
-      {/* Selection indicator */}
-      {isSelected && (
-        <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
-          <span className="text-xs text-black font-bold">✓</span>
-        </div>
+      {/* Background with border effect */}
+      {isFromDecay ? (
+        <svg
+          className="absolute inset-0 w-full h-full"
+          viewBox="0 1.5 90 80"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M4 4 L86 4 L86 55 L60 81 L4 81 Z"
+            fill="transparent"
+            stroke={isSelected ? "#facc15" : categoryColor}
+            strokeWidth="4"
+          />
+        </svg>
+      ) : (
+        <div
+          className="absolute inset-0 border-[4px] "
+          style={{
+            borderColor: isSelected ? "#facc15" : categoryColor,
+            ...borderRadiusStyle,
+          }}
+        />
       )}
 
-      {/* Selection button */}
-      <button
-        onClick={handleSelect}
-        className="absolute bottom-1 right-1 w-4 h-4 bg-black bg-opacity-30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity hover:bg-opacity-50"
-      >
-        <span className="text-[10px] text-white font-bold">+</span>
-      </button>
+      {/* Content container */}
+      <div className="relative z-10  h-full">
+        {/* Top row: Atomic number (left) and Element name (right) */}
+        <div className="flex justify-between items-start mb-1">
+          <div className="text-[10px] font-bold">{element.atomicNumber}</div>
+          <div className="text-[8px] font-semibold truncate ">
+            {element.name}
+          </div>
+        </div>
+
+        {/* Center: Element symbol (large) */}
+        <div className="flex justify-center items-center flex-1 my-1">
+          <div className="text-2xl font-bold">{element.symbol}</div>
+        </div>
+
+        {/* Bottom left: Atomic mass */}
+        <div className="flex justify-start">
+          <div className="text-[10px] font-medium">{element.atomicMass}</div>
+        </div>
+
+        {/* Selection indicator */}
+        {isSelected && (
+          <div className="absolute -top-1 -right-1 w-4 h-4 bg-yellow-400 rounded-full flex items-center justify-center">
+            <span className="text-xs text-black font-bold">✓</span>
+          </div>
+        )}
+
+        {/* Selection button */}
+        <button
+          onClick={handleSelect}
+          className="absolute bottom-1 right-1 w-4 h-4 bg-black bg-opacity-30 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 hover:opacity-100 transition-opacity hover:bg-opacity-50"
+        >
+          <span className="text-[10px] text-white font-bold">+</span>
+        </button>
+      </div>
     </div>
   );
 }
