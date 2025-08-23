@@ -122,16 +122,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // AI Assistant endpoint with enhanced features
+  // AI Assistant endpoint with enhanced features and context
   app.post("/api/ai-assistant", async (req, res) => {
     try {
-      const { question } = req.body;
+      const { question, context } = req.body;
       if (!question) {
         return res.status(400).json({ error: "Question is required" });
       }
 
+      // Create context-aware question if context is provided
+      let contextualQuestion = question;
+      if (context && context.elements && context.elements.length > 0) {
+        const elementsText = context.elements.join(" + ");
+        contextualQuestion = `Context: We are discussing the reaction between ${elementsText}. The user is asking: "${question}"
+        
+Please provide a specific answer about ${elementsText} and their interaction, safety concerns, properties, or related chemistry concepts.`;
+      }
+
       // Use enhanced OpenRouter AI assistant
-      const response = await assistantChat(question);
+      const response = await assistantChat(contextualQuestion);
 
       res.json({
         response,

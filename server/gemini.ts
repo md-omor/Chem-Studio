@@ -1,6 +1,6 @@
 import { GoogleGenAI } from "@google/genai";
 
-const ai = new GoogleGenAI({ apiKey: process.env.GEMINI_API_KEY || "" });
+const ai = new GoogleGenAI({ apiKey: process.env.GOOGLE_API_KEY || "" });
 
 export interface ReactionAnalysis {
   product: string;
@@ -11,10 +11,12 @@ export interface ReactionAnalysis {
   feasible: boolean;
 }
 
-export async function analyzeChemicalReaction(elementSymbols: string[]): Promise<ReactionAnalysis> {
+export async function analyzeChemicalReaction(
+  elementSymbols: string[]
+): Promise<ReactionAnalysis> {
   try {
     const elementsText = elementSymbols.join(", ");
-    
+
     const prompt = `You are a chemistry expert analyzing a potential reaction between elements: ${elementsText}.
 
 Please analyze if these elements can realistically form a stable compound and provide educational information.
@@ -55,12 +57,19 @@ Examples of good responses:
             description: { type: "string" },
             uses: { type: "string" },
             facts: { type: "string" },
-            feasible: { type: "boolean" }
+            feasible: { type: "boolean" },
           },
-          required: ["product", "productName", "description", "uses", "facts", "feasible"]
-        }
+          required: [
+            "product",
+            "productName",
+            "description",
+            "uses",
+            "facts",
+            "feasible",
+          ],
+        },
       },
-      contents: prompt
+      contents: prompt,
     });
 
     const rawJson = response.text;
@@ -76,24 +85,31 @@ Examples of good responses:
     return {
       product: "Unknown",
       productName: "Unknown Compound",
-      description: "Unable to analyze this combination of elements at the moment.",
+      description:
+        "Unable to analyze this combination of elements at the moment.",
       uses: "Analysis temporarily unavailable.",
       facts: "Please try again or select different elements.",
-      feasible: false
+      feasible: false,
     };
   }
 }
 
-export async function explainElement(elementSymbol: string, elementName: string): Promise<string> {
+export async function explainElement(
+  elementSymbol: string,
+  elementName: string
+): Promise<string> {
   try {
     const prompt = `Provide a brief, educational explanation about the element ${elementName} (${elementSymbol}) that would be interesting for high school students. Include 2-3 fascinating facts in about 100 words.`;
 
     const response = await ai.models.generateContent({
       model: "gemini-2.5-flash",
-      contents: prompt
+      contents: prompt,
     });
 
-    return response.text || `${elementName} is an important chemical element with the symbol ${elementSymbol}.`;
+    return (
+      response.text ||
+      `${elementName} is an important chemical element with the symbol ${elementSymbol}.`
+    );
   } catch (error) {
     console.error("Failed to explain element:", error);
     return `${elementName} is an important chemical element with the symbol ${elementSymbol}.`;
@@ -127,12 +143,17 @@ Format responses with clear structure and proper spacing for optimal readability
       config: {
         systemInstruction: systemPrompt,
       },
-      contents: question
+      contents: question,
     });
 
-    return response.text || "I'm having trouble processing your question right now. Could you please rephrase it or try again?";
+    return (
+      response.text ||
+      "I'm having trouble processing your question right now. Could you please rephrase it or try again?"
+    );
   } catch (error) {
     console.error("Failed to process assistant chat:", error);
-    throw new Error("Unable to process your question at the moment. Please try again.");
+    throw new Error(
+      "Unable to process your question at the moment. Please try again."
+    );
   }
 }

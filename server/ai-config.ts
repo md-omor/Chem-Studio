@@ -6,10 +6,10 @@ export const AI_CONFIG = {
   provider: "openrouter" as "openrouter" | "gemini",
 
   // OpenRouter model selection
-  // Using Llama 3.1 405B - The most powerful Llama model
+  // Using FREE Llama 3.1 405B - No charges!
   openrouter: {
     // LLAMA MODELS
-    LLAMA_405B: "meta-llama/llama-3.1-405b-instruct", // Most powerful Llama model
+    LLAMA_405B_FREE: "meta-llama/llama-3.1-405b-instruct:free", // FREE VERSION - No charges!
     LLAMA_70B_FREE: "meta-llama/llama-3.1-70b-instruct:free", // Best free option
     LLAMA_8B_FREE: "meta-llama/llama-3.1-8b-instruct:free", // Good free option
 
@@ -20,8 +20,8 @@ export const AI_CONFIG = {
     CLAUDE_SONNET: "anthropic/claude-3.5-sonnet", // $3.00/M tokens - Best
     GPT4O: "openai/gpt-4o", // $2.50/M tokens - Great
 
-    // Current selection - Using Llama 3.1 405B (most powerful)
-    current: "meta-llama/llama-3.1-405b-instruct", // Most powerful Llama model
+    // Current selection - FREE Llama 3.1 405B (NO CHARGES!)
+    current: "meta-llama/llama-3.1-405b-instruct:free", // FREE VERSION
   },
 
   // Model-specific settings
@@ -51,10 +51,14 @@ export function switchModel(modelKey: keyof typeof AI_CONFIG.openrouter) {
 
 // Cost estimation (approximate per million tokens)
 export const MODEL_COSTS = {
-  "meta-llama/llama-3.1-405b-instruct": 2.7, // Premium Llama model
+  // FREE MODELS (No cost)
+  "meta-llama/llama-3.1-405b-instruct:free": 0, // FREE VERSION
   "meta-llama/llama-3.1-70b-instruct:free": 0,
   "meta-llama/llama-3.1-8b-instruct:free": 0,
   "mistralai/mistral-7b-instruct:free": 0,
+
+  // PAID MODELS (Will charge your account)
+  "meta-llama/llama-3.1-405b-instruct": 2.7, // PAID VERSION - AVOID
   "anthropic/claude-3.5-haiku": 0.25,
   "openai/gpt-4o-mini": 0.15,
   "anthropic/claude-3.5-sonnet": 3.0,

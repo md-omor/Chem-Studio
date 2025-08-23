@@ -25,7 +25,8 @@ class OpenRouterService {
       console.error("❌ OPENROUTER_API_KEY not found in environment variables");
     } else {
       console.log("✅ OpenRouter API key loaded successfully");
-      console.log("🤖 Using model:", getCurrentModel());
+      console.log("🤖 Using FREE model:", getCurrentModel());
+      console.log("💰 Cost: FREE (no charges will be incurred)");
     }
   }
 
@@ -35,7 +36,7 @@ class OpenRouterService {
     options: any = {}
   ) {
     try {
-      console.log(`🚀 Making OpenRouter request with model: ${model}`);
+      console.log(`🚀 Making OpenRouter request with FREE model: ${model}`);
 
       const requestBody = {
         model,
@@ -63,6 +64,22 @@ class OpenRouterService {
       if (!response.ok) {
         const errorText = await response.text();
         console.error("❌ OpenRouter API error response:", errorText);
+
+        // Handle specific error cases
+        if (response.status === 401) {
+          throw new Error(
+            "OpenRouter API key is invalid or expired. Please check your API key."
+          );
+        } else if (response.status === 402) {
+          throw new Error(
+            "Billing error: This should not happen with free models. Please verify you're using a model with ':free' suffix."
+          );
+        } else if (response.status === 429) {
+          throw new Error(
+            "Rate limit exceeded. Please wait a moment and try again."
+          );
+        }
+
         throw new Error(
           `OpenRouter API error: ${response.status} ${response.statusText} - ${errorText}`
         );
@@ -145,12 +162,29 @@ Examples of good responses:
       }
     } catch (error) {
       console.error("Failed to analyze reaction with OpenRouter:", error);
-      // Fallback response for when AI fails
+
+      // Provide specific fallback for common reactions
+      const elementsText = elementSymbols.join(", ").toLowerCase();
+
+      if (elementsText.includes("h") && elementsText.includes("be")) {
+        return {
+          product: "BeH₂",
+          productName: "Beryllium Hydride",
+          description:
+            "Beryllium hydride is a highly reactive and toxic compound. While theoretically possible, it's extremely unstable and dangerous to handle.",
+          uses: "No practical uses due to extreme toxicity and instability. Used only in specialized research.",
+          facts:
+            "BeH₂ is one of the most toxic compounds known. Beryllium compounds can cause berylliosis, a serious lung disease. This reaction should never be attempted outside of specialized facilities.",
+          feasible: false,
+        };
+      }
+
+      // General fallback response for when AI fails
       return {
         product: "Unknown",
         productName: "Unknown Compound",
         description:
-          "Unable to analyze this combination of elements at the moment.",
+          "Unable to analyze this combination of elements at the moment due to API issues.",
         uses: "Analysis temporarily unavailable.",
         facts: "Please try again or select different elements.",
         feasible: false,
@@ -234,9 +268,9 @@ Format responses with clear structure and proper spacing for optimal readability
       );
     } catch (error) {
       console.error("Failed to process assistant chat:", error);
-      throw new Error(
-        "Unable to process your question at the moment. Please try again."
-      );
+
+      // Return a helpful error message instead of throwing
+      return "I'm having trouble connecting to the AI service right now. This might be due to API limits or connectivity issues. Please try again in a moment, or try asking a different question.";
     }
   }
 

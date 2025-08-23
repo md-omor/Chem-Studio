@@ -1,29 +1,27 @@
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
+import { Textarea } from "@/components/ui/textarea";
 import { apiRequest } from "@/lib/queryClient";
-import { 
-  Bot, 
-  User, 
-  Send, 
-  Brain, 
-  FlaskConical, 
-  Calculator, 
-  FileText, 
-  Lightbulb,
-  Sparkles,
-  BookOpen,
+import { useMutation } from "@tanstack/react-query";
+import {
   Atom,
+  BookOpen,
+  Bot,
+  Brain,
+  Calculator,
   FileImage,
+  FileText,
+  FlaskConical,
   ImageIcon,
-  Upload 
+  Lightbulb,
+  Send,
+  Sparkles,
+  User,
 } from "lucide-react";
+import { useState } from "react";
 
 interface Message {
   id: string;
@@ -54,7 +52,7 @@ export default function AiAssistant() {
       description: "Get clear explanations of chemistry concepts with examples",
       icon: <BookOpen className="h-5 w-5" />,
       color: "bg-blue-500",
-      prompt: "Explain this chemistry concept in simple terms with examples:"
+      prompt: "Explain this chemistry concept in simple terms with examples:",
     },
     {
       id: "equation",
@@ -62,7 +60,7 @@ export default function AiAssistant() {
       description: "Balance chemical equations and understand the process",
       icon: <Calculator className="h-5 w-5" />,
       color: "bg-green-500",
-      prompt: "Help me balance this chemical equation and explain the steps:"
+      prompt: "Help me balance this chemical equation and explain the steps:",
     },
     {
       id: "flowchart",
@@ -70,7 +68,7 @@ export default function AiAssistant() {
       description: "Create step-by-step flowcharts for chemical processes",
       icon: <FileText className="h-5 w-5" />,
       color: "bg-purple-500",
-      prompt: "Create a step-by-step flowchart for this chemical process:"
+      prompt: "Create a step-by-step flowchart for this chemical process:",
     },
     {
       id: "problem",
@@ -78,7 +76,7 @@ export default function AiAssistant() {
       description: "Solve chemistry problems with detailed explanations",
       icon: <Brain className="h-5 w-5" />,
       color: "bg-red-500",
-      prompt: "Help me solve this chemistry problem step by step:"
+      prompt: "Help me solve this chemistry problem step by step:",
     },
     {
       id: "safety",
@@ -86,7 +84,7 @@ export default function AiAssistant() {
       description: "Learn about chemical safety and lab procedures",
       icon: <FlaskConical className="h-5 w-5" />,
       color: "bg-orange-500",
-      prompt: "Explain the safety considerations for:"
+      prompt: "Explain the safety considerations for:",
     },
     {
       id: "explore",
@@ -94,13 +92,15 @@ export default function AiAssistant() {
       description: "Discover interesting facts and applications",
       icon: <Lightbulb className="h-5 w-5" />,
       color: "bg-teal-500",
-      prompt: "Tell me interesting facts and real-world applications about:"
-    }
+      prompt: "Tell me interesting facts and real-world applications about:",
+    },
   ];
 
   const chatMutation = useMutation({
     mutationFn: async (question: string) => {
-      const response = await apiRequest("POST", "/api/ai-assistant", { question });
+      const response = await apiRequest("POST", "/api/ai-assistant", {
+        question,
+      });
       return response.json();
     },
     onSuccess: (data) => {
@@ -109,26 +109,29 @@ export default function AiAssistant() {
         content: data.response,
         sender: "ai",
         timestamp: new Date(),
-        type: data.type || "text"
+        type: data.type || "text",
       };
-      setMessages(prev => [...prev, aiMessage]);
+      setMessages((prev) => [...prev, aiMessage]);
     },
     onError: () => {
       const errorMessage: Message = {
         id: Date.now().toString() + "-error",
-        content: "Sorry, I'm having trouble responding right now. Please try again.",
+        content:
+          "Sorry, I'm having trouble responding right now. Please try again.",
         sender: "ai",
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     },
   });
 
   const handleSendMessage = () => {
     if (!inputValue.trim()) return;
 
-    const finalQuestion = selectedFeature 
-      ? `${features.find(f => f.id === selectedFeature)?.prompt} ${inputValue}`
+    const finalQuestion = selectedFeature
+      ? `${
+          features.find((f) => f.id === selectedFeature)?.prompt
+        } ${inputValue}`
       : inputValue;
 
     const userMessage: Message = {
@@ -138,7 +141,7 @@ export default function AiAssistant() {
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     chatMutation.mutate(finalQuestion);
     setInputValue("");
     setSelectedFeature(null);
@@ -160,8 +163,8 @@ export default function AiAssistant() {
           sender: "user",
           timestamp: new Date(),
         };
-        setMessages(prev => [...prev, userMessage]);
-        
+        setMessages((prev) => [...prev, userMessage]);
+
         // For demo purposes, simulate AI response
         setTimeout(() => {
           const aiMessage: Message = {
@@ -170,7 +173,7 @@ export default function AiAssistant() {
             sender: "ai",
             timestamp: new Date(),
           };
-          setMessages(prev => [...prev, aiMessage]);
+          setMessages((prev) => [...prev, aiMessage]);
         }, 1000);
       };
       reader.readAsDataURL(file);
@@ -186,8 +189,8 @@ export default function AiAssistant() {
         sender: "user",
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, userMessage]);
-      
+      setMessages((prev) => [...prev, userMessage]);
+
       // For demo purposes, simulate AI response
       setTimeout(() => {
         const aiMessage: Message = {
@@ -196,7 +199,7 @@ export default function AiAssistant() {
           sender: "ai",
           timestamp: new Date(),
         };
-        setMessages(prev => [...prev, aiMessage]);
+        setMessages((prev) => [...prev, aiMessage]);
       }, 1000);
     }
   };
@@ -230,8 +233,9 @@ export default function AiAssistant() {
             </h1>
           </div>
           <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Your personal chemistry tutor powered by AI. Get explanations, solve problems, 
-            and explore the fascinating world of chemistry with interactive help.
+            Your personal chemistry tutor powered by AI. Get explanations, solve
+            problems, and explore the fascinating world of chemistry with
+            interactive help.
           </p>
         </div>
 
@@ -249,23 +253,37 @@ export default function AiAssistant() {
                 {features.map((feature) => (
                   <Button
                     key={feature.id}
-                    variant={selectedFeature === feature.id ? "default" : "outline"}
+                    variant={
+                      selectedFeature === feature.id ? "default" : "outline"
+                    }
                     className={`w-full justify-start h-auto p-4 ${
-                      selectedFeature === feature.id ? feature.color + " text-white" : ""
+                      selectedFeature === feature.id
+                        ? feature.color + " text-white"
+                        : ""
                     }`}
                     onClick={() => handleFeatureSelect(feature)}
                   >
                     <div className="flex items-start gap-3">
-                      <div className={`p-2 rounded-lg ${
-                        selectedFeature === feature.id ? "bg-white/20" : feature.color + " text-white"
-                      }`}>
+                      <div
+                        className={`p-2 rounded-lg ${
+                          selectedFeature === feature.id
+                            ? "bg-white/20"
+                            : feature.color + " text-white"
+                        }`}
+                      >
                         {feature.icon}
                       </div>
                       <div className="text-left flex-1">
-                        <div className="font-medium text-sm">{feature.title}</div>
-                        <div className={`text-xs mt-1 leading-relaxed ${
-                          selectedFeature === feature.id ? "text-white/80" : "text-gray-500"
-                        }`}>
+                        <div className="font-medium text-sm">
+                          {feature.title}
+                        </div>
+                        <div
+                          className={`text-xs mt-1 leading-relaxed ${
+                            selectedFeature === feature.id
+                              ? "text-white/80"
+                              : "text-gray-500"
+                          }`}
+                        >
                           {feature.description}
                         </div>
                       </div>
@@ -311,12 +329,12 @@ export default function AiAssistant() {
                   Chat with AI Assistant
                   {selectedFeature && (
                     <Badge variant="secondary" className="ml-2">
-                      {features.find(f => f.id === selectedFeature)?.title}
+                      {features.find((f) => f.id === selectedFeature)?.title}
                     </Badge>
                   )}
                 </CardTitle>
               </CardHeader>
-              
+
               <CardContent className="flex-1 flex flex-col gap-4 min-h-0">
                 {/* Messages */}
                 <ScrollArea className="flex-1 pr-4 custom-scrollbar">
@@ -324,17 +342,24 @@ export default function AiAssistant() {
                     {messages.length === 0 ? (
                       <div className="text-center text-gray-500 py-12">
                         <Bot className="h-16 w-16 mx-auto mb-4 text-gray-400" />
-                        <h3 className="text-lg font-medium mb-2">Welcome to your AI Chemistry Assistant!</h3>
+                        <h3 className="text-lg font-medium mb-2">
+                          Welcome to your AI Chemistry Assistant!
+                        </h3>
                         <p className="text-sm">
-                          Choose a feature from the left panel or ask me any chemistry question. 
-                          I can help with explanations, equations, problem solving, and more!
+                          Choose a feature from the left panel or ask me any
+                          chemistry question. I can help with explanations,
+                          equations, problem solving, and more!
                         </p>
                       </div>
                     ) : (
                       messages.map((message) => (
                         <div
                           key={message.id}
-                          className={`flex gap-3 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+                          className={`flex gap-3 ${
+                            message.sender === "user"
+                              ? "justify-end"
+                              : "justify-start"
+                          }`}
                         >
                           {message.sender === "ai" && (
                             <div className="flex-shrink-0">
@@ -354,9 +379,13 @@ export default function AiAssistant() {
                               <div className="whitespace-pre-wrap text-sm leading-relaxed">
                                 {message.content}
                               </div>
-                              <div className={`text-xs mt-2 ${
-                                message.sender === "user" ? "text-blue-100" : "text-gray-500"
-                              }`}>
+                              <div
+                                className={`text-xs mt-2 ${
+                                  message.sender === "user"
+                                    ? "text-blue-100"
+                                    : "text-gray-500"
+                                }`}
+                              >
                                 {message.timestamp.toLocaleTimeString()}
                               </div>
                             </CardContent>
@@ -382,7 +411,9 @@ export default function AiAssistant() {
                           <CardContent className="p-4">
                             <div className="flex items-center gap-2">
                               <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                              <span className="text-sm text-gray-600">Thinking...</span>
+                              <span className="text-sm text-gray-600">
+                                Thinking...
+                              </span>
                             </div>
                           </CardContent>
                         </Card>
@@ -398,13 +429,16 @@ export default function AiAssistant() {
                   <div className="text-center">
                     <FileImage className="h-8 w-8 mx-auto mb-2 text-blue-600" />
                     <p className="text-sm text-gray-600 mb-3">
-                      Upload chemistry problems, equations, or diagrams for AI analysis
+                      Upload chemistry problems, equations, or diagrams for AI
+                      analysis
                     </p>
                     <div className="flex flex-col sm:flex-row gap-2 justify-center">
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => document.getElementById('image-upload')?.click()}
+                        onClick={() =>
+                          document.getElementById("image-upload")?.click()
+                        }
                         className="flex items-center gap-2"
                       >
                         <ImageIcon className="h-4 w-4" />
@@ -413,7 +447,9 @@ export default function AiAssistant() {
                       <Button
                         variant="outline"
                         size="sm"
-                        onClick={() => document.getElementById('file-upload')?.click()}
+                        onClick={() =>
+                          document.getElementById("file-upload")?.click()
+                        }
                         className="flex items-center gap-2"
                       >
                         <FileText className="h-4 w-4" />
@@ -441,11 +477,16 @@ export default function AiAssistant() {
                 <div className="space-y-3">
                   {selectedFeature && (
                     <div className="flex items-center gap-2 p-2 bg-blue-50 rounded-lg">
-                      <div className={`p-1 rounded ${features.find(f => f.id === selectedFeature)?.color} text-white`}>
-                        {features.find(f => f.id === selectedFeature)?.icon}
+                      <div
+                        className={`p-1 rounded ${
+                          features.find((f) => f.id === selectedFeature)?.color
+                        } text-white`}
+                      >
+                        {features.find((f) => f.id === selectedFeature)?.icon}
                       </div>
                       <span className="text-sm text-blue-700">
-                        {features.find(f => f.id === selectedFeature)?.title} mode active
+                        {features.find((f) => f.id === selectedFeature)?.title}{" "}
+                        mode active
                       </span>
                       <Button
                         size="sm"
@@ -457,15 +498,17 @@ export default function AiAssistant() {
                       </Button>
                     </div>
                   )}
-                  
+
                   <div className="flex gap-2">
                     <Textarea
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyPress={handleKeyPress}
                       placeholder={
-                        selectedFeature 
-                          ? `${features.find(f => f.id === selectedFeature)?.prompt.toLowerCase()}...`
+                        selectedFeature
+                          ? `${features
+                              .find((f) => f.id === selectedFeature)
+                              ?.prompt.toLowerCase()}...`
                           : "Ask me anything about chemistry..."
                       }
                       disabled={chatMutation.isPending}

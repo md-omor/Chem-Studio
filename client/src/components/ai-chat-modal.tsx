@@ -1,12 +1,17 @@
-import { useState } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
+import { Card } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card } from "@/components/ui/card";
 import { apiRequest } from "@/lib/queryClient";
-import { Send, Bot, User } from "lucide-react";
+import { useMutation } from "@tanstack/react-query";
+import { Bot, Send, User } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 
 interface Message {
   id: string;
@@ -22,14 +27,37 @@ interface AiChatModalProps {
   reactionElements?: string[];
 }
 
-export function AiChatModal({ open, onOpenChange, initialContext, reactionElements }: AiChatModalProps) {
+export function AiChatModal({
+  open,
+  onOpenChange,
+  initialContext,
+  reactionElements,
+}: AiChatModalProps) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [inputValue, setInputValue] = useState("");
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  // Auto-scroll to bottom when new messages are added
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const chatMutation = useMutation({
     mutationFn: async (question: string) => {
-      const context = initialContext ? `Context: ${initialContext}\n\nElements involved: ${reactionElements?.join(", ") || "None"}\n\nQuestion: ${question}` : question;
-      const response = await apiRequest("POST", "/api/chat", { question: context });
+      // Create context object for the AI assistant
+      const context =
+        reactionElements && reactionElements.length > 0
+          ? {
+              elements: reactionElements,
+              initialContext: initialContext,
+            }
+          : undefined;
+
+      const response = await apiRequest("POST", "/api/ai-assistant", {
+        question,
+        context,
+      });
       return response.json();
     },
     onSuccess: (data) => {
@@ -39,16 +67,17 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
         sender: "ai",
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, aiMessage]);
+      setMessages((prev) => [...prev, aiMessage]);
     },
     onError: () => {
       const errorMessage: Message = {
         id: Date.now().toString() + "-error",
-        content: "Sorry, I'm having trouble responding right now. Please try again.",
+        content:
+          "Sorry, I'm having trouble responding right now. Please try again.",
         sender: "ai",
         timestamp: new Date(),
       };
-      setMessages(prev => [...prev, errorMessage]);
+      setMessages((prev) => [...prev, errorMessage]);
     },
   });
 
@@ -62,12 +91,12 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
       timestamp: new Date(),
     };
 
-    setMessages(prev => [...prev, userMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     chatMutation.mutate(inputValue);
     setInputValue("");
   };
 
-  const handleKeyPress = (e: React.KeyboardEvent) => {
+  const handleKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       handleSendMessage();
@@ -83,29 +112,36 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="max-w-2xl max-h-[80vh] flex flex-col">
-        <DialogHeader>
+      <DialogContent className="max-w-2xl h-[80vh] flex flex-col p-0">
+        <DialogHeader className="px-6 py-4 border-b">
           <DialogTitle className="flex items-center gap-2">
             <Bot className="h-5 w-5 text-blue-600" />
             AI Chemistry Assistant
           </DialogTitle>
         </DialogHeader>
 
-        <div className="flex-1 flex flex-col gap-4 min-h-0">
+        <div className="flex-1 flex flex-col min-h-0">
           {/* Chat Messages */}
           <div className="flex-1 overflow-hidden">
-            <ScrollArea className="h-full w-full custom-scrollbar">
-              <div className="space-y-4 p-4 min-h-[400px]">
+            <ScrollArea className="h-full w-full" ref={scrollAreaRef}>
+              <div className="space-y-4 p-4">
                 {messages.length === 0 ? (
                   <div className="text-center text-gray-500 py-8">
                     <Bot className="h-12 w-12 mx-auto mb-4 text-gray-400" />
-                    <p>Ask me anything about chemistry, reactions, or the elements you're working with!</p>
+                    <p>
+                      Ask me anything about chemistry, reactions, or the
+                      elements you're working with!
+                    </p>
                   </div>
                 ) : (
                   messages.map((message) => (
                     <div
                       key={message.id}
-                      className={`flex gap-3 ${message.sender === "user" ? "justify-end" : "justify-start"}`}
+                      className={`flex gap-3 ${
+                        message.sender === "user"
+                          ? "justify-end"
+                          : "justify-start"
+                      }`}
                     >
                       {message.sender === "ai" && (
                         <div className="flex-shrink-0">
@@ -122,10 +158,16 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
                         }`}
                       >
                         <div className="p-4">
-                          <div className="whitespace-pre-wrap text-sm leading-relaxed">{message.content}</div>
-                          <div className={`text-xs mt-2 ${
-                            message.sender === "user" ? "text-blue-100" : "text-gray-500"
-                          }`}>
+                          <div className="whitespace-pre-wrap text-sm leading-relaxed">
+                            {message.content}
+                          </div>
+                          <div
+                            className={`text-xs mt-2 ${
+                              message.sender === "user"
+                                ? "text-blue-100"
+                                : "text-gray-500"
+                            }`}
+                          >
                             {message.timestamp.toLocaleTimeString()}
                           </div>
                         </div>
@@ -151,27 +193,31 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
                       <div className="p-4">
                         <div className="flex items-center gap-2">
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
-                          <span className="text-sm text-gray-600">Thinking...</span>
+                          <span className="text-sm text-gray-600">
+                            Thinking...
+                          </span>
                         </div>
                       </div>
                     </Card>
                   </div>
                 )}
+                {/* Invisible element to scroll to */}
+                <div ref={messagesEndRef} />
               </div>
             </ScrollArea>
           </div>
 
           {/* Suggested Questions */}
           {messages.length === 0 && (
-            <div className="space-y-2">
-              <p className="text-sm text-gray-600">Suggested questions:</p>
+            <div className="px-4 py-2 border-t bg-gray-50">
+              <p className="text-sm text-gray-600 mb-2">Suggested questions:</p>
               <div className="grid grid-cols-2 gap-2">
                 {suggestedQuestions.map((question, index) => (
                   <Button
                     key={index}
                     variant="outline"
                     size="sm"
-                    className="text-left h-auto py-2 px-3 whitespace-normal"
+                    className="text-left h-auto py-2 px-3 whitespace-normal text-xs"
                     onClick={() => {
                       setInputValue(question);
                       handleSendMessage();
@@ -185,11 +231,11 @@ export function AiChatModal({ open, onOpenChange, initialContext, reactionElemen
           )}
 
           {/* Input Area */}
-          <div className="flex gap-2">
+          <div className="flex gap-2 p-4 border-t bg-white">
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
+              onKeyDown={handleKeyDown}
               placeholder="Ask about the chemistry, safety, applications..."
               disabled={chatMutation.isPending}
               className="flex-1"
