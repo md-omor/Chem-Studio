@@ -1,3 +1,23 @@
+import dotenv from "dotenv";
+// Load environment variables first
+dotenv.config();
+
+// Debug environment variables
+console.log("🔧 Environment variables loaded:");
+console.log(
+  "DATABASE_URL:",
+  process.env.DATABASE_URL ? "✅ Set" : "❌ Missing"
+);
+console.log(
+  "GOOGLE_API_KEY:",
+  process.env.GOOGLE_API_KEY ? "✅ Set" : "❌ Missing"
+);
+console.log(
+  "OPENROUTER_API_KEY:",
+  process.env.OPENROUTER_API_KEY ? "✅ Set" : "❌ Missing"
+);
+console.log("PORT:", process.env.PORT || "3000 (default)");
+
 import express, { NextFunction, type Request, Response } from "express";
 import { registerRoutes } from "./routes";
 import { log, serveStatic, setupVite } from "./vite";

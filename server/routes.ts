@@ -1,7 +1,11 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
+import {
+  analyzeChemicalReaction,
+  assistantChat,
+  explainElement,
+} from "./openrouter";
 import { storage } from "./storage";
-import { analyzeChemicalReaction, explainElement, assistantChat } from "./gemini";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   // Get all elements
@@ -44,17 +48,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!reactants || !Array.isArray(reactants)) {
         return res.status(400).json({ error: "Invalid reactants" });
       }
-      
+
       // First try to find a known reaction in storage
       const storedReaction = await storage.getReactionByReactants(reactants);
       if (storedReaction) {
         return res.json(storedReaction);
       }
-      
+
       // If no stored reaction found, use AI to analyze
-      console.log(`No stored reaction found for ${reactants.join(', ')}, using AI analysis...`);
+      console.log(
+        `No stored reaction found for ${reactants.join(
+          ", "
+        )}, using AI analysis...`
+      );
       const aiAnalysis = await analyzeChemicalReaction(reactants);
-      
+
       if (aiAnalysis.feasible) {
         // Create a temporary reaction object that matches our interface
         const aiReaction = {
@@ -64,14 +72,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           productName: aiAnalysis.productName,
           description: aiAnalysis.description,
           uses: aiAnalysis.uses,
-          facts: aiAnalysis.facts
+          facts: aiAnalysis.facts,
         };
-        
+
         res.json(aiReaction);
       } else {
-        return res.status(404).json({ 
-          error: "No stable compound can be formed", 
-          explanation: aiAnalysis.description 
+        return res.status(404).json({
+          error: "No stable compound can be formed",
+          explanation: aiAnalysis.description,
         });
       }
     } catch (error) {
@@ -87,7 +95,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (!element) {
         return res.status(404).json({ error: "Element not found" });
       }
-      
+
       const explanation = await explainElement(element.symbol, element.name);
       res.json({ explanation });
     } catch (error) {
@@ -104,9 +112,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Question is required" });
       }
 
-      // Use Gemini to answer chemistry questions
+      // Use OpenRouter AI to answer chemistry questions
       const response = await assistantChat(question);
-      
+
       res.json({ response });
     } catch (error) {
       console.error("Chat error:", error);
@@ -122,12 +130,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: "Question is required" });
       }
 
-      // Use enhanced Gemini assistant
+      // Use enhanced OpenRouter AI assistant
       const response = await assistantChat(question);
-      
-      res.json({ 
+
+      res.json({
         response,
-        type: "text" // Could be expanded to support different response types
+        type: "text", // Could be expanded to support different response types
       });
     } catch (error) {
       console.error("AI Assistant error:", error);
