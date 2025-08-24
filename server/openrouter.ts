@@ -118,10 +118,9 @@ class OpenRouterService {
   async analyzeChemicalReaction(
     elementSymbols: string[]
   ): Promise<ReactionAnalysis> {
-    try {
-      const elementsText = elementSymbols.join(", ");
+    const elementsText = elementSymbols.join(", ");
 
-      const prompt = `You are a chemistry expert analyzing a potential reaction between elements: ${elementsText}.
+    const prompt = `You are a chemistry expert analyzing a potential reaction between elements: ${elementsText}.
 
 Please analyze if these elements can realistically form a stable compound and provide educational information.
 
@@ -149,109 +148,121 @@ Examples of good responses:
 - C + O → CO₂ (carbon dioxide)
 - Noble gases typically don't react with other elements`;
 
-      const messages = [
-        {
-          role: "system",
-          content:
-            "You are an expert chemistry tutor. Always respond with valid JSON only.",
-        },
-        {
-          role: "user",
-          content: prompt,
-        },
-      ];
+    const messages = [
+      {
+        role: "system",
+        content:
+          "You are an expert chemistry tutor. Always respond with valid JSON only.",
+      },
+      {
+        role: "user",
+        content: prompt,
+      },
+    ];
 
-      let response;
-      try {
-        response = await this.makeRequest(messages, getCurrentModel(), {
-          temperature: 0.3,
-          maxTokens: 1000,
-        });
-      } catch (error) {
-        console.error(
-          "❌ Primary model failed for reaction analysis, trying fallback..."
-        );
-        // Try fallback model for reaction analysis
-        response = await this.makeRequest(
-          messages,
-          "meta-llama/llama-3.1-70b-instruct:free",
-          {
+    // Try models with retry logic
+    const fallbackModels = [
+      getCurrentModel(),
+      "meta-llama/llama-3.1-70b-instruct:free",
+      "meta-llama/llama-3.1-8b-instruct:free",
+    ];
+
+    for (const model of fallbackModels) {
+      for (let attempt = 0; attempt < 2; attempt++) {
+        try {
+          console.log(
+            `🔄 Analyzing reaction with model: ${model} (attempt ${
+              attempt + 1
+            })`
+          );
+
+          const response = await this.makeRequest(messages, model, {
             temperature: 0.3,
             maxTokens: 1000,
+          });
+
+          // Parse JSON response
+          const jsonMatch = response.match(/\{[\s\S]*\}/);
+          if (jsonMatch) {
+            const data: ReactionAnalysis = JSON.parse(jsonMatch[0]);
+            console.log(`✅ Reaction analysis successful with model: ${model}`);
+            return data;
           }
-        );
+        } catch (error) {
+          console.error(
+            `❌ Model ${model} attempt ${attempt + 1} failed:`,
+            error
+          );
+
+          if (attempt < 1) {
+            await new Promise((resolve) => setTimeout(resolve, 1000));
+          }
+        }
       }
-
-      // Parse JSON response
-      const jsonMatch = response.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        const data: ReactionAnalysis = JSON.parse(jsonMatch[0]);
-        return data;
-      } else {
-        throw new Error("Invalid JSON response from AI model");
-      }
-    } catch (error) {
-      console.error("Failed to analyze reaction with OpenRouter:", error);
-
-      // Provide specific fallback for common reactions
-      const elementsText = elementSymbols.join(", ").toLowerCase();
-
-      if (elementsText.includes("h") && elementsText.includes("be")) {
-        return {
-          product: "BeH₂",
-          productName: "Beryllium Hydride",
-          description:
-            "Beryllium hydride is a highly reactive and toxic compound. While theoretically possible, it's extremely unstable and dangerous to handle.",
-          uses: "No practical uses due to extreme toxicity and instability. Used only in specialized research.",
-          facts:
-            "BeH₂ is one of the most toxic compounds known. Beryllium compounds can cause berylliosis, a serious lung disease. This reaction should never be attempted outside of specialized facilities.",
-          feasible: false,
-        };
-      }
-
-      // General fallback response for when AI fails
-      return {
-        product: "Unknown",
-        productName: "Unknown Compound",
-        description:
-          "Unable to analyze this combination of elements at the moment due to API issues.",
-        uses: "Analysis temporarily unavailable.",
-        facts: "Please try again or select different elements.",
-        feasible: false,
-      };
     }
+
+    // All models failed, return fallback
+    console.error("❌ All reaction analysis attempts failed, using fallback");
+    return {
+      product: "Analysis Unavailable",
+      productName: "Service Temporarily Unavailable",
+      description:
+        "The AI analysis service is currently experiencing high demand. This is common with free models during peak usage times.",
+      uses: "Please try again in a few minutes when the service load decreases.",
+      facts:
+        "Free AI models have usage limits and may be temporarily unavailable during high demand periods.",
+      feasible: false,
+    };
   }
 
   async explainElement(
     elementSymbol: string,
     elementName: string
   ): Promise<string> {
-    try {
-      const messages = [
-        {
-          role: "system",
-          content:
-            "You are an expert chemistry tutor for high school students. Provide clear, engaging explanations.",
-        },
-        {
-          role: "user",
-          content: `Provide a brief, educational explanation about the element ${elementName} (${elementSymbol}) that would be interesting for high school students. Include 2-3 fascinating facts in about 100 words.`,
-        },
-      ];
+    const messages = [
+      {
+        role: "system",
+        content:
+          "You are an expert chemistry tutor for high school students. Provide clear, engaging explanations.",
+      },
+      {
+        role: "user",
+        content: `Provide a brief, educational explanation about the element ${elementName} (${elementSymbol}) that would be interesting for high school students. Include 2-3 fascinating facts in about 100 words.`,
+      },
+    ];
 
-      const response = await this.makeRequest(messages, getCurrentModel(), {
-        temperature: 0.8,
-        maxTokens: 300,
-      });
+    // Try models with simple retry
+    const fallbackModels = [
+      getCurrentModel(),
+      "meta-llama/llama-3.1-70b-instruct:free",
+      "meta-llama/llama-3.1-8b-instruct:free",
+    ];
 
-      return (
-        response ||
-        `${elementName} is an important chemical element with the symbol ${elementSymbol}.`
-      );
-    } catch (error) {
-      console.error("Failed to explain element:", error);
-      return `${elementName} is an important chemical element with the symbol ${elementSymbol}.`;
+    for (const model of fallbackModels) {
+      try {
+        console.log(`🔄 Explaining element with model: ${model}`);
+
+        const response = await this.makeRequest(messages, model, {
+          temperature: 0.8,
+          maxTokens: 300,
+        });
+
+        if (response) {
+          console.log(`✅ Element explanation successful with model: ${model}`);
+          return response;
+        }
+      } catch (error) {
+        console.error(
+          `❌ Model ${model} failed for element explanation:`,
+          error
+        );
+        continue;
+      }
     }
+
+    // Fallback explanation
+    console.log("❌ All models failed, using fallback explanation");
+    return `${elementName} (${elementSymbol}) is an important chemical element. The AI explanation service is temporarily unavailable due to high demand on free models. Please try again in a few minutes for a detailed explanation.`;
   }
 
   async assistantChat(question: string): Promise<string> {
@@ -286,54 +297,47 @@ Format responses with clear structure and proper spacing for optimal readability
       },
     ];
 
-    // Try primary free model first
-    try {
-      console.log("🔄 Trying primary free model:", getCurrentModel());
-      const response = await this.makeRequest(messages, getCurrentModel(), {
-        temperature: 0.7,
-        maxTokens: 2000,
-      });
+    // Try models with retry logic
+    const fallbackModels = [
+      getCurrentModel(),
+      "meta-llama/llama-3.1-70b-instruct:free",
+      "meta-llama/llama-3.1-8b-instruct:free",
+      "mistralai/mistral-7b-instruct:free",
+    ];
 
-      return (
-        response ||
-        "I'm having trouble processing your question right now. Could you please rephrase it or try again?"
-      );
-    } catch (error) {
-      console.error("❌ Primary model failed:", error);
-
-      // Try fallback free models
-      const fallbackModels = [
-        "meta-llama/llama-3.1-70b-instruct:free",
-        "meta-llama/llama-3.1-8b-instruct:free",
-        "mistralai/mistral-7b-instruct:free",
-      ];
-
-      for (const fallbackModel of fallbackModels) {
+    for (const model of fallbackModels) {
+      for (let attempt = 0; attempt < 3; attempt++) {
         try {
-          console.log("🔄 Trying fallback model:", fallbackModel);
-          const response = await this.makeRequest(messages, fallbackModel, {
+          console.log(`🔄 Trying model: ${model} (attempt ${attempt + 1})`);
+
+          const response = await this.makeRequest(messages, model, {
             temperature: 0.7,
             maxTokens: 2000,
           });
 
-          console.log("✅ Fallback model succeeded:", fallbackModel);
-          return (
-            response ||
-            "I'm having trouble processing your question right now. Could you please rephrase it or try again?"
-          );
-        } catch (fallbackError) {
+          if (response) {
+            console.log(`✅ Success with model: ${model}`);
+            return response;
+          }
+        } catch (error) {
           console.error(
-            `❌ Fallback model ${fallbackModel} failed:`,
-            fallbackError
+            `❌ Model ${model} attempt ${attempt + 1} failed:`,
+            error
           );
-          continue;
+
+          // Wait before retry (exponential backoff)
+          if (attempt < 2) {
+            const delay = Math.pow(2, attempt) * 1000; // 1s, 2s, 4s
+            console.log(`⏳ Waiting ${delay}ms before retry...`);
+            await new Promise((resolve) => setTimeout(resolve, delay));
+          }
         }
       }
-
-      // If all models fail, return helpful error message
-      console.error("❌ All free models failed");
-      return "I'm having trouble connecting to the AI service right now. This might be due to high demand on free models or temporary connectivity issues. Please try again in a moment, or try asking a different question.";
     }
+
+    // All models and retries failed
+    console.error("❌ All models and retries exhausted");
+    return "I'm experiencing technical difficulties right now. The AI service might be overloaded. Please try again in a few minutes, or ask a simpler question.";
   }
 
   // Method to get current model info
