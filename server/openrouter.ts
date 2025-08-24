@@ -64,6 +64,12 @@ class OpenRouterService {
       if (!response.ok) {
         const errorText = await response.text();
         console.error("❌ OpenRouter API error response:", errorText);
+        console.error("🔍 Model used:", model);
+        console.error(
+          "📊 Response status:",
+          response.status,
+          response.statusText
+        );
 
         // Handle specific error cases
         if (response.status === 401) {
@@ -76,12 +82,20 @@ class OpenRouterService {
           );
         } else if (response.status === 429) {
           throw new Error(
-            "Rate limit exceeded. Please wait a moment and try again."
+            "Rate limit exceeded for free model. Free models have usage limits. Please wait a moment and try again, or try asking a shorter question."
+          );
+        } else if (response.status === 503) {
+          throw new Error(
+            "The free model is temporarily unavailable due to high demand. Please try again in a few minutes."
+          );
+        } else if (response.status >= 500) {
+          throw new Error(
+            "OpenRouter server error. The free model might be experiencing issues. Please try again later."
           );
         }
 
         throw new Error(
-          `OpenRouter API error: ${response.status} ${response.statusText} - ${errorText}`
+          `OpenRouter API error: ${response.status} ${response.statusText}. Free models may have temporary limitations.`
         );
       }
 
@@ -147,10 +161,26 @@ Examples of good responses:
         },
       ];
 
-      const response = await this.makeRequest(messages, getCurrentModel(), {
-        temperature: 0.3,
-        maxTokens: 1000,
-      });
+      let response;
+      try {
+        response = await this.makeRequest(messages, getCurrentModel(), {
+          temperature: 0.3,
+          maxTokens: 1000,
+        });
+      } catch (error) {
+        console.error(
+          "❌ Primary model failed for reaction analysis, trying fallback..."
+        );
+        // Try fallback model for reaction analysis
+        response = await this.makeRequest(
+          messages,
+          "meta-llama/llama-3.1-70b-instruct:free",
+          {
+            temperature: 0.3,
+            maxTokens: 1000,
+          }
+        );
+      }
 
       // Parse JSON response
       const jsonMatch = response.match(/\{[\s\S]*\}/);
@@ -225,8 +255,7 @@ Examples of good responses:
   }
 
   async assistantChat(question: string): Promise<string> {
-    try {
-      const systemPrompt = `You are an expert chemistry tutor for high school students. You provide clear, accurate, and educational explanations about chemistry concepts, reactions, equations, safety, and applications.
+    const systemPrompt = `You are an expert chemistry tutor for high school students. You provide clear, accurate, and educational explanations about chemistry concepts, reactions, equations, safety, and applications.
 
 Key guidelines:
 1. Use simple, clear language appropriate for high school level
@@ -246,17 +275,20 @@ Key guidelines:
 
 Format responses with clear structure and proper spacing for optimal readability.`;
 
-      const messages = [
-        {
-          role: "system",
-          content: systemPrompt,
-        },
-        {
-          role: "user",
-          content: question,
-        },
-      ];
+    const messages = [
+      {
+        role: "system",
+        content: systemPrompt,
+      },
+      {
+        role: "user",
+        content: question,
+      },
+    ];
 
+    // Try primary free model first
+    try {
+      console.log("🔄 Trying primary free model:", getCurrentModel());
       const response = await this.makeRequest(messages, getCurrentModel(), {
         temperature: 0.7,
         maxTokens: 2000,
@@ -267,10 +299,40 @@ Format responses with clear structure and proper spacing for optimal readability
         "I'm having trouble processing your question right now. Could you please rephrase it or try again?"
       );
     } catch (error) {
-      console.error("Failed to process assistant chat:", error);
+      console.error("❌ Primary model failed:", error);
 
-      // Return a helpful error message instead of throwing
-      return "I'm having trouble connecting to the AI service right now. This might be due to API limits or connectivity issues. Please try again in a moment, or try asking a different question.";
+      // Try fallback free models
+      const fallbackModels = [
+        "meta-llama/llama-3.1-70b-instruct:free",
+        "meta-llama/llama-3.1-8b-instruct:free",
+        "mistralai/mistral-7b-instruct:free",
+      ];
+
+      for (const fallbackModel of fallbackModels) {
+        try {
+          console.log("🔄 Trying fallback model:", fallbackModel);
+          const response = await this.makeRequest(messages, fallbackModel, {
+            temperature: 0.7,
+            maxTokens: 2000,
+          });
+
+          console.log("✅ Fallback model succeeded:", fallbackModel);
+          return (
+            response ||
+            "I'm having trouble processing your question right now. Could you please rephrase it or try again?"
+          );
+        } catch (fallbackError) {
+          console.error(
+            `❌ Fallback model ${fallbackModel} failed:`,
+            fallbackError
+          );
+          continue;
+        }
+      }
+
+      // If all models fail, return helpful error message
+      console.error("❌ All free models failed");
+      return "I'm having trouble connecting to the AI service right now. This might be due to high demand on free models or temporary connectivity issues. Please try again in a moment, or try asking a different question.";
     }
   }
 
