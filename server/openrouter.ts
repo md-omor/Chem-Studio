@@ -163,16 +163,15 @@ Examples of good responses:
     // Try models with retry logic
     const fallbackModels = [
       getCurrentModel(),
-      "meta-llama/llama-3.1-70b-instruct:free",
-      "meta-llama/llama-3.1-8b-instruct:free",
+      "anthropic/claude-3.5-haiku",
+      "anthropic/claude-3.5-sonnet",
     ];
 
     for (const model of fallbackModels) {
       for (let attempt = 0; attempt < 2; attempt++) {
         try {
           console.log(
-            `🔄 Analyzing reaction with model: ${model} (attempt ${
-              attempt + 1
+            `🔄 Analyzing reaction with model: ${model} (attempt ${attempt + 1
             })`
           );
 
@@ -234,8 +233,8 @@ Examples of good responses:
     // Try models with simple retry
     const fallbackModels = [
       getCurrentModel(),
-      "meta-llama/llama-3.1-70b-instruct:free",
-      "meta-llama/llama-3.1-8b-instruct:free",
+      "anthropic/claude-3.5-haiku",
+      "anthropic/claude-3.5-sonnet",
     ];
 
     for (const model of fallbackModels) {
@@ -300,9 +299,8 @@ Format responses with clear structure and proper spacing for optimal readability
     // Try models with retry logic
     const fallbackModels = [
       getCurrentModel(),
-      "meta-llama/llama-3.1-70b-instruct:free",
-      "meta-llama/llama-3.1-8b-instruct:free",
-      "mistralai/mistral-7b-instruct:free",
+      "anthropic/claude-3.5-haiku",
+      "anthropic/claude-3.5-sonnet",
     ];
 
     for (const model of fallbackModels) {

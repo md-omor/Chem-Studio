@@ -20,8 +20,8 @@ export const AI_CONFIG = {
     CLAUDE_SONNET: "anthropic/claude-3.5-sonnet", // $3.00/M tokens - Best
     GPT4O: "openai/gpt-4o", // $2.50/M tokens - Great
 
-    // Current selection - FREE Llama 3.1 405B (NO CHARGES!)
-    current: "meta-llama/llama-3.1-405b-instruct:free", // FREE VERSION
+    // Current selection - Anthropic Claude 3.5 Haiku
+    current: "anthropic/claude-3.5-haiku", // Anthropic Claude 3.5 Haiku
   },
 
   // Model-specific settings
@@ -30,9 +30,9 @@ export const AI_CONFIG = {
     maxTokens: 2000,
 
     // Different temperatures for different tasks
-    reactionAnalysis: { temperature: 0.3, maxTokens: 1000 }, // More precise for JSON
-    elementExplanation: { temperature: 0.8, maxTokens: 300 }, // More creative for explanations
-    chatAssistant: { temperature: 0.7, maxTokens: 2000 }, // Balanced for conversations
+    reactionAnalysis: { temperature: 0.4, maxTokens: 1500 }, // Anthropic Claude: more precise
+    elementExplanation: { temperature: 0.4, maxTokens: 1500 }, // Anthropic Claude: more precise
+    chatAssistant: { temperature: 0.4, maxTokens: 1500 }, // Anthropic Claude: more precise
   },
 };
 
