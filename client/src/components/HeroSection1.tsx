@@ -93,26 +93,28 @@ const HeroSection1 = () => {
         </div>
 
         {/* Stats/Social Proof */}
-        <div className="flex flex-col sm:flex-row items-center justify-center gap-6 sm:gap-8 text-muted-foreground mb-16 sm:mb-0 w-full">
-          <div className="flex items-center gap-3 justify-center">
-            <div className="w-8 h-8 bg-gradient-primary-solid rounded-full flex items-center justify-center">
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4 sm:gap-8 text-muted-foreground mb-16 sm:mb-0 w-full max-w-2xl mx-auto">
+          <div className="flex items-center gap-3 justify-center sm:justify-start w-full sm:w-auto">
+            <div className="w-8 h-8 bg-gradient-primary-solid rounded-full flex items-center justify-center flex-shrink-0">
               <span className="text-xs font-bold text-background">✓</span>
             </div>
-            <span className="font-montserrat font-medium">
+            <span className="font-montserrat font-medium text-center sm:text-left">
               Free for Students
             </span>
           </div>
-          <div className="flex items-center gap-3 justify-center">
-            <div className="w-8 h-8 bg-gradient-secondary-solid rounded-full flex items-center justify-center">
+          <div className="flex items-center gap-3 justify-center sm:justify-start w-full sm:w-auto">
+            <div className="w-8 h-8 bg-gradient-secondary-solid rounded-full flex items-center justify-center flex-shrink-0">
               <span className="text-xs font-bold text-background">AI</span>
             </div>
-            <span className="font-montserrat font-medium">AI-Powered</span>
+            <span className="font-montserrat font-medium text-center sm:text-left">
+              AI-Powered
+            </span>
           </div>
-          <div className="flex items-center gap-3 justify-center">
-            <div className="w-8 h-8 bg-gradient-accent-solid rounded-full flex items-center justify-center">
+          <div className="flex items-center gap-3 justify-center sm:justify-start w-full sm:w-auto">
+            <div className="w-8 h-8 bg-gradient-accent-solid rounded-full flex items-center justify-center flex-shrink-0">
               <span className="text-xs font-bold text-background">3D</span>
             </div>
-            <span className="font-montserrat font-medium">
+            <span className="font-montserrat font-medium text-center sm:text-left">
               3D Visualization
             </span>
           </div>

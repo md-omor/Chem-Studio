@@ -115,7 +115,7 @@
 
   /* Add top padding to main content to account for fixed navbar */
   main {
-    padding-top: 80px; /* Mobile spacing */
+    padding-top: 120px; /* Mobile spacing */
   }
 
   @media (min-width: 768px) {
