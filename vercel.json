@@ -2,5 +2,11 @@
   "buildCommand": "npm run build:client",
   "outputDirectory": "dist/public",
   "installCommand": "npm install",
-  "framework": null
+  "framework": null,
+  "rewrites": [
+    {
+      "source": "/((?!api/.*).*)",
+      "destination": "/index.html"
+    }
+  ]
 }

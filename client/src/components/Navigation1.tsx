@@ -14,6 +14,7 @@ import {
 import { cn } from "@/lib/utils";
 import React, { useEffect, useState } from "react";
 import { IoMenu } from "react-icons/io5";
+import { Link } from "wouter";
 
 const ListItem = React.forwardRef<
   React.ElementRef<"a">,
@@ -67,28 +68,6 @@ const MainNavbar = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isOpen]);
 
-  const handleNavigation = (
-    e: React.MouseEvent<HTMLAnchorElement>,
-    sectionId: string
-  ) => {
-    e.preventDefault();
-    const element = document.getElementById(sectionId);
-    if (element) {
-      // Add some offset for the fixed navbar
-      const offset = 100; // Adjust this value based on your navbar height
-      const elementPosition = element.getBoundingClientRect().top;
-      const offsetPosition = elementPosition + window.scrollY - offset;
-
-      window.scrollTo({
-        top: offsetPosition,
-        behavior: "smooth",
-      });
-
-      // Update URL without page reload
-      window.history.pushState({}, "", `/#${sectionId}`);
-    }
-  };
-
   return (
     <>
       <nav
@@ -104,11 +83,11 @@ const MainNavbar = () => {
       >
         <div className="flex w-full items-center justify-between px-4">
           {/* Logo */}
-          <a href="/" className="flex items-center gap-2">
+          <Link href="/" className="flex items-center gap-2">
             <span className="text-white text-xl font-semibold font-montserrat">
               ChemStudio
             </span>
-          </a>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-6">
@@ -119,7 +98,7 @@ const MainNavbar = () => {
                     className="text-white/80 hover:text-white transition-colors font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                     asChild
                   >
-                    <a href="/periodic-table">Periodic Table</a>
+                    <Link href="/periodic-table">Periodic Table</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
@@ -128,7 +107,7 @@ const MainNavbar = () => {
                     className="text-white/80 hover:text-white transition-colors font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                     asChild
                   >
-                    <a href="/mix-lab">Mix Lab</a>
+                    <Link href="/mix-lab">Mix Lab</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
@@ -137,7 +116,7 @@ const MainNavbar = () => {
                     className="text-white/80 hover:text-white transition-colors font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                     asChild
                   >
-                    <a href="/knowledge-center">Knowledge Center</a>
+                    <Link href="/knowledge-center">Knowledge Center</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
 
@@ -146,7 +125,7 @@ const MainNavbar = () => {
                     className="text-white/80 hover:text-white transition-colors font-medium px-3 py-2 rounded-lg hover:bg-white/10"
                     asChild
                   >
-                    <a href="/ai-assistant">AI Assistant</a>
+                    <Link href="/ai-assistant">AI Assistant</Link>
                   </NavigationMenuLink>
                 </NavigationMenuItem>
               </NavigationMenuList>
@@ -161,7 +140,7 @@ const MainNavbar = () => {
                 className="bg-gradient-to-r from-primary to-secondary text-white rounded-full hover:from-primary/90 hover:to-secondary/90 px-6 py-2 font-medium transition-all duration-300 shadow-lg hover:shadow-xl"
                 asChild
               >
-                <a href="/join-us">Join Beta</a>
+                <Link href="/join-us">Join Beta</Link>
               </Button>
             </div>
 
