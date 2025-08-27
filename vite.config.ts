@@ -32,5 +32,15 @@ export default defineConfig({
   build: {
     outDir: path.resolve(__dirname, "dist/public"),
     emptyOutDir: true,
+    rollupOptions: {
+      external: (id) => {
+        // Exclude server-side modules from client build
+        return (
+          id.includes("server/") ||
+          id.includes("node:") ||
+          id.includes("express")
+        );
+      },
+    },
   },
 });
