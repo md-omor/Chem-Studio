@@ -85,7 +85,7 @@ export function PeriodicTableGrid({
   };
 
   return (
-    <div className="overflow-x-auto pb-10 periodic-table-scrollbar">
+    <div className="overflow-x-auto pb-16 periodic-table-scrollbar">
       <div className="periodic-table-container min-w-max">
         {/* Main periodic table grid */}
         <div className="periodic-table-grid w-full">
