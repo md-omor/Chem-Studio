@@ -235,7 +235,7 @@ export default function PeriodicTable() {
       </div>
 
       {/* Periodic Table */}
-      <Card className=" backdrop-blur-md border border-white/20">
+      <Card className=" backdrop-blur-md  border-none">
         <CardContent className="p-6">
           <PeriodicTableGrid
             elements={elements || []}
