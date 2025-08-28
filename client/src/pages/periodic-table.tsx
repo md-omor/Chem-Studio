@@ -3,6 +3,7 @@ import { PeriodicTableGrid } from "@/components/periodic-table-grid";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { elementsData } from "@/data/elements";
 import { useElementSelection } from "@/hooks/use-element-selection";
 import type { Element } from "@shared/schema";
 import { useQuery } from "@tanstack/react-query";
@@ -19,6 +20,19 @@ export default function PeriodicTable() {
 
   const { data: elements, isLoading } = useQuery<Element[]>({
     queryKey: ["/api/elements"],
+    queryFn: async () => {
+      try {
+        const response = await fetch("/api/elements");
+        if (!response.ok) {
+          throw new Error("API not available");
+        }
+        return response.json();
+      } catch (error) {
+        // Fallback to static data if API is not available
+        console.log("Using static element data as fallback");
+        return elementsData as Element[];
+      }
+    },
   });
 
   const handleElementClick = (element: Element) => {
@@ -49,12 +63,14 @@ export default function PeriodicTable() {
 
   if (isLoading) {
     return (
-      <div className="py-8">
+      <div className="min-h-screen bg-background text-foreground py-8">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-center h-64">
             <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto mb-4"></div>
-              <p className="text-gray-600">Loading periodic table...</p>
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-primary mx-auto mb-4"></div>
+              <p className="text-white/80 font-montserrat font-semibold">
+                Loading periodic table...
+              </p>
             </div>
           </div>
         </div>
@@ -63,28 +79,30 @@ export default function PeriodicTable() {
   }
 
   return (
-    <div className="py-8 fade-in">
+    <div className="bg-background text-foreground py-16 md:py-40 fade-in">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-4">
+        <div className="text-center mb-16">
+          <h1 className="text-5xl md:leading-0 leading-[70px] md:text-6xl font-montserrat font-bold mb-5 sm:mb-8 block bg-gradient-secondary bg-clip-text text-transparent">
             Interactive Periodic Table
           </h1>
-          <p className="text-gray-600">
+          <p className="text-sm md:text-lg text-white/80 font-montserrat font-semibold">
             Click on any element to learn more about its properties and uses
           </p>
         </div>
 
         {/* Legend */}
-        <Card className="mb-8">
+        <Card className="mb-8 backdrop-blur-md border border-white/20">
           <CardHeader>
-            <CardTitle className="text-lg">Element Categories</CardTitle>
+            <CardTitle className="text-lg text-white font-montserrat font-semibold">
+              Element Categories
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {Object.entries(categoryColors).map(([category, color]) => (
                 <div key={category} className="flex items-center space-x-2">
                   <div className={`w-4 h-4 rounded ${color}`}></div>
-                  <span className="text-sm text-gray-600 capitalize">
+                  <span className="text-sm text-white/80 capitalize font-montserrat font-semibold">
                     {category.replace("-", " ")}
                   </span>
                 </div>
@@ -94,9 +112,11 @@ export default function PeriodicTable() {
         </Card>
 
         {/* Origin Legend */}
-        <Card className="mb-8">
+        <Card className="mb-8 backdrop-blur-md border border-white/20">
           <CardHeader>
-            <CardTitle className="text-lg">Element Origins</CardTitle>
+            <CardTitle className="text-lg text-white font-montserrat font-semibold">
+              Element Origins
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -109,8 +129,10 @@ export default function PeriodicTable() {
                   />
                 </div>
                 <div>
-                  <div className="font-semibold text-sm">Primordial</div>
-                  <div className="text-xs text-gray-600">
+                  <div className="font-semibold text-sm text-white font-montserrat">
+                    Primordial
+                  </div>
+                  <div className="text-xs text-white/70 font-montserrat font-semibold">
                     Existed since Earth's formation
                   </div>
                 </div>
@@ -134,8 +156,10 @@ export default function PeriodicTable() {
                   </svg>
                 </div>
                 <div>
-                  <div className="font-semibold text-sm">From Decay</div>
-                  <div className="text-xs text-gray-600">
+                  <div className="font-semibold text-sm text-white font-montserrat">
+                    From Decay
+                  </div>
+                  <div className="text-xs text-white/70 font-montserrat font-semibold">
                     Formed from radioactive decay
                   </div>
                 </div>
@@ -150,8 +174,10 @@ export default function PeriodicTable() {
                   />
                 </div>
                 <div>
-                  <div className="font-semibold text-sm">Synthetic</div>
-                  <div className="text-xs text-gray-600">
+                  <div className="font-semibold text-sm text-white font-montserrat">
+                    Synthetic
+                  </div>
+                  <div className="text-xs text-white/70 font-montserrat font-semibold">
                     Artificially created in labs
                   </div>
                 </div>
@@ -161,16 +187,16 @@ export default function PeriodicTable() {
         </Card>
 
         {/* Selected Elements */}
-        <Card className="mb-8">
+        <Card className="mb-8 backdrop-blur-md border border-white/20">
           <CardHeader>
-            <CardTitle className="text-lg">
+            <CardTitle className="text-lg text-white font-montserrat font-semibold">
               Selected Elements for Mixing
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="flex flex-wrap gap-2 min-h-12 mb-4">
               {selectedElements.length === 0 ? (
-                <div className="text-gray-500 text-sm flex items-center">
+                <div className="text-white/70 text-sm flex items-center font-montserrat font-semibold">
                   Select elements from the periodic table below
                 </div>
               ) : (
@@ -178,7 +204,7 @@ export default function PeriodicTable() {
                   <Badge
                     key={element.symbol}
                     variant="secondary"
-                    className={`px-3 py-1 text-white cursor-pointer ${
+                    className={`px-3 py-1 text-white cursor-pointer font-montserrat font-semibold ${
                       categoryColors[element.category] || "bg-gray-500"
                     }`}
                     onClick={() => handleElementSelect(element)}
@@ -192,36 +218,40 @@ export default function PeriodicTable() {
               <Button
                 onClick={handleMixElements}
                 disabled={selectedElements.length < 2}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="bg-gradient-to-r from-primary to-secondary text-white rounded-full hover:from-primary/90 hover:to-secondary/90 px-6 py-2 font-semibold transition-all duration-300 shadow-lg hover:shadow-xl font-montserrat"
               >
                 Mix Elements
               </Button>
-              <Button variant="outline" onClick={clearSelection}>
+              <Button
+                variant="outline"
+                onClick={clearSelection}
+                className="border-white/20 text-white hover:bg-white/10 font-montserrat font-semibold"
+              >
                 Clear Selection
               </Button>
             </div>
           </CardContent>
         </Card>
-
-        {/* Periodic Table */}
-        <Card>
-          <CardContent className="p-6 bg-black">
-            <PeriodicTableGrid
-              elements={elements || []}
-              onElementClick={handleElementClick}
-              onElementSelect={handleElementSelect}
-              selectedElements={selectedElements}
-            />
-          </CardContent>
-        </Card>
-
-        {/* Element Modal */}
-        <ElementModal
-          element={selectedElement}
-          open={showModal}
-          onOpenChange={setShowModal}
-        />
       </div>
+
+      {/* Periodic Table */}
+      <Card className=" backdrop-blur-md border border-white/20">
+        <CardContent className="p-6">
+          <PeriodicTableGrid
+            elements={elements || []}
+            onElementClick={handleElementClick}
+            onElementSelect={handleElementSelect}
+            selectedElements={selectedElements}
+          />
+        </CardContent>
+      </Card>
+
+      {/* Element Modal */}
+      <ElementModal
+        element={selectedElement}
+        open={showModal}
+        onOpenChange={setShowModal}
+      />
     </div>
   );
 }
