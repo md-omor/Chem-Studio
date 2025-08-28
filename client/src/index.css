@@ -101,10 +101,6 @@
     --actinide: hsl(320, 100%, 50%); /* Pink */
   }
 
-  .dark {
-    /* Inherits from root - already dark by default */
-  }
-
   * {
     @apply border-border;
   }
@@ -485,23 +481,121 @@
   }
 }
 
-/* Custom scrollbar styles */
-.custom-scrollbar::-webkit-scrollbar {
-  width: 8px;
+/* Interactive Chemistry-themed Scrollbar Styles */
+.periodic-table-scrollbar::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f5f9;
-  border-radius: 4px;
+/* Element Modal Thin Scrollbar */
+.element-modal-scrollbar::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #cbd5e1;
-  border-radius: 4px;
+.periodic-table-scrollbar::-webkit-scrollbar-track {
+  background: linear-gradient(
+    135deg,
+    hsl(240 10% 3.9%) 0%,
+    hsl(240 8% 8%) 50%,
+    hsl(240 10% 3.9%) 100%
+  );
+  border-radius: 8px;
+  border: 1px solid hsl(240 3.7% 15.9%);
+  box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.3);
 }
 
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #94a3b8;
+.element-modal-scrollbar::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 3px;
+}
+
+.periodic-table-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    hsl(200 100% 60%) 0%,
+    hsl(260 100% 70%) 50%,
+    hsl(180 100% 50%) 100%
+  );
+  border-radius: 8px;
+  border: 1px solid hsl(200 100% 60% / 0.3);
+  box-shadow: 0 0 10px hsl(200 100% 60% / 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  transition: all 0.3s ease;
+}
+
+.element-modal-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    135deg,
+    hsl(200 100% 60%) 0%,
+    hsl(260 100% 70%) 100%
+  );
+  border-radius: 3px;
+  transition: all 0.2s ease;
+}
+
+.periodic-table-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    135deg,
+    hsl(200 100% 70%) 0%,
+    hsl(260 100% 80%) 50%,
+    hsl(180 100% 60%) 100%
+  );
+  box-shadow: 0 0 15px hsl(200 100% 60% / 0.6), 0 0 25px hsl(260 100% 70% / 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.element-modal-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    135deg,
+    hsl(200 100% 70%) 0%,
+    hsl(260 100% 80%) 100%
+  );
+  box-shadow: 0 0 8px hsl(200 100% 60% / 0.4);
+}
+
+.periodic-table-scrollbar::-webkit-scrollbar-thumb:active {
+  background: linear-gradient(
+    135deg,
+    hsl(200 100% 80%) 0%,
+    hsl(260 100% 90%) 50%,
+    hsl(180 100% 70%) 100%
+  );
+  box-shadow: 0 0 20px hsl(200 100% 60% / 0.8), 0 0 35px hsl(260 100% 70% / 0.6),
+    inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.periodic-table-scrollbar::-webkit-scrollbar-corner {
+  background: linear-gradient(
+    135deg,
+    hsl(240 10% 3.9%) 0%,
+    hsl(240 8% 8%) 100%
+  );
+  border-radius: 8px;
+}
+
+/* Enhanced scrollbar for horizontal scrolling */
+.periodic-table-scrollbar::-webkit-scrollbar:horizontal {
+  height: 3px;
+}
+
+/* Animated scrollbar glow effect */
+@keyframes scrollbarGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 10px hsl(200 100% 60% / 0.4),
+      inset 0 1px 0 rgba(255, 255, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px hsl(200 100% 60% / 0.6),
+      0 0 30px hsl(260 100% 70% / 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+  }
+}
+
+/* Apply glow animation on scroll */
+.periodic-table-scrollbar.scrolling::-webkit-scrollbar-thumb {
+  animation: scrollbarGlow 2s ease-in-out infinite;
 }
 
 /* Enhanced animations */
@@ -711,6 +805,96 @@
   }
 }
 
-.dark {
-  /* Inherits from root - already dark by default */
+/* Element Modal Enhancements */
+.shadow-elegant {
+  box-shadow: var(--shadow-elegant);
+}
+
+/* Enhanced modal animations */
+@keyframes modalScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes modalScaleOut {
+  from {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+}
+
+.modal-enter {
+  animation: modalScaleIn 0.3s ease-out;
+}
+
+.modal-exit {
+  animation: modalScaleOut 0.2s ease-in;
+}
+
+/* Enhanced glass morphism */
+.glass-strong {
+  background: rgba(255, 255, 255, 0.15);
+  backdrop-filter: blur(20px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+/* Property row hover effects */
+.property-row {
+  transition: all 0.2s ease;
+}
+
+.property-row:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(2px);
+}
+
+/* Element modal specific animations */
+.element-modal-enter {
+  animation: elementModalEnter 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes elementModalEnter {
+  0% {
+    opacity: 0;
+    transform: scale(0.9) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+/* Enhanced glow effects for element categories */
+.element-glow-primary {
+  box-shadow: 0 0 20px hsl(var(--primary) / 0.4),
+    0 0 40px hsl(var(--primary) / 0.2);
+}
+
+.element-glow-secondary {
+  box-shadow: 0 0 20px hsl(var(--secondary) / 0.4),
+    0 0 40px hsl(var(--secondary) / 0.2);
+}
+
+.element-glow-accent {
+  box-shadow: 0 0 20px hsl(var(--accent) / 0.4),
+    0 0 40px hsl(var(--accent) / 0.2);
+}
+
+/* Smooth transitions for all interactive elements */
+.element-modal * {
+  transition-property: color, background-color, border-color,
+    text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter,
+    backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 200ms;
 }
