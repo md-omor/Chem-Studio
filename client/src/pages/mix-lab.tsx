@@ -1,21 +1,22 @@
-import { useState, useEffect } from "react";
-import { useMutation } from "@tanstack/react-query";
-import { Link } from "wouter";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
-import { useElementSelection } from "@/hooks/use-element-selection";
-import { apiRequest } from "@/lib/queryClient";
-import { ArrowRight, Beaker } from "lucide-react";
 import { AiChatModal } from "@/components/ai-chat-modal";
 import { ReactionJar } from "@/components/reaction-jar";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { useElementSelection } from "@/hooks/use-element-selection";
+import { apiRequest } from "@/lib/queryClient";
 import type { Reaction } from "@shared/schema";
+import { useMutation } from "@tanstack/react-query";
+import { ArrowRight, Beaker } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link } from "wouter";
 
 export default function MixLab() {
   const { selectedElements, clearSelection } = useElementSelection();
   const [reactionResult, setReactionResult] = useState<Reaction | null>(null);
   const [showNoReaction, setShowNoReaction] = useState(false);
-  const [noReactionExplanation, setNoReactionExplanation] = useState<string>("");
+  const [noReactionExplanation, setNoReactionExplanation] =
+    useState<string>("");
   const [isAnimating, setIsAnimating] = useState(false);
   const [showAiInquiry, setShowAiInquiry] = useState(false);
   const [showChatModal, setShowChatModal] = useState(false);
@@ -23,7 +24,9 @@ export default function MixLab() {
 
   const findReactionMutation = useMutation({
     mutationFn: async (reactants: string[]) => {
-      const response = await apiRequest("POST", "/api/reactions/find", { reactants });
+      const response = await apiRequest("POST", "/api/reactions/find", {
+        reactants,
+      });
       return response.json();
     },
     onSuccess: (data) => {
@@ -45,7 +48,9 @@ export default function MixLab() {
           setNoReactionExplanation(errorData.explanation);
         }
       } catch (e) {
-        setNoReactionExplanation("These elements cannot form a stable compound under normal conditions.");
+        setNoReactionExplanation(
+          "These elements cannot form a stable compound under normal conditions."
+        );
       }
     },
   });
@@ -56,10 +61,10 @@ export default function MixLab() {
       setReactionResult(null);
       setShowNoReaction(false);
       setShowAiInquiry(false);
-      
+
       // Add animation delay before API call
       setTimeout(() => {
-        const reactants = selectedElements.map(el => el.symbol);
+        const reactants = selectedElements.map((el) => el.symbol);
         findReactionMutation.mutate(reactants);
       }, 2000);
     }
@@ -70,12 +75,12 @@ export default function MixLab() {
     "alkaline-earth": "bg-orange-500",
     "transition-metal": "bg-blue-500",
     "post-transition": "bg-purple-500",
-    "metalloid": "bg-yellow-500",
-    "nonmetal": "bg-green-500",
-    "halogen": "bg-pink-500",
+    metalloid: "bg-yellow-500",
+    nonmetal: "bg-green-500",
+    halogen: "bg-pink-500",
     "noble-gas": "bg-cyan-500",
-    "lanthanide": "bg-orange-400",
-    "actinide": "bg-pink-600",
+    lanthanide: "bg-orange-400",
+    actinide: "bg-pink-600",
   };
 
   // Auto-trigger mixing when elements are selected and we come to this page
@@ -90,7 +95,10 @@ export default function MixLab() {
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-4">Mix Lab</h1>
-          <p className="text-gray-600">Combine elements to create compounds and learn about chemical reactions</p>
+          <p className="text-gray-600">
+            Combine elements to create compounds and learn about chemical
+            reactions
+          </p>
         </div>
 
         <Card className="mb-8">
@@ -110,7 +118,9 @@ export default function MixLab() {
                     selectedElements.map((element, index) => (
                       <div key={element.symbol} className="flex items-center">
                         <Badge
-                          className={`text-white ${categoryColors[element.category] || 'bg-gray-500'}`}
+                          className={`text-white ${
+                            categoryColors[element.category] || "bg-gray-500"
+                          }`}
                         >
                           {element.symbol}
                         </Badge>
@@ -121,20 +131,22 @@ export default function MixLab() {
                     ))
                   )}
                 </div>
-                
+
                 <ArrowRight className="h-6 w-6 text-gray-400" />
-                
+
                 <div className="text-center">
                   {isAnimating || findReactionMutation.isPending ? (
-                    <ReactionJar 
+                    <ReactionJar
                       product="Mixing..."
                       productName="Reaction in Progress"
                       isAnimating={true}
                     />
                   ) : reactionResult ? (
-                    <ReactionJar 
+                    <ReactionJar
                       product={reactionResult.product}
-                      productName={reactionResult.productName || reactionResult.product}
+                      productName={
+                        reactionResult.productName || reactionResult.product
+                      }
                       isAnimating={false}
                     />
                   ) : showNoReaction ? (
@@ -155,7 +167,9 @@ export default function MixLab() {
         {showNoReaction && noReactionExplanation && (
           <Card className="mb-8">
             <CardHeader>
-              <CardTitle className="text-red-700">Why This Reaction Doesn't Work</CardTitle>
+              <CardTitle className="text-red-700">
+                Why This Reaction Doesn't Work
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="bg-red-50 rounded-lg p-4">
@@ -169,7 +183,8 @@ export default function MixLab() {
           <Card className="mb-8">
             <CardHeader>
               <CardTitle className="text-center text-2xl">
-                {selectedElements.map(e => e.symbol).join(" + ")} → {reactionResult.product}
+                {selectedElements.map((e) => e.symbol).join(" + ")} →{" "}
+                {reactionResult.product}
               </CardTitle>
               <div className="text-center text-gray-600">
                 {reactionResult.productName || reactionResult.product}
@@ -183,7 +198,7 @@ export default function MixLab() {
                   </h4>
                   <p className="text-blue-800">{reactionResult.description}</p>
                 </div>
-                
+
                 <div className="bg-green-50 rounded-lg p-4">
                   <h4 className="font-semibold text-green-900 mb-3 flex items-center gap-2">
                     🏭 Real-World Uses
@@ -191,21 +206,25 @@ export default function MixLab() {
                   <p className="text-green-800">{reactionResult.uses}</p>
                 </div>
               </div>
-              
+
               <div className="bg-purple-50 rounded-lg p-4">
                 <h4 className="font-semibold text-purple-900 mb-3 flex items-center gap-2">
                   ⚡ Amazing Facts
                 </h4>
                 <p className="text-purple-800">{reactionResult.facts}</p>
               </div>
-              
+
               {reactionResult.id === -1 && (
                 <div className="bg-amber-50 rounded-lg p-4 border border-amber-200">
                   <div className="flex items-center gap-2 mb-2">
-                    <span className="text-amber-600 font-medium">🤖 AI Analysis</span>
+                    <span className="text-amber-600 font-medium">
+                      🤖 AI Analysis
+                    </span>
                   </div>
                   <p className="text-amber-800 text-sm">
-                    This reaction analysis was generated using artificial intelligence. The information is educational and based on chemistry principles.
+                    This reaction analysis was generated using artificial
+                    intelligence. The information is educational and based on
+                    chemistry principles.
                   </p>
                 </div>
               )}
@@ -224,40 +243,59 @@ export default function MixLab() {
             <CardContent>
               <div className="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4">
                 <p className="text-gray-700 mb-4">
-                  Would you like me to explain more about this reaction, suggest related experiments, 
-                  or answer any questions about the chemistry involved?
+                  Would you like me to explain more about this reaction, suggest
+                  related experiments, or answer any questions about the
+                  chemistry involved?
                 </p>
                 <div className="flex gap-2 flex-wrap">
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => {
-                      setChatContext(reactionResult ? 
-                        `Reaction: ${selectedElements.map(e => e.symbol).join(" + ")} → ${reactionResult.product}\nDescription: ${reactionResult.description}` :
-                        `Elements: ${selectedElements.map(e => e.symbol).join(", ")}\nExplanation: ${noReactionExplanation}`
+                      setChatContext(
+                        reactionResult
+                          ? `Reaction: ${selectedElements
+                              .map((e) => e.symbol)
+                              .join(" + ")} → ${
+                              reactionResult.product
+                            }\nDescription: ${reactionResult.description}`
+                          : `Elements: ${selectedElements
+                              .map((e) => e.symbol)
+                              .join(
+                                ", "
+                              )}\nExplanation: ${noReactionExplanation}`
                       );
                       setShowChatModal(true);
                     }}
                   >
                     Explain the Chemistry
                   </Button>
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => {
-                      setChatContext(`Please suggest similar reactions to: ${selectedElements.map(e => e.symbol).join(" + ")}`);
+                      setChatContext(
+                        `Please suggest similar reactions to: ${selectedElements
+                          .map((e) => e.symbol)
+                          .join(" + ")}`
+                      );
                       setShowChatModal(true);
                     }}
                   >
                     Similar Reactions
                   </Button>
-                  <Button 
-                    size="sm" 
+                  <Button
+                    size="sm"
                     variant="outline"
                     onClick={() => {
-                      setChatContext(reactionResult ? 
-                        `I have questions about this reaction: ${selectedElements.map(e => e.symbol).join(" + ")} → ${reactionResult.product}` :
-                        `I have questions about these elements: ${selectedElements.map(e => e.symbol).join(", ")}`
+                      setChatContext(
+                        reactionResult
+                          ? `I have questions about this reaction: ${selectedElements
+                              .map((e) => e.symbol)
+                              .join(" + ")} → ${reactionResult.product}`
+                          : `I have questions about these elements: ${selectedElements
+                              .map((e) => e.symbol)
+                              .join(", ")}`
                       );
                       setShowChatModal(true);
                     }}
@@ -273,7 +311,11 @@ export default function MixLab() {
         <div className="flex justify-center gap-4">
           <Button
             onClick={handleMixElements}
-            disabled={selectedElements.length < 2 || findReactionMutation.isPending || isAnimating}
+            disabled={
+              selectedElements.length < 2 ||
+              findReactionMutation.isPending ||
+              isAnimating
+            }
             className="bg-blue-600 hover:bg-blue-700"
           >
             {isAnimating ? "Mixing..." : "Mix Elements"}
@@ -282,9 +324,7 @@ export default function MixLab() {
             Clear Selection
           </Button>
           <Link href="/periodic-table">
-            <Button variant="outline">
-              Back to Periodic Table
-            </Button>
+            <Button variant="outline">Back to Periodic Table</Button>
           </Link>
         </div>
 
@@ -293,7 +333,7 @@ export default function MixLab() {
           open={showChatModal}
           onOpenChange={setShowChatModal}
           initialContext={chatContext}
-          reactionElements={selectedElements.map(e => e.symbol)}
+          reactionElements={selectedElements.map((e) => e.symbol)}
         />
       </div>
     </div>
