@@ -114,8 +114,8 @@ export function AiChatModal({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="max-w-2xl h-[80vh] flex flex-col p-0">
         <DialogHeader className="px-6 py-4 border-b">
-          <DialogTitle className="flex items-center gap-2">
-            <Bot className="h-5 w-5 text-blue-600" />
+          <DialogTitle className="flex items-center gap-2 font-montserrat font-semibold">
+            <Bot className="h-6 w-6 text-blue-600" />
             AI Chemistry Assistant
           </DialogTitle>
         </DialogHeader>
@@ -126,8 +126,8 @@ export function AiChatModal({
             <ScrollArea className="h-full w-full" ref={scrollAreaRef}>
               <div className="space-y-4 p-4">
                 {messages.length === 0 ? (
-                  <div className="text-center text-gray-500 py-8">
-                    <Bot className="h-12 w-12 mx-auto mb-4 text-gray-400" />
+                  <div className="text-center text-gray-100 py-8 font-montserrat font-normal px-14  ">
+                    <Bot className="h-12 w-12 mx-auto mb-4 text-gray-300" />
                     <p>
                       Ask me anything about chemistry, reactions, or the
                       elements you're working with!
@@ -209,15 +209,16 @@ export function AiChatModal({
 
           {/* Suggested Questions */}
           {messages.length === 0 && (
-            <div className="px-4 py-2 border-t bg-gray-50">
-              <p className="text-sm text-gray-600 mb-2">Suggested questions:</p>
+            <div className="px-4 py-2 border-t">
+              <p className="text-sm text-gray-100 mb-2 font-montserrat font-semibold">
+                Suggested Questions :
+              </p>
               <div className="grid grid-cols-2 gap-2">
                 {suggestedQuestions.map((question, index) => (
                   <Button
                     key={index}
-                    variant="outline"
                     size="sm"
-                    className="text-left h-auto py-2 px-3 whitespace-normal text-xs"
+                    className="bg-gray-800 hover:bg-gray-700 text-white border-0 text-left h-auto py-2 px-3 whitespace-normal text-xs"
                     onClick={() => {
                       setInputValue(question);
                       handleSendMessage();
@@ -231,7 +232,7 @@ export function AiChatModal({
           )}
 
           {/* Input Area */}
-          <div className="flex gap-2 p-4 border-t bg-white">
+          <div className="flex gap-2 p-4 border-t ">
             <Input
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
@@ -244,6 +245,7 @@ export function AiChatModal({
               onClick={handleSendMessage}
               disabled={!inputValue.trim() || chatMutation.isPending}
               size="icon"
+              className="bg-blue-600 hover:bg-blue-700 text-white border-0 disabled:bg-gray-400 disabled:text-gray-200"
             >
               <Send className="h-4 w-4" />
             </Button>

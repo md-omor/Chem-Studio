@@ -1,12 +1,28 @@
-import { useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Separator } from "@/components/ui/separator";
-import { Clock, BookOpen, Atom, Zap, Microscope, FlaskConical, Search, ChevronRight, Play, FileText, Calculator } from "lucide-react";
+import {
+  Atom,
+  BookOpen,
+  Calculator,
+  ChevronRight,
+  Clock,
+  FileText,
+  FlaskConical,
+  Microscope,
+  Search,
+  Zap,
+} from "lucide-react";
+import { useState } from "react";
 
 export default function KnowledgeCenter() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -17,7 +33,8 @@ export default function KnowledgeCenter() {
     {
       id: 1,
       title: "Atomic Structure",
-      description: "Understanding protons, neutrons, and electrons. Learn how atoms are built and how they interact.",
+      description:
+        "Understanding protons, neutrons, and electrons. Learn how atoms are built and how they interact.",
       duration: "5 min read",
       icon: <Atom className="h-6 w-6" />,
       color: "bg-blue-500",
@@ -56,13 +73,14 @@ Understanding atomic structure helps explain why elements behave the way they do
       exercises: [
         "Draw the atomic structure of carbon (6 protons, 6 neutrons, 6 electrons)",
         "Explain why sodium easily loses an electron",
-        "Compare the atomic structure of hydrogen and helium"
-      ]
+        "Compare the atomic structure of hydrogen and helium",
+      ],
     },
     {
       id: 2,
       title: "Chemical Reactions",
-      description: "Explore different types of chemical reactions and learn how elements combine to form compounds.",
+      description:
+        "Explore different types of chemical reactions and learn how elements combine to form compounds.",
       duration: "8 min read",
       icon: <Zap className="h-6 w-6" />,
       color: "bg-green-500",
@@ -104,13 +122,14 @@ A substance combines with oxygen, releasing energy
       exercises: [
         "Classify the reaction: 2Na + Cl₂ → 2NaCl",
         "Balance the equation: H₂ + O₂ → H₂O",
-        "Predict products: Mg + HCl → ?"
-      ]
+        "Predict products: Mg + HCl → ?",
+      ],
     },
     {
       id: 3,
       title: "Periodic Trends",
-      description: "Discover patterns in the periodic table and understand how element properties change across periods and groups.",
+      description:
+        "Discover patterns in the periodic table and understand how element properties change across periods and groups.",
       duration: "6 min read",
       icon: <BookOpen className="h-6 w-6" />,
       color: "bg-purple-500",
@@ -154,13 +173,14 @@ Ability to attract electrons in a bond
       exercises: [
         "Compare atomic radius: Li vs F vs Ne",
         "Predict which has higher ionization energy: Na or Mg",
-        "Explain why noble gases are unreactive"
-      ]
+        "Explain why noble gases are unreactive",
+      ],
     },
     {
       id: 4,
       title: "Chemical Bonding",
-      description: "Learn about ionic, covalent, and metallic bonds, and how they determine compound properties.",
+      description:
+        "Learn about ionic, covalent, and metallic bonds, and how they determine compound properties.",
       duration: "7 min read",
       icon: <Microscope className="h-6 w-6" />,
       color: "bg-red-500",
@@ -205,13 +225,14 @@ Chemical bonds form when atoms share or transfer electrons to achieve stable ele
       exercises: [
         "Predict bond type: K + Br, C + O, Al + Al",
         "Draw electron dot structure for H₂O",
-        "Explain why oil doesn't mix with water"
-      ]
+        "Explain why oil doesn't mix with water",
+      ],
     },
     {
       id: 5,
       title: "Acids and Bases",
-      description: "Understand pH, acid-base reactions, and their importance in everyday life and industry.",
+      description:
+        "Understand pH, acid-base reactions, and their importance in everyday life and industry.",
       duration: "9 min read",
       icon: <FlaskConical className="h-6 w-6" />,
       color: "bg-orange-500",
@@ -267,13 +288,14 @@ Substances that change color based on pH:
       exercises: [
         "Calculate pH if [H⁺] = 1 × 10⁻³ M",
         "Predict products: H₂SO₄ + Ca(OH)₂ → ?",
-        "Explain why stomach needs acid"
-      ]
+        "Explain why stomach needs acid",
+      ],
     },
     {
       id: 6,
       title: "Organic Chemistry",
-      description: "Introduction to carbon-based compounds and their role in living organisms and synthetic materials.",
+      description:
+        "Introduction to carbon-based compounds and their role in living organisms and synthetic materials.",
       duration: "10 min read",
       icon: <Atom className="h-6 w-6" />,
       color: "bg-teal-500",
@@ -338,15 +360,16 @@ Special arrangements of atoms that determine properties:
       exercises: [
         "Draw structure of methane (CH₄)",
         "Identify functional groups in aspirin",
-        "Explain why oil is hydrophobic"
-      ]
+        "Explain why oil is hydrophobic",
+      ],
     },
   ];
 
-  const filteredLessons = lessons.filter(lesson =>
-    lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    lesson.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    lesson.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredLessons = lessons.filter(
+    (lesson) =>
+      lesson.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lesson.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      lesson.category.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleLessonClick = (lesson: any) => {
@@ -354,219 +377,306 @@ Special arrangements of atoms that determine properties:
     setDialogOpen(true);
   };
 
-  const categories = ["All", "Fundamentals", "Reactions", "Periodic Table", "Bonding", "Organic"];
+  const categories = [
+    "All",
+    "Fundamentals",
+    "Reactions",
+    "Periodic Table",
+    "Bonding",
+    "Organic",
+  ];
   const [selectedCategory, setSelectedCategory] = useState("All");
 
-  const categoryFilteredLessons = filteredLessons.filter(lesson => 
-    selectedCategory === "All" || lesson.category === selectedCategory
+  const categoryFilteredLessons = filteredLessons.filter(
+    (lesson) =>
+      selectedCategory === "All" || lesson.category === selectedCategory
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-white to-purple-50 py-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-            Knowledge Center
-          </h1>
-          <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-            Master chemistry concepts with our comprehensive lessons designed for high school students
-          </p>
-        </div>
+    <div
+      className="dark relative min-h-screen flex flex-col overflow-hidden bg-background text-foreground"
+      style={{ backgroundColor: "hsl(240 10% 3.9%)", color: "hsl(0 0% 98%)" }}
+    >
+      {/* Hero Gradient Glow Effect */}
+      <div className="absolute inset-0 flex items-center justify-center">
+        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
+        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[5px] w-1/4 blur-sm" />
+        <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-transparent via-purple-500 to-transparent h-px w-1/2" />
+        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-transparent via-purple-500 to-transparent h-[5px] w-1/4 blur-sm" />
+      </div>
 
-        {/* Search and Filters */}
-        <div className="mb-8 space-y-4">
-          <div className="relative max-w-md mx-auto">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 h-4 w-4" />
-            <Input
-              placeholder="Search lessons..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="pl-10"
-            />
+      <div className="relative z-20 pt-20 pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-foreground">
+          {/* Header */}
+          <div className="text-center mb-12">
+            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 font-montserrat">
+              Knowledge Center
+            </h1>
+            <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-montserrat">
+              Master chemistry concepts with our comprehensive lessons designed
+              for high school students. Explore interactive content and build
+              your understanding step by step.
+            </p>
           </div>
-          
-          <div className="flex flex-wrap justify-center gap-2">
-            {categories.map((category) => (
-              <Button
-                key={category}
-                variant={selectedCategory === category ? "default" : "outline"}
-                size="sm"
-                onClick={() => setSelectedCategory(category)}
-                className={selectedCategory === category ? "bg-blue-600 hover:bg-blue-700" : ""}
+
+          {/* Search and Filters */}
+          <div className="mb-12 space-y-6">
+            <div className="relative max-w-lg mx-auto">
+              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-slate-400 h-5 w-5" />
+              <Input
+                placeholder="Search chemistry lessons..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="pl-12 h-12 bg-slate-800/50 border-slate-700/50 text-slate-100 placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20 rounded-xl backdrop-blur-sm"
+              />
+            </div>
+
+            <div className="flex flex-wrap justify-center gap-3">
+              {categories.map((category) => (
+                <Button
+                  key={category}
+                  variant={
+                    selectedCategory === category ? "default" : "outline"
+                  }
+                  size="sm"
+                  onClick={() => setSelectedCategory(category)}
+                  className={
+                    selectedCategory === category
+                      ? "bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white border-0 rounded-xl px-4 py-2 font-montserrat font-semibold shadow-lg hover:shadow-blue-500/25 transition-all duration-200"
+                      : "bg-slate-800/50 hover:bg-slate-700/70 text-slate-200 hover:text-white border-slate-600/50 hover:border-blue-500/50 rounded-xl px-4 py-2 font-montserrat transition-all duration-200"
+                  }
+                >
+                  {category}
+                </Button>
+              ))}
+            </div>
+          </div>
+
+          {/* Lessons Grid */}
+          <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {categoryFilteredLessons.map((lesson) => (
+              <Card
+                key={lesson.id}
+                className="relative overflow-hidden bg-slate-800/50 border-slate-700/50 hover:border-blue-500/50 backdrop-blur-sm hover:shadow-2xl hover:shadow-blue-500/10 transition-all duration-300 cursor-pointer group hover:scale-105 hover:-translate-y-2"
+                onClick={() => handleLessonClick(lesson)}
               >
-                {category}
-              </Button>
+                <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+
+                <CardHeader className="relative">
+                  <div className="flex items-center justify-between mb-4">
+                    <div
+                      className={`p-4 rounded-xl ${lesson.color} text-white shadow-xl group-hover:scale-110 transition-transform duration-300`}
+                    >
+                      {lesson.icon}
+                    </div>
+                    <div className="text-right space-y-2">
+                      <Badge className="bg-slate-700/50 text-slate-300 border-slate-600/50 flex items-center gap-1">
+                        <Clock className="h-3 w-3" />
+                        {lesson.duration}
+                      </Badge>
+                      <Badge
+                        className={`text-xs border ${
+                          lesson.level === "Beginner"
+                            ? "bg-green-500/10 border-green-500/30 text-green-400"
+                            : lesson.level === "Intermediate"
+                            ? "bg-yellow-500/10 border-yellow-500/30 text-yellow-400"
+                            : "bg-red-500/10 border-red-500/30 text-red-400"
+                        }`}
+                      >
+                        {lesson.level}
+                      </Badge>
+                    </div>
+                  </div>
+                  <CardTitle className="text-xl text-slate-100 group-hover:text-blue-400 transition-colors font-montserrat font-bold">
+                    {lesson.title}
+                  </CardTitle>
+                  <Badge className="w-fit bg-slate-700/50 text-slate-300 border-slate-600/50">
+                    {lesson.category}
+                  </Badge>
+                </CardHeader>
+                <CardContent className="relative">
+                  <p className="text-slate-300 mb-6 text-sm leading-relaxed">
+                    {lesson.description}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      className="text-blue-400 hover:text-blue-300 hover:bg-blue-500/10 p-0 font-montserrat font-semibold"
+                    >
+                      Start Learning{" "}
+                      <ChevronRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                    <div className="flex items-center gap-1 text-xs text-slate-400">
+                      <FileText className="h-3 w-3" />
+                      <span>{lesson.exercises.length} exercises</span>
+                    </div>
+                  </div>
+                </CardContent>
+              </Card>
             ))}
           </div>
-        </div>
 
-        {/* Lessons Grid */}
-        <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-12">
-          {categoryFilteredLessons.map((lesson) => (
-            <Card 
-              key={lesson.id} 
-              className="hover:shadow-xl transition-all duration-300 cursor-pointer group hover:scale-105"
-              onClick={() => handleLessonClick(lesson)}
-            >
-              <CardHeader>
-                <div className="flex items-center justify-between mb-4">
-                  <div className={`p-3 rounded-lg ${lesson.color} text-white shadow-lg`}>
-                    {lesson.icon}
-                  </div>
-                  <div className="text-right space-y-1">
-                    <Badge variant="secondary" className="flex items-center gap-1">
-                      <Clock className="h-3 w-3" />
-                      {lesson.duration}
-                    </Badge>
-                    <Badge 
-                      variant="outline" 
-                      className={`text-xs ${
-                        lesson.level === 'Beginner' ? 'border-green-300 text-green-700' :
-                        lesson.level === 'Intermediate' ? 'border-yellow-300 text-yellow-700' :
-                        'border-red-300 text-red-700'
-                      }`}
+          {/* Call to Action */}
+          <div className="text-center">
+            <Card className="relative overflow-hidden bg-slate-800/30 border-slate-700/50 backdrop-blur-sm shadow-2xl">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-purple-500/10 to-pink-500/10"></div>
+              <CardContent className="relative pt-12 pb-12">
+                <div className="max-w-4xl mx-auto">
+                  <h3 className="text-4xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 font-montserrat">
+                    Ready to Start Experimenting?
+                  </h3>
+                  <p className="text-xl text-slate-300 mb-10 leading-relaxed font-montserrat">
+                    Apply your knowledge with our interactive tools! Explore
+                    elements, mix compounds, and get AI-powered explanations for
+                    any chemistry questions.
+                  </p>
+                  <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-6 max-w-3xl mx-auto">
+                    <Button
+                      asChild
+                      className="h-16 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 rounded-xl shadow-xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105 group"
                     >
-                      {lesson.level}
-                    </Badge>
-                  </div>
-                </div>
-                <CardTitle className="text-xl group-hover:text-blue-600 transition-colors">
-                  {lesson.title}
-                </CardTitle>
-                <Badge variant="secondary" className="w-fit">
-                  {lesson.category}
-                </Badge>
-              </CardHeader>
-              <CardContent>
-                <p className="text-gray-600 mb-4 text-sm leading-relaxed">{lesson.description}</p>
-                <div className="flex items-center justify-between">
-                  <Button variant="ghost" size="sm" className="text-blue-600 hover:text-blue-800 p-0">
-                    Start Learning <ChevronRight className="h-4 w-4 ml-1" />
-                  </Button>
-                  <div className="flex items-center gap-1 text-xs text-gray-500">
-                    <FileText className="h-3 w-3" />
-                    <span>{lesson.exercises.length} exercises</span>
+                      <a
+                        href="/periodic-table"
+                        className="flex items-center justify-center gap-3 font-montserrat font-bold text-lg"
+                      >
+                        <Atom className="h-6 w-6 group-hover:rotate-12 transition-transform" />
+                        Periodic Table
+                      </a>
+                    </Button>
+                    <Button
+                      asChild
+                      className="h-16 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white border-0 rounded-xl shadow-xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105 group"
+                    >
+                      <a
+                        href="/mix-lab"
+                        className="flex items-center justify-center gap-3 font-montserrat font-bold text-lg"
+                      >
+                        <FlaskConical className="h-6 w-6 group-hover:scale-110 transition-transform" />
+                        Mix Lab
+                      </a>
+                    </Button>
+                    <Button
+                      asChild
+                      className="h-16 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 rounded-xl shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 group"
+                    >
+                      <a
+                        href="/ai-assistant"
+                        className="flex items-center justify-center gap-3 font-montserrat font-bold text-lg"
+                      >
+                        <Calculator className="h-6 w-6 group-hover:rotate-12 transition-transform" />
+                        AI Assistant
+                      </a>
+                    </Button>
                   </div>
                 </div>
               </CardContent>
             </Card>
-          ))}
+          </div>
         </div>
+      </div>
 
-        {/* Call to Action */}
-        <div className="text-center">
-          <Card className="bg-gradient-to-r from-blue-50 via-purple-50 to-green-50 border-none shadow-xl">
-            <CardContent className="pt-8 pb-8">
-              <div className="max-w-3xl mx-auto">
-                <h3 className="text-3xl font-bold text-gray-900 mb-4">Ready to Start Experimenting?</h3>
-                <p className="text-lg text-gray-600 mb-8">
-                  Apply your knowledge with our interactive tools! Explore elements, mix compounds, 
-                  and get AI-powered explanations for any chemistry questions.
-                </p>
-                <div className="grid sm:grid-cols-1 md:grid-cols-3 gap-4 max-w-2xl mx-auto">
-                  <Button asChild className="h-12">
-                    <a href="/periodic-table" className="bg-blue-600 hover:bg-blue-700">
-                      <Atom className="h-4 w-4 mr-2" />
-                      Periodic Table
-                    </a>
-                  </Button>
-                  <Button asChild className="h-12">
-                    <a href="/mix-lab" className="bg-green-600 hover:bg-green-700">
-                      <FlaskConical className="h-4 w-4 mr-2" />
-                      Mix Lab
-                    </a>
-                  </Button>
-                  <Button asChild className="h-12">
-                    <a href="/ai-assistant" className="bg-purple-600 hover:bg-purple-700">
-                      <Calculator className="h-4 w-4 mr-2" />
-                      AI Assistant
-                    </a>
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
+      {/* Lesson Detail Modal */}
+      <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
+        <DialogContent className="max-w-5xl max-h-[90vh] flex flex-col bg-slate-900 border-slate-700">
+          <DialogHeader className="flex-shrink-0 border-b border-slate-700/50 pb-4">
+            <DialogTitle className="flex items-center gap-4">
+              {selectedLesson && (
+                <>
+                  <div
+                    className={`p-3 rounded-xl ${selectedLesson.color} text-white shadow-lg`}
+                  >
+                    {selectedLesson.icon}
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold text-slate-100 font-montserrat">
+                      {selectedLesson.title}
+                    </div>
+                    <div className="text-sm text-slate-400 font-normal mt-1">
+                      {selectedLesson.category} • {selectedLesson.level} •{" "}
+                      {selectedLesson.duration}
+                    </div>
+                  </div>
+                </>
+              )}
+            </DialogTitle>
+          </DialogHeader>
 
-        {/* Lesson Detail Modal */}
-        <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-          <DialogContent className="max-w-4xl max-h-[90vh] flex flex-col">
-            <DialogHeader className="flex-shrink-0">
-              <DialogTitle className="flex items-center gap-3">
-                {selectedLesson && (
-                  <>
-                    <div className={`p-2 rounded-lg ${selectedLesson.color} text-white`}>
-                      {selectedLesson.icon}
+          {selectedLesson && (
+            <div className="flex-1 overflow-hidden">
+              <ScrollArea className="h-full w-full">
+                <div className="p-6 space-y-8">
+                  {/* Content */}
+                  <div className="prose prose-invert prose-lg max-w-none">
+                    <div className="whitespace-pre-wrap text-slate-200 leading-relaxed font-montserrat">
+                      {selectedLesson.content}
                     </div>
-                    <div>
-                      <div className="text-xl">{selectedLesson.title}</div>
-                      <div className="text-sm text-gray-500 font-normal">
-                        {selectedLesson.category} • {selectedLesson.level} • {selectedLesson.duration}
-                      </div>
-                    </div>
-                  </>
-                )}
-              </DialogTitle>
-            </DialogHeader>
-            
-            {selectedLesson && (
-              <div className="flex-1 overflow-hidden">
-                <ScrollArea className="h-full w-full">
-                  <div className="p-6 space-y-6">
-                    {/* Content */}
-                    <div className="prose prose-sm max-w-none">
-                      <div className="whitespace-pre-wrap text-gray-700 leading-relaxed">
-                        {selectedLesson.content}
-                      </div>
-                    </div>
-                    
-                    <Separator />
-                    
-                    {/* Exercises */}
-                    <div>
-                      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-                        <Calculator className="h-5 w-5 text-blue-600" />
-                        Practice Exercises
-                      </h3>
-                      <div className="space-y-3">
-                        {selectedLesson.exercises.map((exercise: string, index: number) => (
-                          <Card key={index} className="bg-blue-50 border-blue-200">
-                            <CardContent className="p-4">
-                              <div className="flex items-start gap-3">
-                                <Badge variant="outline" className="bg-blue-100 text-blue-700 border-blue-300">
+                  </div>
+
+                  <Separator className="bg-slate-700/50" />
+
+                  {/* Exercises */}
+                  <div>
+                    <h3 className="text-xl font-bold mb-6 flex items-center gap-3 text-slate-100 font-montserrat">
+                      <Calculator className="h-6 w-6 text-blue-400" />
+                      Practice Exercises
+                    </h3>
+                    <div className="space-y-4">
+                      {selectedLesson.exercises.map(
+                        (exercise: string, index: number) => (
+                          <Card
+                            key={index}
+                            className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm"
+                          >
+                            <CardContent className="p-5">
+                              <div className="flex items-start gap-4">
+                                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 font-bold text-sm px-3 py-1">
                                   {index + 1}
                                 </Badge>
-                                <p className="text-sm text-gray-700 flex-1">{exercise}</p>
+                                <p className="text-slate-200 flex-1 leading-relaxed font-montserrat">
+                                  {exercise}
+                                </p>
                               </div>
                             </CardContent>
                           </Card>
-                        ))}
-                      </div>
-                    </div>
-                    
-                    <Separator />
-                    
-                    {/* Action Buttons */}
-                    <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                      <Button asChild>
-                        <a href="/ai-assistant" className="bg-purple-600 hover:bg-purple-700">
-                          Ask AI Assistant
-                        </a>
-                      </Button>
-                      <Button asChild variant="outline">
-                        <a href="/mix-lab">
-                          Try in Mix Lab
-                        </a>
-                      </Button>
+                        )
+                      )}
                     </div>
                   </div>
-                </ScrollArea>
-              </div>
-            )}
-          </DialogContent>
-        </Dialog>
-      </div>
+
+                  <Separator className="bg-slate-700/50" />
+
+                  {/* Action Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                    <Button
+                      asChild
+                      className="h-12 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-200 font-montserrat font-bold"
+                    >
+                      <a
+                        href="/ai-assistant"
+                        className="flex items-center gap-2"
+                      >
+                        <Calculator className="h-5 w-5" />
+                        Ask AI Assistant
+                      </a>
+                    </Button>
+                    <Button
+                      asChild
+                      className="h-12 bg-slate-700/50 hover:bg-slate-600/70 text-slate-200 hover:text-white border-slate-600/50 hover:border-blue-500/50 rounded-xl transition-all duration-200 font-montserrat font-bold"
+                    >
+                      <a href="/mix-lab" className="flex items-center gap-2">
+                        <FlaskConical className="h-5 w-5" />
+                        Try in Mix Lab
+                      </a>
+                    </Button>
+                  </div>
+                </div>
+              </ScrollArea>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

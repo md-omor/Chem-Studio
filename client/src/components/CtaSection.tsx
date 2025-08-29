@@ -84,7 +84,7 @@ const CtaSection = () => {
         {/* Additional Benefits */}
         <div className="grid md:grid-cols-3 gap-6 mt-16 text-center">
           <div className="p-6 bg-card/30 backdrop-blur-sm rounded-xl border border-border hover:border-primary/30 transition-colors">
-            <div className="w-12 h-12 bg-gradient-primary rounded-lg mx-auto mb-4 flex items-center justify-center">
+            <div className="w-12 h-12 bg-gradient-accent-solid rounded-lg mx-auto mb-4 flex items-center justify-center">
               <span className="text-background font-bold">✓</span>
             </div>
             <h3 className="font-semibold mb-2">Instant Access</h3>

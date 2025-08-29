@@ -255,14 +255,13 @@ export default function PeriodicTable() {
                   <Button
                     onClick={handleMixElements}
                     disabled={selectedElements.length < 2}
-                    className="bg-gradient-to-r from-primary to-secondary text-white !rounded-[4px] hover:from-primary/90 hover:to-secondary/90 px-4 py-2 font-montserrat font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-sm"
+                    className="bg-blue-600 hover:bg-blue-700 text-white border-0 !rounded-[4px] px-4 py-2 font-montserrat font-semibold transition-all duration-300 shadow-lg hover:shadow-xl text-sm disabled:bg-gray-600 disabled:text-gray-300"
                   >
                     Mix Elements
                   </Button>
                   <Button
-                    variant="outline"
                     onClick={clearSelection}
-                    className="border-white/20 text-white hover:bg-white/10 hover:text-white font-montserrat font-semibold !rounded-[4px] px-4 py-2 text-sm"
+                    className="bg-gray-600 hover:bg-gray-700 text-white border-0 font-montserrat font-semibold !rounded-[4px] px-4 py-2 text-sm"
                   >
                     Clear Selection
                   </Button>
