@@ -23,6 +23,7 @@ import {
   Zap,
 } from "lucide-react";
 import { useState } from "react";
+import { Link } from "wouter";
 
 export default function KnowledgeCenter() {
   const [searchTerm, setSearchTerm] = useState("");
@@ -397,20 +398,18 @@ Special arrangements of atoms that determine properties:
       className="dark relative min-h-screen flex flex-col overflow-hidden bg-background text-foreground"
       style={{ backgroundColor: "hsl(240 10% 3.9%)", color: "hsl(0 0% 98%)" }}
     >
-      {/* Hero Gradient Glow Effect */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-px w-3/4" />
-        <div className="absolute inset-x-20 top-0 bg-gradient-to-r from-transparent via-indigo-500 to-transparent h-[5px] w-1/4 blur-sm" />
-        <div className="absolute inset-x-60 top-0 bg-gradient-to-r from-transparent via-sky-500 to-transparent h-[5px] w-1/4 blur-sm" />
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-transparent via-purple-500 to-transparent h-px w-1/2" />
-        <div className="absolute top-0 left-1/2 transform -translate-x-1/2 bg-gradient-to-r from-transparent via-purple-500 to-transparent h-[5px] w-1/4 blur-sm" />
-      </div>
-
-      <div className="relative z-20 pt-20 pb-8">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-foreground">
+      <div className="relative z-20 md:pt-40 pb-8">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-foreground animate-fade-in-up">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="text-5xl font-bold bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 font-montserrat">
+            <div className="inline-flex items-center gap-2 bg-muted/50 backdrop-blur-sm border border-primary/20 rounded-full px-4 py-2 mb-6 text-sm">
+              <div className="w-2 h-2 bg-primary rounded-full animate-glow-pulse"></div>
+              <span className="text-muted-foreground font-montserrat font-bold">
+                Knowledge Hub
+              </span>
+            </div>
+
+            <h1 className="text-5xl font-bold text-gradient-hero text-transparent mb-6 pb-2 font-montserrat">
               Knowledge Center
             </h1>
             <p className="text-xl text-slate-300 max-w-3xl mx-auto leading-relaxed font-montserrat">
@@ -428,7 +427,7 @@ Special arrangements of atoms that determine properties:
                 placeholder="Search chemistry lessons..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="pl-12 h-12 bg-slate-800/50 border-slate-700/50 text-slate-100 placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20 rounded-xl backdrop-blur-sm"
+                className="pl-12 h-12 bg-slate-800 border-slate-700 text-slate-100 placeholder:text-slate-400 focus:border-blue-500/50 focus:ring-blue-500/20 rounded-xl"
               />
             </div>
 
@@ -518,6 +517,80 @@ Special arrangements of atoms that determine properties:
             ))}
           </div>
 
+          {/* Interactive Features Section */}
+          <div className="mb-16">
+            <div className="relative overflow-hidden bg-slate-800/20 border border-slate-700/30 rounded-3xl backdrop-blur-sm">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 via-purple-500/5 to-pink-500/5"></div>
+              <div className="relative p-8 md:p-12">
+                <div className="text-center mb-12">
+                  <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-400 to-purple-400 bg-clip-text text-transparent mb-4 font-montserrat">
+                    Why Choose Our Knowledge Center?
+                  </h2>
+                  <p className="text-slate-300 max-w-2xl mx-auto font-montserrat">
+                    Comprehensive chemistry education designed for modern
+                    learners
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                  <div className="group">
+                    <div className="relative overflow-hidden bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 hover:border-blue-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/10">
+                      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative">
+                        <div className="w-12 h-12 bg-gradient-to-br from-blue-500 to-blue-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                          <BookOpen className="h-6 w-6 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-100 mb-2 font-montserrat">
+                          Interactive Lessons
+                        </h3>
+                        <p className="text-slate-300 text-sm leading-relaxed">
+                          Engaging content with real-world examples and
+                          step-by-step explanations
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group">
+                    <div className="relative overflow-hidden bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 hover:border-green-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-green-500/10">
+                      <div className="absolute inset-0 bg-gradient-to-br from-green-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative">
+                        <div className="w-12 h-12 bg-gradient-to-br from-green-500 to-emerald-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                          <Zap className="h-6 w-6 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-100 mb-2 font-montserrat">
+                          Practice Exercises
+                        </h3>
+                        <p className="text-slate-300 text-sm leading-relaxed">
+                          Hands-on problems to reinforce learning and build
+                          confidence
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="group">
+                    <div className="relative overflow-hidden bg-slate-800/40 border border-slate-700/50 rounded-2xl p-6 hover:border-purple-500/50 transition-all duration-300 hover:shadow-lg hover:shadow-purple-500/10">
+                      <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                      <div className="relative">
+                        <div className="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-600 rounded-xl flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300">
+                          <Calculator className="h-6 w-6 text-white" />
+                        </div>
+                        <h3 className="text-xl font-bold text-slate-100 mb-2 font-montserrat">
+                          AI-Powered Help
+                        </h3>
+                        <p className="text-slate-300 text-sm leading-relaxed">
+                          Get instant answers and explanations from our
+                          chemistry AI assistant
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           {/* Call to Action */}
           <div className="text-center">
             <Card className="relative overflow-hidden bg-slate-800/30 border-slate-700/50 backdrop-blur-sm shadow-2xl">
@@ -537,37 +610,37 @@ Special arrangements of atoms that determine properties:
                       asChild
                       className="h-16 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white border-0 rounded-xl shadow-xl hover:shadow-blue-500/25 transition-all duration-300 transform hover:scale-105 group"
                     >
-                      <a
+                      <Link
                         href="/periodic-table"
                         className="flex items-center justify-center gap-3 font-montserrat font-bold text-lg"
                       >
                         <Atom className="h-6 w-6 group-hover:rotate-12 transition-transform" />
                         Periodic Table
-                      </a>
+                      </Link>
                     </Button>
                     <Button
                       asChild
                       className="h-16 bg-gradient-to-r from-green-600 to-emerald-700 hover:from-green-700 hover:to-emerald-800 text-white border-0 rounded-xl shadow-xl hover:shadow-green-500/25 transition-all duration-300 transform hover:scale-105 group"
                     >
-                      <a
+                      <Link
                         href="/mix-lab"
                         className="flex items-center justify-center gap-3 font-montserrat font-bold text-lg"
                       >
                         <FlaskConical className="h-6 w-6 group-hover:scale-110 transition-transform" />
                         Mix Lab
-                      </a>
+                      </Link>
                     </Button>
                     <Button
                       asChild
                       className="h-16 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 rounded-xl shadow-xl hover:shadow-purple-500/25 transition-all duration-300 transform hover:scale-105 group"
                     >
-                      <a
+                      <Link
                         href="/ai-assistant"
                         className="flex items-center justify-center gap-3 font-montserrat font-bold text-lg"
                       >
                         <Calculator className="h-6 w-6 group-hover:rotate-12 transition-transform" />
                         AI Assistant
-                      </a>
+                      </Link>
                     </Button>
                   </div>
                 </div>
@@ -653,22 +726,22 @@ Special arrangements of atoms that determine properties:
                       asChild
                       className="h-12 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-200 font-montserrat font-bold"
                     >
-                      <a
+                      <Link
                         href="/ai-assistant"
                         className="flex items-center gap-2"
                       >
                         <Calculator className="h-5 w-5" />
                         Ask AI Assistant
-                      </a>
+                      </Link>
                     </Button>
                     <Button
                       asChild
                       className="h-12 bg-slate-700/50 hover:bg-slate-600/70 text-slate-200 hover:text-white border-slate-600/50 hover:border-blue-500/50 rounded-xl transition-all duration-200 font-montserrat font-bold"
                     >
-                      <a href="/mix-lab" className="flex items-center gap-2">
+                      <Link href="/mix-lab" className="flex items-center gap-2">
                         <FlaskConical className="h-5 w-5" />
                         Try in Mix Lab
-                      </a>
+                      </Link>
                     </Button>
                   </div>
                 </div>
