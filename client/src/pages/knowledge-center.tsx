@@ -8,8 +8,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Separator } from "@/components/ui/separator";
 import {
   Atom,
   BookOpen,
@@ -650,25 +648,31 @@ Special arrangements of atoms that determine properties:
         </div>
       </div>
 
-      {/* Lesson Detail Modal */}
+      {/* Blog Article Modal */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
-        <DialogContent className="max-w-5xl max-h-[90vh] flex flex-col bg-slate-900 border-slate-700">
-          <DialogHeader className="flex-shrink-0 border-b border-slate-700/50 pb-4">
+        <DialogContent className="max-w-5xl max-h-[95vh] flex flex-col bg-card border-border shadow-elegant overflow-hidden">
+          <DialogHeader className="flex-shrink-0 border-b border-border pb-6 bg-card">
             <DialogTitle className="flex items-center gap-4">
               {selectedLesson && (
                 <>
                   <div
-                    className={`p-3 rounded-xl ${selectedLesson.color} text-white shadow-lg`}
+                    className={`p-4 rounded-xl ${selectedLesson.color} text-white shadow-lg`}
                   >
                     {selectedLesson.icon}
                   </div>
-                  <div>
-                    <div className="text-2xl font-bold text-slate-100 font-montserrat">
+                  <div className="flex-1">
+                    <h1 className="text-4xl font-bold text-foreground font-serif leading-tight mb-2">
                       {selectedLesson.title}
-                    </div>
-                    <div className="text-sm text-slate-400 font-normal mt-1">
-                      {selectedLesson.category} • {selectedLesson.level} •{" "}
-                      {selectedLesson.duration}
+                    </h1>
+                    <div className="flex items-center gap-3 text-sm text-muted-foreground font-normal">
+                      <span className="px-3 py-1 bg-primary/20 text-primary rounded-full font-medium">{selectedLesson.category}</span>
+                      <span>•</span>
+                      <span className="font-medium">{selectedLesson.level}</span>
+                      <span>•</span>
+                      <div className="flex items-center gap-1">
+                        <Clock className="h-4 w-4" />
+                        {selectedLesson.duration}
+                      </div>
                     </div>
                   </div>
                 </>
@@ -677,75 +681,83 @@ Special arrangements of atoms that determine properties:
           </DialogHeader>
 
           {selectedLesson && (
-            <div className="flex-1 overflow-hidden">
-              <ScrollArea className="h-full w-full">
-                <div className="p-6 space-y-8">
-                  {/* Content */}
-                  <div className="prose prose-invert prose-lg max-w-none">
-                    <div className="whitespace-pre-wrap text-slate-200 leading-relaxed font-montserrat">
+            <div className="flex-1 overflow-y-auto bg-card element-modal-scrollbar px-8 py-6"
+              style={{
+                scrollbarWidth: 'thin',
+                scrollbarColor: 'hsl(180 100% 50%) hsl(240 3.7% 15.9%)'
+              }}
+            >
+                
+                
+                <div className="max-w-4xl mx-auto space-y-12 blog-content">
+                  {/* Article Content */}
+                  <article className="prose prose-invert prose-xl max-w-none">
+                    <div className="whitespace-pre-wrap text-foreground leading-relaxed text-base line-height-8">
                       {selectedLesson.content}
                     </div>
-                  </div>
+                  </article>
 
-                  <Separator className="bg-slate-700/50" />
 
-                  {/* Exercises */}
-                  <div>
-                    <h3 className="text-xl font-bold mb-6 flex items-center gap-3 text-slate-100 font-montserrat">
-                      <Calculator className="h-6 w-6 text-blue-400" />
+                  {/* Practice Section */}
+                  <section className="bg-muted/30 rounded-2xl p-8 border border-border">
+                    <h3 className="text-2xl font-bold mb-8 flex items-center gap-3 text-foreground ">
+                      <div className="p-3 bg-primary/20 rounded-xl">
+                        <Calculator className="h-7 w-7 text-primary" />
+                      </div>
                       Practice Exercises
                     </h3>
-                    <div className="space-y-4">
+                    <div className="space-y-6">
                       {selectedLesson.exercises.map(
                         (exercise: string, index: number) => (
-                          <Card
+                          <div
                             key={index}
-                            className="bg-slate-800/50 border-slate-700/50 backdrop-blur-sm"
+                            className="bg-card border border-border rounded-xl p-6 hover:border-primary/50 hover:shadow-md transition-all duration-300"
                           >
-                            <CardContent className="p-5">
-                              <div className="flex items-start gap-4">
-                                <Badge className="bg-blue-500/20 text-blue-400 border-blue-500/30 font-bold text-sm px-3 py-1">
-                                  {index + 1}
-                                </Badge>
-                                <p className="text-slate-200 flex-1 leading-relaxed font-montserrat">
-                                  {exercise}
-                                </p>
+                            <div className="flex items-center gap-4">
+                              <div className="flex-shrink-0">
+                                <div className="w-10 h-10 bg-primary rounded-xl flex items-center justify-center">
+                                  <span className="text-primary-foreground font-bold text-base">{index + 1}</span>
+                                </div>
                               </div>
-                            </CardContent>
-                          </Card>
+                              <p className="text-foreground flex-1 leading-relaxed font-medium text-base">
+                                {exercise}
+                              </p>
+                            </div>
+                          </div>
                         )
                       )}
                     </div>
-                  </div>
+                  </section>
 
-                  <Separator className="bg-slate-700/50" />
-
-                  {/* Action Buttons */}
-                  <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                    <Button
-                      asChild
-                      className="h-12 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white border-0 rounded-xl shadow-lg hover:shadow-purple-500/25 transition-all duration-200 font-montserrat font-bold"
-                    >
-                      <Link
-                        href="/ai-assistant"
-                        className="flex items-center gap-2"
+                  {/* Call to Action */}
+                  <div className="bg-gradient-to-r from-primary/10 to-secondary/10 rounded-2xl p-8 border border-border text-center">
+                    <h4 className="text-2xl font-semibold text-foreground mb-4">Continue Your Learning Journey</h4>
+                    <p className="text-muted-foreground mb-6 text-base">Ready to put your knowledge into practice?</p>
+                    <div className="flex flex-col sm:flex-row gap-4 justify-center">
+                      <Button
+                        asChild
+                        className="h-12 bg-primary hover:bg-primary/90 text-primary-foreground border-0 rounded-xl shadow-lg hover:shadow-primary/25 transition-all duration-200 font-semibold text-slate-700 text-base px-8"
                       >
-                        <Calculator className="h-5 w-5" />
-                        Ask AI Assistant
-                      </Link>
-                    </Button>
-                    <Button
-                      asChild
-                      className="h-12 bg-slate-700/50 hover:bg-slate-600/70 text-slate-200 hover:text-white border-slate-600/50 hover:border-blue-500/50 rounded-xl transition-all duration-200 font-montserrat font-bold"
-                    >
-                      <Link href="/mix-lab" className="flex items-center gap-2">
-                        <FlaskConical className="h-5 w-5" />
-                        Try in Mix Lab
-                      </Link>
-                    </Button>
+                        <Link
+                          href="/ai-assistant"
+                          className="flex items-center gap-3"
+                        >
+                          <Calculator className="h-5 w-5" />
+                          Ask AI Assistant
+                        </Link>
+                      </Button>
+                      <Button
+                        asChild
+                        className="h-12 bg-secondary hover:bg-secondary/90 text-secondary-foreground border-0 rounded-xl transition-all duration-200 font-semibold text-slate-200 text-base px-8"
+                      >
+                        <Link href="/mix-lab" className="flex items-center gap-3">
+                          <FlaskConical className="h-5 w-5" />
+                          Try in Mix Lab
+                        </Link>
+                      </Button>
+                    </div>
                   </div>
                 </div>
-              </ScrollArea>
             </div>
           )}
         </DialogContent>
